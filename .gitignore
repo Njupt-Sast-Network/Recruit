@@ -1,0 +1,7 @@
+/recruit/Runtime/*
+/recruit/Runtime/Cache/*
+/recruit/Home/Conf/config.php
+/recruit/Common/Conf/config.php
+recruit/Common/Conf
+recruit/Home/Conf
+/.idea
