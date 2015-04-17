@@ -97,4 +97,9 @@ class StudentRecruitInfo extends Model{
         }
         return $this->where($condition)->save($changed);
     }
+
+    // 按条件分页筛选学生
+    public function getRecruitStates($condition, $page, $perpage) {
+
+    }
 }

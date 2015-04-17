@@ -27,4 +27,13 @@ class StudentBasicInfoModel extends Model {
         $condition['xh'] = $xh;
         return $this->where($condition)->save($info);
     }
+
+    // 添加学生
+    public function addStudent($info) {
+        $condition['xh'] = $info['xh'];
+        if ($this->where($condition)->count() > 0) {
+            return 'reged';
+        }
+        return $this->add($info);
+    }
 }
