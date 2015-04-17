@@ -9,7 +9,7 @@
 namespace Common\Model;
 use Think\Model;
 
-class StudentRecruitInfo extends Model{
+class StudentRecruitInfoModel extends Model{
 
     // 返回指定条件的学生报名、录取状况
     public function getStudentRecruitState($condition) {
@@ -39,7 +39,7 @@ class StudentRecruitInfo extends Model{
         if ($this->isStudentAcceptAble($xh)) {
             $condition['xh'] = $xh;
             $data['acceptState'] = $_SESSION['department'];
-            $this->where($condition)->save($data);
+            return $this->where($condition)->save($data);
         } else {
             return false;
         }
@@ -99,7 +99,12 @@ class StudentRecruitInfo extends Model{
     }
 
     // 按条件分页筛选学生
-    public function getRecruitStates($condition, $page, $perpage) {
-
+    public function getRecruitStates($condition, $page, $perPage) {
+        $total = $this->where($condition)->count();
+        $start = ($page -1) * $perPage;
+        $result['total'] = $total;
+        $result['allPages'] = ceil($total / $perPage);
+        $result['stuList'] = $this->where($condition)->limit($start, $perPage)->select();
+        return $result;
     }
 }
