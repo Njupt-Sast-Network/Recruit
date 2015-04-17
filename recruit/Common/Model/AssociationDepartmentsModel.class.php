@@ -18,4 +18,21 @@ class AssociationDepartmentsModel extends Model {
         $result = $this->where($condition)->find();
         return $result['departmentName'];
     }
+
+    // 添加部门(管理员)
+    // departmentInfo中包含用户信息
+    // 管理员是departmentId为0的用户
+    public function addDepartment($departmentInfo) {
+        $association = $_SESSION['association'];
+        $department = $_SESSION['department'];
+        if (!$association || $department != 0) {
+            return 'access forbidden';
+        }
+        $condition['username'] = $departmentInfo['username'];
+        $result = $this->where($condition)->count();
+        if ($result > 0) {
+            return 'user exist';
+        }
+        return $this->add($departmentInfo);
+    }
 }

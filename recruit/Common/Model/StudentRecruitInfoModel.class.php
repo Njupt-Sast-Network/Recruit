@@ -11,7 +11,7 @@ use Think\Model;
 
 class StudentRecruitInfo extends Model{
 
-    // 返回指定学号的学生报名、录取状况
+    // 返回指定条件的学生报名、录取状况
     public function getStudentRecruitState($condition) {
         return $this->where($condition)->find();
     }

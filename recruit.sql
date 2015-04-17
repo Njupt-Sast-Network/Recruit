@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2015 at 02:41 PM
+-- Generation Time: Apr 17, 2015 at 12:45 PM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.19
 
@@ -47,6 +47,9 @@ CREATE TABLE IF NOT EXISTS `association_departments` (
 CREATE TABLE IF NOT EXISTS `association_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `associationName` varchar(40) NOT NULL,
+  `quest1` text NOT NULL,
+  `quest2` text NOT NULL,
+  `quest3` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -79,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `student_basic_info` (
 --
 
 INSERT INTO `student_basic_info` (`id`, `xh`, `name`, `birthday`, `year`, `password`, `qq`, `mail`, `phone`, `sex`, `dorm`, `college`, `major`, `gaozhong`) VALUES
-(1, 'B13080228', '我', '1993-11-05', 1993, 'qweqwe', 213123, '12312@121', 2132132, 22, '21321', '321312', '', '');
+(1, 'B11111111', '我', '1993-11-05', 1993, 'qweqwe', 213123, '12312@121', 2132132, 22, '21321', '321312', '', '');
 
 -- --------------------------------------------------------
 
