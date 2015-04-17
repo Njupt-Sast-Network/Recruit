@@ -35,4 +35,18 @@ class AssociationDepartmentsModel extends Model {
         }
         return $this->add($departmentInfo);
     }
+
+    // 修改部门信息
+    public function changeDepartmentInfo($departmentId, $association, $updatedInfo) {
+        if ($association != $_SESSION['association'] && $_SESSION['association'] != 0) {
+            return 'access forbidden';
+        }
+        if ($departmentId != $_SESSION['department'] && $_SESSION['department'] != 0) {
+            return 'access forbidden';
+        }
+        $condition['departmentId'] = $departmentId;
+        $condition['association'] = $association;
+        return $this->where($condition)->save($updatedInfo);
+    }
+
 }
