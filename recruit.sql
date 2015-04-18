@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2015 at 12:45 PM
+-- Generation Time: Apr 18, 2015 at 03:00 PM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.19
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `association_departments` (
   `password` text NOT NULL,
   `association` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门账户列表,若部门id为0但社团id不为0则为该社团管理员账户,若全部为0则是root用户' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -47,11 +47,19 @@ CREATE TABLE IF NOT EXISTS `association_departments` (
 CREATE TABLE IF NOT EXISTS `association_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `associationName` varchar(40) NOT NULL,
-  `quest1` text NOT NULL,
-  `quest2` text NOT NULL,
-  `quest3` text NOT NULL,
+  `quest1` longtext,
+  `quest2` longtext,
+  `quest3` longtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `association_list`
+--
+
+INSERT INTO `association_list` (`id`, `associationName`, `quest1`, `quest2`, `quest3`) VALUES
+(1, 'Test1', 'foo', 'bar', NULL),
+(2, 'Test2', NULL, 'foo2', 'bar2');
 
 -- --------------------------------------------------------
 
@@ -75,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `student_basic_info` (
   `major` text NOT NULL,
   `gaozhong` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='记录基本信息如学号,姓名等' AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `student_basic_info`
@@ -96,12 +104,19 @@ CREATE TABLE IF NOT EXISTS `student_recruit_info` (
   `department1` int(11) NOT NULL,
   `department2` int(11) NOT NULL,
   `association` int(11) NOT NULL,
-  `specialty` text NOT NULL,
-  `expectation` text NOT NULL,
-  `understanding` text NOT NULL,
+  `quest1` longtext,
+  `quest2` longtext,
+  `quest3` longtext,
   `acceptState` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `student_recruit_info`
+--
+
+INSERT INTO `student_recruit_info` (`id`, `xh`, `department1`, `department2`, `association`, `quest1`, `quest2`, `quest3`, `acceptState`) VALUES
+(1, 'B11111111', 2, 3, 1, 'hehe', 'qwqw', 'edf', NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
