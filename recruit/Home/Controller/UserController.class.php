@@ -83,6 +83,7 @@ class UserController extends Controller {
                 die($key);
             }
         }
+        $data['password'] = md5('spf'.$data['password']);
         if ($studentBasicInfo->addStudent($data)) {
             echo 'ok';
         } else {
