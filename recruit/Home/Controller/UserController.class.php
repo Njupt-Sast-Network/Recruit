@@ -120,4 +120,47 @@ class UserController extends Controller {
         }
         echo $studentRecruitInfo->studentChangeDepartment($xh,$changed, $association);
     }
+
+    public function doChangePassword() {
+        $xh = I('session.xh', '');
+        if (!$xh) {
+            die('relogin');
+        }
+        $old = md5('spf'.I('post.old', ''));
+        $current = I('post.current', '');
+        $student = getStuInfo();
+        if ($student['password'] != $old) {
+            die('old_pass_mismatch');
+        } else {
+            if (strlen($current) < 8) {
+                die('too_short');
+            }
+            $res = D('StudentBasicInfo')->setStudentPassword($xh, md5('spf'.$current));
+            if (!$res) {
+                die('fail');
+            }
+            echo 'success';
+        }
+    }
+
+    public function doChangeInfo() {
+        $student = getStuInfo();
+        $data['name'] = I('post.name', '', '/^[\x{4e00}-\x{9fa5}]+$/u');
+        $data['birthday'] = (int)$_POST['birthday-y'].'-'.(int)$_POST['birthday-m'].'-'.(int)$_POST['birthday-d'];
+        $data['qq'] = I('post.qq', '', 'number_int');
+        $data['mail'] = I('post.mail', '', 'email');
+        $data['phone'] = I('post.phone', '', 'number_int');
+        $data['sex'] = I('post.sex', '', 'number_int');
+        $data['dorm'] = I('post.dorm', '');
+        $data['college'] = I('post.college', '');
+        $data['gaozhong'] = I('gaozhong', '');
+        // 检查提交数据完整程度
+        foreach($data as $key => $value) {
+            if (!$value) {
+                die($key);
+            }
+        }
+        echo D('StudentBasicInfo')->updateStudentInfo($student['xh'], $data);
+    }
+
 }

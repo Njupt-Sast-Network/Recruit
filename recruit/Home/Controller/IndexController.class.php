@@ -15,6 +15,7 @@ class IndexController extends Controller {
     }
 
     // 注册
+    // 向/Home/User/doReg进行POST
     public function reg() {
         $this->display();
     }
@@ -33,12 +34,14 @@ class IndexController extends Controller {
     }
 
     // 修改个人信息
+    // 向/Home/User/doChangeInfo进行POST
     public function changeInfo() {
         $this->assign('user', getStuInfo());
         $this->display();
     }
 
     // 修改密码
+    // 向/Home/User/doChangeDepartment进行POST
     public function changePassword() {
         $this->display();
     }
