@@ -92,6 +92,32 @@ class UserController extends Controller {
     }
 
     public function doRegAssociation() {
+        $studentRecruitInfo = new StudentRecruitInfoModel();
+        $data['xh'] = I('session.xh', '');
+        $data['department1'] = I('post.department1', '');
+        $data['department2'] = I('post.department2', '');
+        $data['association'] = I('post.association', '');
+        foreach($data as $key => $value) {
+            if (!$value) {
+                die($key);
+            }
+        }
+        $data['quest1'] = I('post.quest1', '');
+        $data['quest2'] = I('post.quest2', '');
+        $data['quest3'] = I('post.quest3', '');
+        $res = $studentRecruitInfo->studentRegisterAssociation($data['xh'], $data);
+        echo $res;
+    }
 
+    public function doChangeDepartment() {
+        $studentRecruitInfo = new StudentRecruitInfoModel();
+        $xh = I('session.xh', '');
+        $changed['department1'] = I('post.department1', '');
+        $changed['department2'] = I('post.department2', '');
+        $association = I('post.association');
+        if (!$xh) {
+            die('relogin');
+        }
+        echo $studentRecruitInfo->studentChangeDepartment($xh,$changed, $association);
     }
 }
