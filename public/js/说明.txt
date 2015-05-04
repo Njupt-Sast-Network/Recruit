@@ -1,0 +1,1 @@
+bootstrap.js和bootstrap.min.js内容完全一样，只是后者压缩，文件小很多。
