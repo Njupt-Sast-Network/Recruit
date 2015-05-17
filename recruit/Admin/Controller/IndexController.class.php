@@ -11,4 +11,7 @@ class IndexController extends Controller {
     public function comctrl(){
     	$this->display();
     }
+    public function amin_login(){
+    	$this->display();
+    }
 }

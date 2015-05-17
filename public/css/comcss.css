@@ -1,0 +1,15 @@
+
+.div1 {
+	padding: 50px;
+	width: 20%;
+	background-color: azure;
+	float: left;
+}
+
+.div2 {
+	
+	width: 80%;
+	background-color: antiquewhite;
+	float: left;
+	padding: 50px;
+}
