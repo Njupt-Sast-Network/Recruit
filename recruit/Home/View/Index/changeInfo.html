@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>找回密码</title>
+    <title>修改信息</title>
 
     <!-- Bootstrap -->
     <link href="__ROOT__/css/bootstrap.min.css" rel="stylesheet">
@@ -37,87 +37,66 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav second-nav">
-        <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changeDepartment" class="nav-link">修改信息</a></li>
-        <li class="nav-contain active"><a href="#" class="nav-link">申请报名</a></li>
-        <li class="nav-contain"><a href="#" class="nav-link">修改密码</a></li>
+        <li class="nav-contain active"><a href="http://localhost/index.php/Home/Index/changeInfo">修改信息</a></li>
+        <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changeDepartment">申请报名</a></li>
+        <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changePassword">修改密码</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 
-      <div class="container tablecontain" id="main" >
-          <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>社团</th>
-                  <th>部门1</th>
-                  <th>部门2</th>
-                  <th>录取状态</th>
-                  <th>操作</th>
-                </tr>
-                <tr>
-                  <th>#</th>
-                  <th>
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                  </th>
-                  <th>
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                  </th>
-                  <th>
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                  </th>
-                  <th>#</th>
-                  <th><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                    <button type="button" class="btn btn-default">添加</button>
-                  </div></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>社团</td>
-                  <td>部门</td>
-                  <td>部门</td>
-                  <td>录取</td>
-                  <td><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                    <button type="button" class="btn btn-default">修改</button>
-                    <button type="button" class="btn btn-default">删除</button>
-                  </div></td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>社团</td>
-                  <td>部门</td>
-                  <td>部门</td>
-                  <td>录取</td>
-                  <td><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                    <button type="button" class="btn btn-default">修改</button>
-                    <button type="button" class="btn btn-default">删除</button>
-                  </div></td>
-                </tr>
-              </tbody>
-          </table>
-     
-      </div> <!-- /container -->
+      <div class="container" id="main">
+      
+      <!--信息填写界面面板-->
+      <div class="tab-content">
+        <!-- 信息填写表单 -->
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="inputSex" class="col-sm-2 control-label">性别</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="" id="inputSex">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputBirth" class="col-sm-2 control-label">生日</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputBirth" placeholder="">
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="inputQQ" class="col-sm-2 control-label">QQ</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputQQ" placeholder="">
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputEmail" placeholder="">
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="inputTel" class="col-sm-2 control-label">电话</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputTel" placeholder="">
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="inputDorm" class="col-sm-2 control-label">宿舍</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputDorm" placeholder="">
+                    </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" id="changeInfo">提交</button>
+                </div>
+            </div>
+        </form>
+
+      </div>
+    </div> <!-- /container -->
     </div>
     <div class="footer">
       <div class="container bottom">
@@ -128,74 +107,91 @@
     <script src="__ROOT__/js/bootstrap.min.js"></script>
     <!--<script src="../../../../public/js/ajax.js"></script>-->
     <script>
-    
-    $(document).ready(function(){
-      //array of judgement
-    $("#changepassword").click(function(){
-      console.log("123");
-        if(($("#prepassword").attr("name")=="true")&&($("#newpassword").attr("name")=="true")&&($("#confirmpassword").attr("name")=="true")){
-          $.ajax({  
-                    type : "POST",  
-                    url :"{:U('Home/User/doChangePassword')}"//待改
-                    // success :function(){
-                    //     console.log('success2');
-                    // }
-                });
-        } else {
-          if($("#prepassword").attr("name")=="false"){
-            alert("请正确输入原密码");
-          } else if($("#newpassword").attr("name")=="false"){
-            alert("请正确输入密码");
-          } else if($("#confirmpassword").attr("name")=="false"){
-            alert("密码格式不正确或两次密码不一致");
-          }
+        $(document).ready(function(){
+          check();
+          $("changeInfo").click(function(){
+            if()
+          });
+        });
+
+        function check(){
+          $("#inputSex").focus(function(){
+            $("#inputSex").attr('placeholder','请输入性别');
+          });
+          $("#inputSex").blur(function(){
+            if($("#inputSex").attr('placeholder') == '请输入性别'){
+              $("#inputSex").attr('placeholder','');
+            }
+          });
+          $("#inputBirth").focus(function(){
+            $("#inputBirth").attr('placeholder','例如：1970-01-01');
+          });
+          $("#inputBirth").blur(function(){
+            if($("#inputBirth").attr('placeholder') == '例如：1970-01-01'){
+              $("#inputBirth").attr('placeholder','');
+            }
+          });
+          $("#inputQQ").focus(function(){
+            $("#inputQQ").attr('placeholder','请输入QQ号');
+          });
+          $("#inputQQ").blur(function(){
+            if($("#inputQQ").attr('placeholder') == '请输入QQ号'){
+              $("#inputQQ").attr('placeholder','');
+            }
+          });
+          $("#inputEmail").focus(function(){
+            $("#inputEmail").attr('placeholder','请输入邮箱');
+          });
+          $("#inputEmail").blur(function(){
+            if($("#inputEmail").attr('placeholder') == '请输入邮箱'){
+              $("#inputEmail").attr('placeholder','');
+            }
+          });
+          $("#inputTel").focus(function(){
+            $("#inputTel").attr('placeholder','请输入手机号');
+          });
+          $("#inputTel").blur(function(){
+            if($("#inputTel").attr('placeholder') == '请输入手机号'){
+              $("#inputTel").attr('placeholder','');
+            }
+          });
+          $("#inputDorm").focus(function(){
+            $("#inputDorm").attr('placeholder','例如：27#506-3');
+          });
+          $("#inputDorm").blur(function(){
+            if($("#inputDorm").attr('placeholder') == '例如：27#506-3'){
+              $("#inputDorm").attr('placeholder','');
+            }
+          });
         }
-    });
-       
-//is input property password(prepassword)
-    $("#prepassword").blur(function(){
-    if($("#prepassword").val().length == 0){
-        $("#prepassword").css("border-color","#8B0000");
-        $("#prepassword").attr("name","false");
-    } else {
-        $("#prepassword").css("border-color","#66afe9");
-        $("#prepassword").attr("name","true");
-    }
-}); 
 
-//is input property password(newpassword)
-$("#newpassword").focus(function(){
-  $("#newpassword").attr("placeholder","6-18位、字母或数字开头");
-});
-$("#newpassword").blur(function(){
-  if(!$("#newpassword").val()){
-  $("#newpassword").attr("placeholder","6-18位、字母或数字开头");
-}
-  var id = /^[a-zA-Z0-9]\w{5,17}$/;
-    if(!id.test($("#newpassword").val())){
-        $("#newpassword").css("border-color","#8B0000");
-        $("#newpassword").attr("name","false");
-    } else {
-        $("#newpassword").css("border-color","#66afe9");
-        $("#newpassword").attr("name","true");
-    }
-});
-//is input property password again(confirmpassword)
-$("#confirmpassword").focus(function(){
-  $("#confirmpassword").attr("placeholder","请再次输入密码");
-});
-$("#confirmpassword").blur(function(){
-  var id = /^[a-zA-Z0-9]\w{5,17}$/;
-    if(($("#newpassword").val()==$("#confirmpassword").val())&&(id.test($("#newpassword").val()))){
-        $("#confirmpassword").css("border-color","#66afe9");
-        $("#confirmpassword").attr("name","true");
-    } else {
-        $("#confirmpassword").css("border-color","#8B0000");
-        $("#confirmpassword").attr("name","false");
-    }
-});
-
-});
+        function ajax(){
+          var sex = $("#inputSex").val(),birth = $("#inputBirth").val(),QQ = $("#inputQQ").val(),
+              Email = $("#inputEmail").val(),TEL = $("#inputTel").val(),dorm = $("#inputDorm").val();
+          $.ajax({
+            type : "POST",
+            data : {
+              "sex" : sex,
+              "birth" : birth,
+              "QQ" : QQ,
+              "Email" : Email,
+              "TEL" : TEL,
+              "dorm" : dorm
+            },
+            url : "{:U('Home/User/doChangeInfo')}",
+            dataType : "json",
+            success : function(back){
+              if(back.status == 1){
+                location.reload();
+              } else {
+                alert(back.info);
+              }
+            },
+            error : function(){
+              alert("异常");
+            }
+          });
+        }
     </script>
   </body>
 </html>

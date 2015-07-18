@@ -85,8 +85,10 @@
                           alert(back.info);
                         }
                     },
-                    error : function(){
-                      console.log("异常");
+                    error : function(XMLHttpRequest,info){
+                      // console.log("异常");
+                      console.log(XMLHttpRequest);
+
                     }
                 });
       } else {

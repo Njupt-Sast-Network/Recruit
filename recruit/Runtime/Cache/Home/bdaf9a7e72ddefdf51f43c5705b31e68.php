@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -8,8 +8,8 @@
     <title>修改信息</title>
 
     <!-- Bootstrap -->
-    <link href="__ROOT__/css/bootstrap.min.css" rel="stylesheet">
-    <link href="__ROOT__/css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,7 +37,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav second-nav">
-        <li class="nav-contain active"><a href="http://localhost/index.php/Home/Index/changeInfo1">修改信息</a></li>
+        <li class="nav-contain active"><a href="http://localhost/index.php/Home/Index/changeInfo">修改信息</a></li>
         <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changeDepartment">申请报名</a></li>
         <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changePassword">修改密码</a></li>
       </ul>
@@ -103,8 +103,8 @@
       <p class="test-muted">&copy; 校科协</p>
     </div>
     </div>
-    <script src="__ROOT__/js/jquery-1.11.2.min.js"></script>
-    <script src="__ROOT__/js/bootstrap.min.js"></script>
+    <script src="/js/jquery-1.11.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <!--<script src="../../../../public/js/ajax.js"></script>-->
     <script>
         $(document).ready(function(){
@@ -178,7 +178,7 @@
               "TEL" : TEL,
               "dorm" : dorm
             },
-            url : "{:U('Home/User/doChangeInfo')}",
+            url : "<?php echo U('Home/User/doChangeInfo');?>",
             dataType : "json",
             success : function(back){
               if(back.status == 1){
