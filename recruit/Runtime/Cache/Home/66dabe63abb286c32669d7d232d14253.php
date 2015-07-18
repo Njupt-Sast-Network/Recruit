@@ -79,28 +79,32 @@
     <!--<script src="../../../../public/js/ajax.js"></script>-->
     <script>
     
-    $(document).ready(function(){
-      //array of judgement
-    $("#login").click(function(){
-      if(($("#inputStudentId").attr("name")=="true")&&($("#inputPassWord").attr("name")=="true")){
-        $.ajax({  
-                    type : "POST",  
-                    url :"<?php echo U('Home/User/doLogin');?>",//待改
-                    success :function(){
-                        console.log('success1');
-                    }
-                });
-      } else {
-        alert("请正确输入信息");
-      }
-    });
-    $("#reg").click(function(){
+$(document).ready(function(){
+        //array of judgement
+$("#reg").click(function(){
+        var xh = $("#inputStudentId1").val();
+        var name = $("#inputName1").val();
+        var password = $("#inputPassWord1").val();
         if(($("#inputStudentId1").attr("name")=="true")&&($("#inputName1").attr("name")=="true")&&($("#inputPassWord1").attr("name")=="true")&&($("#confirmPassWord1").attr("name")=="true")){
           $.ajax({  
                     type : "POST",  
-                    url :"<?php echo U('Home/User/doReg');?>",//待改
-                    success :function(){
-                        console.log('success2');
+                    url :"<?php echo U('Home/User/doReg');?>",
+                    dataType : "json",
+                    data : {
+                      "xh" : xh,
+                      "name" : name,
+                      "password" : password
+                    },
+                    success :function(back){
+                      console.log(back);
+                        if(back.status == 1){
+                          location.reload();
+                        } else {
+                          alert(back.info);
+                        }
+                    },
+                    error : function(){
+                      console.log("异常");
                     }
                 });
         } else {
@@ -114,10 +118,10 @@
             alert("两次输入密码不一致");
           }
         }
-    });
+});
      
 //is input property id(login)
-    $("#inputStudentId").blur(function(){
+$("#inputStudentId").blur(function(){
     var id = /^[BQ]+[0-9]{8}$/;
     if(!id.test($("#inputStudentId").val())){
         $("#inputStudentId").css("border-color","#8B0000");
@@ -128,7 +132,7 @@
     }
 });    
 //is input property password(login)
-    $("#inputPassWord").blur(function(){
+$("#inputPassWord").blur(function(){
     if($("#inputPassWord").val().length == 0){
         $("#inputPassWord").css("border-color","#8B0000");
         $("#inputPassWord").attr("name","false");
@@ -152,7 +156,7 @@ $("#inputStudentId1").blur(function(){
 $("#inputName1").blur(function(){
   if(!$("#inputName1").val()){
   $("#inputName1").attr("placeholder","姓名");
-}
+ }
   var id = /[\u4e00-\u9fa5]{2,4}/;
     if(!id.test($("#inputName1").val())){
         $("#inputName1").css("border-color","#8B0000");
@@ -166,7 +170,7 @@ $("#inputName1").blur(function(){
 $("#inputPassWord1").blur(function(){
   if(!$("#inputPassWord1").val()){
   $("#inputPassWord1").attr("placeholder","密码");
-}
+  }
   var id = /^[a-zA-Z0-9]\w{5,17}$/;
     if(!id.test($("#inputPassWord1").val())){
         $("#inputPassWord1").css("border-color","#8B0000");
@@ -194,8 +198,6 @@ $("#inputName1").focus(function(){
 $("#inputPassWord1").focus(function(){
   $("#inputPassWord1").attr("placeholder","6-18位、字母或数字开头");
 });
-
-
 });
     </script>
   </body>

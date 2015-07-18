@@ -16,14 +16,15 @@ use Think\Controller;
 class UserController extends Controller {
 
     public function doLogin() {
+        // echo "string";
         $studentBasicInfo = new StudentBasicInfoModel();
         $student = $studentBasicInfo->getStudentInfoByXh(I('post.xh', ''));
         if (!$student) {
-            die('fail');
+            return 'fail';
         }
         $password = I('post.password', '');
         if (md5('spf'.$password) != $student['password']) {
-            die('fail');
+            return 'fail';
         };
         session_start();
         session(['xh'], $student['xh']);
@@ -67,21 +68,21 @@ class UserController extends Controller {
         $studentBasicInfo = new StudentBasicInfoModel();
         $data['xh'] = I('post.xh', '', '/^[BHYQ][\d]+/i');
         $data['name'] = I('post.name', '', '/^[\x{4e00}-\x{9fa5}]+$/u');
-        $data['birthday'] = (int)$_POST['birthday-y'].'-'.(int)$_POST['birthday-m'].'-'.(int)$_POST['birthday-d'];
-        $data['year'] = date('Y');
+        // $data['birthday'] = (int)$_POST['birthday-y'].'-'.(int)$_POST['birthday-m'].'-'.(int)$_POST['birthday-d'];
+        // $data['year'] = date('Y');
         $data['password'] = I('post.password', '');
-        $data['qq'] = I('post.qq', '', 'number_int');
-        $data['mail'] = I('post.mail', '', 'email');
-        $data['phone'] = I('post.phone', '', 'number_int');
-        $data['sex'] = I('post.sex', '', 'number_int');
-        $data['dorm'] = I('post.dorm', '');
-        $data['college'] = I('post.college', '');
-        $data['gaozhong'] = I('gaozhong', '');
+        // $data['qq'] = I('post.qq', '', 'number_int');
+        // $data['mail'] = I('post.mail', '', 'email');
+        // $data['phone'] = I('post.phone', '', 'number_int');
+        // $data['sex'] = I('post.sex', '', 'number_int');
+        // $data['dorm'] = I('post.dorm', '');
+        // $data['college'] = I('post.college', '');
+        // $data['gaozhong'] = I('gaozhong', '');
         // 检查提交数据完整程度
         foreach($data as $key => $value) {
             if (!$value) {
                 die($key);
-            }
+            } 
         }
         $data['password'] = md5('spf'.$data['password']);
         if ($studentBasicInfo->addStudent($data)) {

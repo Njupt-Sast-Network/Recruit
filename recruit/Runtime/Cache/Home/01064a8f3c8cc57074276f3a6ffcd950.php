@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -8,8 +8,8 @@
     <title>找回密码</title>
 
     <!-- Bootstrap -->
-    <link href="__ROOT__/css/bootstrap.min.css" rel="stylesheet">
-    <link href="__ROOT__/css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,121 +31,70 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <span class="navbar-brand">个人中心</span>
+      <a class="navbar-brand" href="#">个人中心</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav second-nav">
-        <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changeDepartment" class="nav-link">修改信息</a></li>
-        <li class="nav-contain active"><a href="#" class="nav-link">申请报名</a></li>
-        <li class="nav-contain"><a href="#" class="nav-link">修改密码</a></li>
+        <li class="nav-contain"><a href="#">修改信息</a></li>
+        <li class="nav-contain"><a href="#">申请报名</a></li>
+        <li class="nav-contain active"><a href="#">修改密码</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 
-      <div class="container tablecontain" id="main" >
-          <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>社团</th>
-                  <th>部门1</th>
-                  <th>部门2</th>
-                  <th>录取状态</th>
-                  <th>操作</th>
-                </tr>
-                <tr>
-                  <th>#</th>
-                  <th>
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                  </th>
-                  <th>
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                  </th>
-                  <th>
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                  </th>
-                  <th>#</th>
-                  <th><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                    <button type="button" class="btn btn-default">添加</button>
-                  </div></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>社团</td>
-                  <td>部门</td>
-                  <td>部门</td>
-                  <td>录取</td>
-                  <td><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                    <button type="button" class="btn btn-default">修改</button>
-                    <button type="button" class="btn btn-default">删除</button>
-                  </div></td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>社团</td>
-                  <td>部门</td>
-                  <td>部门</td>
-                  <td>录取</td>
-                  <td><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                    <button type="button" class="btn btn-default">修改</button>
-                    <button type="button" class="btn btn-default">删除</button>
-                  </div></td>
-                </tr>
-              </tbody>
-          </table>
-     
-      </div> <!-- /container -->
+      <div class="container" id="main">
+      
+      <!--信息填写界面面板-->
+      <div class="tab-content">
+        <!-- 信息填写表单 -->
+        <form>
+            <div class="form-group">
+                <label for="prepassword">原密码</label>
+                <input type="password" class="form-control" id="prepassword" name="false">
+            </div>
+            <div class="form-group">
+                <label for="newpassword">新密码</label>
+                <input type="password" class="form-control" id="newpassword" name="false">
+            </div>
+            <div class="form-group">
+                <label for="confirmpassword">确认密码</label>
+                <input type="password" class="form-control" id="confirmpassword" name="false">
+            </div>
+            <button type="submit" class="btn btn-default changepasswordbtn" id="changepassword">提交</button>
+        </form>
+
+      </div>
+    </div> <!-- /container -->
     </div>
     <div class="footer">
       <div class="container bottom">
       <p class="test-muted">&copy; 校科协</p>
     </div>
     </div>
-    <script src="__ROOT__/js/jquery-1.11.2.min.js"></script>
-    <script src="__ROOT__/js/bootstrap.min.js"></script>
+    <script src="/js/jquery-1.11.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <!--<script src="../../../../public/js/ajax.js"></script>-->
     <script>
     
     $(document).ready(function(){
       //array of judgement
     $("#changepassword").click(function(){
-      console.log("123");
         if(($("#prepassword").attr("name")=="true")&&($("#newpassword").attr("name")=="true")&&($("#confirmpassword").attr("name")=="true")){
           $.ajax({  
                     type : "POST",  
-                    url :"{:U('Home/User/doChangePassword')}"//待改
-                    // success :function(){
-                    //     console.log('success2');
-                    // }
+                    url :"<?php echo U('Home/User/doChangePassword.html');?>",//待改
+                    success :function(){
+                        console.log('success2');
+                    }
                 });
         } else {
           if($("#prepassword").attr("name")=="false"){
             alert("请正确输入原密码");
-          } else if($("#newpassword").attr("name")=="false"){
-            alert("请正确输入密码");
+          } else if($("#inputName1").attr("name")=="false"){
+            alert("newpassword");
           } else if($("#confirmpassword").attr("name")=="false"){
             alert("密码格式不正确或两次密码不一致");
           }
@@ -180,7 +129,7 @@ $("#newpassword").blur(function(){
         $("#newpassword").attr("name","true");
     }
 });
-//is input property password again(confirmpassword)
+//is input property password again(reg)
 $("#confirmpassword").focus(function(){
   $("#confirmpassword").attr("placeholder","请再次输入密码");
 });

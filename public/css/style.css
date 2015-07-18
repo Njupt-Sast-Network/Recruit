@@ -46,6 +46,25 @@ html {
 .nav>li>a {
 	padding:0 5px 0 5px;
 }
+/*二级页面下的导航*/
+.second-nav {
+	margin: 0;
+}
+.second-nav li{
+	height: 50px;
+}
+.nav-contain{
+	padding: 15px 10px 15px 10px;
+}
+label {
+	color: #fff;
+}
+.changepasswordbtn {
+	margin: 10px 0 0 50px;
+}
+table {
+	color: #fff;
+}
 .footer {
   position: absolute;
   bottom: 0;
@@ -107,7 +126,13 @@ span a:hover{
 	height: 34px;
 	width:88px;
 }
+.tSelector {
+	width: auto;
+}
 
+
+@media (min-width:600px){.tablecontain{width: 500px;}}
+@media (min-width:992px){.tablecontain{width: 800px;}}
 @media (min-width:400px){#forgetKeyWord{margin-left: 110px;}}
 @media (max-width:400px){#identifyingPicture{margin:-34px 0 0 95px;}}
 @media (min-width:370px){#identifyingPicture{margin:-34px 0 0 120px;}}

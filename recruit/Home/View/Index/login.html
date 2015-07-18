@@ -70,39 +70,32 @@
     $(document).ready(function(){
       //array of judgement
     $("#login").click(function(){
+      var studentid = $('#inputStudentId').val();
+      var password = $('#inputPassWord').val();
       if(($("#inputStudentId").attr("name")=="true")&&($("#inputPassWord").attr("name")=="true")){
         $.ajax({  
                     type : "POST",  
-                    url :"{:U('Home/User/doLogin')}",//待改
-                    /*success :function(){
-                        console.log('success1');
-                    }*/
+                    url : "{:U('Home/User/doLogin')}",
+                    data : {"studentid":studentid,"password":password},
+                    dataType : "json",
+                    success : function(back){
+                        if(back.status == 1){
+                          location.reload();
+                        } else {
+                          alert(back.info);
+                        }
+                    },
+                    error : function(XMLHttpRequest,info){
+                      // console.log("异常");
+                      console.log(XMLHttpRequest);
+
+                    }
                 });
       } else {
         alert("请正确输入信息");
       }
     });
-    $("#reg").click(function(){
-        if(($("#inputStudentId1").attr("name")=="true")&&($("#inputName1").attr("name")=="true")&&($("#inputPassWord1").attr("name")=="true")&&($("#confirmPassWord1").attr("name")=="true")){
-          $.ajax({  
-                    type : "POST",  
-                    url :"{:U('Home/User/doReg')}",//待改
-                    /*success :function(){
-                        console.log('success2');
-                    }*/
-                });
-        } else {
-          if($("#inputStudentId1").attr("name")=="false"){
-            alert("请正确输入学号");
-          } else if($("#inputName1").attr("name")=="false"){
-            alert("请正确输入姓名，2-4个汉字");
-          } else if($("#inputPassWord1").attr("name")=="false"){
-            alert("请正确输入密码，以字母或数字开头，长度在6-18之间，只能包含字符、数字和下划线。");
-          } else {
-            alert("两次输入密码不一致");
-          }
-        }
-    });
+
      
 //is input property id(login)
     $("#inputStudentId").blur(function(){
