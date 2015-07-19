@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `student_recruit_info` (
   `quest1` text,
   `quest2` text,
   `quest3` text,
-  `acceptState` varchar(50) DEFAULT '0' COMMENT '0表示暂无结果，-1表示被第一部门拒绝，-2表示被第二部门拒绝，其他字符串表示录取部门名称',
+  `acceptState` varchar(50) DEFAULT '0' COMMENT '0表示暂无结果，-1表示被第一部门拒绝，-2表示被第二部门拒绝，其他正数表示录取部门id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
