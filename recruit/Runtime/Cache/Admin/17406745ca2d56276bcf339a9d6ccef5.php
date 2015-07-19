@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,39 +22,31 @@
             vertical-align: center;
     }
   </style>
-<link rel="stylesheet" href="__ROOT__/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
 
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="__ROOT__/js/jquery-1.11.2.min.js"></script>
+<script src="/js/jquery-1.11.2.min.js"></script>
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="__ROOT__/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="__ROOT__/css/comcss.css">
+<script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/comcss.css">
 </head>
 <body>
     <div class="div1">
         <h2>欢迎登录 <br>
         <span style="">njupt招新管理系统</span>
         </h2>
-        <h5>您当前的身份为：{$identity}</h5>
+        <h5>您当前的身份为：<?php echo ($identity); ?></h5>
         <div>
             社团列表
             <select class="form-control" id="nowass">
-                <volist name="associations" id="as">
-                    <option value="{$as.associationname}" <?php if ($as["associationname"] == $nowassociation) {
-                        echo "selected=selected";
-                    } ?>>{$as.associationname}</option>
-                </volist>
+                <?php if(is_array($associations)): $i = 0; $__LIST__ = $associations;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$as): $mod = ($i % 2 );++$i;?><option value="<?php echo ($as["associationname"]); ?>" <?php if ($as["associationname"] == $nowassociation) { echo "selected=selected"; } ?>><?php echo ($as["associationname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
             </select>
         </div>
         <div>
             部门列表
             <select class="form-control" id="nowdep">
-                <volist name="departments" id="de">
-                    <option value="{$de.id}" association="{$de.association}"<?php if ($de["id"] == $nowdepartment) {
-                        echo "selected=selected";
-                    } ?>>{$de.departmentname}</option>
-                </volist>
+                <?php if(is_array($departments)): $i = 0; $__LIST__ = $departments;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$de): $mod = ($i % 2 );++$i;?><option value="<?php echo ($de["id"]); ?>" association="<?php echo ($de["association"]); ?>"<?php if ($de["id"] == $nowdepartment) { echo "selected=selected"; } ?>><?php echo ($de["departmentname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
             </select>
         </div>
     </div>
@@ -79,18 +71,14 @@
             <label for="firstvolunteer">第一志愿</label>
                 <select class="form-control">
                       <option>请选择...</option>
-                      <volist name="alldepartment" id="vap">
-                          <option value="{$vap.id}">{$vap.departmentname}</option>
-                      </volist>
+                      <?php if(is_array($alldepartment)): $i = 0; $__LIST__ = $alldepartment;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vap): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vap["id"]); ?>"><?php echo ($vap["departmentname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
                 </select>
             </div>
             <div class="form-group" style="margin-left:20px">
                 <label for="secondvolunteer">第二志愿</label>
                 <select class="form-control">
                           <option>请选择...</option>
-                          <volist name="alldepartment" id="vap">
-                              <option value="{$vap.id}">{$vap.departmentname}</option>
-                          </volist>
+                          <?php if(is_array($alldepartment)): $i = 0; $__LIST__ = $alldepartment;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vap): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vap["id"]); ?>"><?php echo ($vap["departmentname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
                 </select>
             </div>
             <div class="form-group" style="margin-left:20px">
@@ -100,9 +88,7 @@
                         <option value="0">审核中</option>
                         <option value="-1">被第一部门拒绝</option>
                         <option value="-2">被第二部门拒绝</option>
-                        <volist name="alldepartment" id="vap">
-                              <option value="{$vap.departmentname}">{$vap.departmentname}</option>
-                        </volist>
+                        <?php if(is_array($alldepartment)): $i = 0; $__LIST__ = $alldepartment;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vap): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vap["departmentname"]); ?>"><?php echo ($vap["departmentname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
                 </select>
             </div>
             <div class="form-group" style="margin-left:20px">
@@ -110,7 +96,7 @@
             </div>
         </form>
         
-        <iframe src="__URL__/recuritlist" id="recuritlist"  width="1000" align="center" height="200" name="win" onload="Javascript:SetWinHeight(this)" frameborder="0" scrolling="no" ></iframe>
+        <iframe src="/index.php/Admin/Index/recuritlist" id="recuritlist"  width="1000" align="center" height="200" name="win" onload="Javascript:SetWinHeight(this)" frameborder="0" scrolling="no" ></iframe>
 
     
     
@@ -120,7 +106,7 @@
         $(document).on("change","#nowass,#nowdep",function(){
             var nowass = $("#nowass").val();
             var nowdep = $("#nowdep").val();
-            location.href = "__URL__/comctrl?nowassociation="+nowass+"&nowdepartment="+nowdep;
+            location.href = "/index.php/Admin/Index/comctrl?nowassociation="+nowass+"&nowdepartment="+nowdep;
         });
 
         function SetWinHeight(obj) { 

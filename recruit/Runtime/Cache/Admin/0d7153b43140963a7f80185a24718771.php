@@ -1,0 +1,48 @@
+<?php if (!defined('THINK_PATH')) exit();?>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>招新管理登录</title>
+  <style type="text/css">
+	.btn2-margin{
+		margin-left: -4px;
+	}	
+	.table tr td{
+			vertical-align: center;
+	}
+  </style>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="/js/jquery-1.11.2.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<nav class="  navbar navbar-default ">
+  		<h2>欢迎登录njupt后台招新管理系统</h2>
+	</nav>
+	<div class="container" style="width:250px">
+		<form class="form-horizontal">
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputEmail3" >用户名</label>
+    <input type="email" class="form-control" id="exampleInputEmail3"
+     placeholder="请输入用户名" maxlength="">
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputPassword3">密码</label>
+    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="请输入密码">
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-default">Sign in</button>
+</form>	</div>
+	<div class="footer">@njupt </div>
+</body>
+</html>

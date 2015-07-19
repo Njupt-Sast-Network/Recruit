@@ -4,14 +4,52 @@ use Common\Model\StudentBasicInfoModel;
 use Think\Controller;
 class IndexController extends Controller {
     public function index() {
-        $studentModel = new \Common\Model\StudentBasicInfoModel();
-        echo 'Hello World';
-        // $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover,{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
+        $this->display();
     }
     public function comctrl(){
+        $data["identity"] = I("session.identity","");
+        switch ($data["identity"]) {
+            case '部门管理员':
+                $associations[0]["associationName"] = I("session.associationName","");
+                $map["departmentName"] = I("session.departmentName","");
+                $departments[0] = M("association_departments")->where($map)->field("id,departmentName")->find();
+                $nowassociation = $associations[0]["associationName"];
+                $nowdepartment = $departments[0]["id"];
+                break;
+            case '社团管理员':
+                $associations[0]["associationName"] = I("session.associationName","");
+                $map["association"] = I("session.associationName","");
+                $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
+                $nowassociation = $associations[0]["associationName"];
+                $nowdepartment = $departments[0]["id"];
+                foreach ($departments as $de) {
+                    if ($de["id"] == I("get.nowdepartment")) {
+                        $nowdepartment = $de["id"];
+                        break;
+                    }
+                }
+                break;
+            case '超级管理员':
+                $associations = M("association_list")->field("associationName")->select();
+                $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
+                $nowassociation = I("get.nowassociation","") ? I("get.nowassociation","") : $associations[0]["associationname"];
+                $nowdepartment = I("get.nowdepartment","") ? I("get.nowdepartment","") : $departments[0]["id"];
+                break;
+            default:
+                redirect("index");
+                break;
+        }
+        $map["association"] = $nowassociation;
+        $alldepartment = M("association_departments")->where($map)->field("id,departmentName")->select();
+        $this->assign("nowassociation",$nowassociation);
+        $this->assign("nowdepartment",$nowdepartment);
+        $this->assign("identity",$data["identity"]);
+        $this->assign("associations",$associations);
+        $this->assign("departments",$departments);
+        $this->assign("alldepartment",$alldepartment);
     	$this->display();
     }
-    public function amin_login(){
+    public function recuritlist(){
     	$this->display();
     }
 }
