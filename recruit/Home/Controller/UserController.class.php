@@ -70,16 +70,7 @@ class UserController extends Controller {
         $studentBasicInfo = new StudentBasicInfoModel();
         $data['xh'] = I('post.xh', '', '/^[BHYQ][\d]+/i');
         $data['name'] = I('post.name', '', '/^[\x{4e00}-\x{9fa5}]+$/u');
-        // $data['birthday'] = (int)$_POST['birthday-y'].'-'.(int)$_POST['birthday-m'].'-'.(int)$_POST['birthday-d'];
-        // $data['year'] = date('Y');
         $data['password'] = I('post.password', '');
-        // $data['qq'] = I('post.qq', '', 'number_int');
-        // $data['mail'] = I('post.mail', '', 'email');
-        // $data['phone'] = I('post.phone', '', 'number_int');
-        // $data['sex'] = I('post.sex', '', 'number_int');
-        // $data['dorm'] = I('post.dorm', '');
-        // $data['college'] = I('post.college', '');
-        // $data['gaozhong'] = I('gaozhong', '');
         // 检查提交数据完整程度
         foreach($data as $key => $value) {
             if (!$value) {
@@ -100,6 +91,7 @@ class UserController extends Controller {
     }
 
     public function doRegAssociation() {
+        //新增添加报名信息
         $studentRecruitInfo = new StudentRecruitInfoModel();
         $data['xh'] = I('session.xh', '');
         $data['department1'] = I('post.department1', '');
@@ -107,28 +99,52 @@ class UserController extends Controller {
         $data['association'] = I('post.association', '');
         foreach($data as $key => $value) {
             if (!$value) {
-                die($key);
+            $this->ajaxReturn(array("status" => 0, "info" => $value."缺失"));
             }
         }
         $data['quest1'] = I('post.quest1', '');
         $data['quest2'] = I('post.quest2', '');
         $data['quest3'] = I('post.quest3', '');
         $res = $studentRecruitInfo->studentRegisterAssociation($data['xh'], $data);
-        echo $res;
+        if ($res) {
+            $this->ajaxReturn(array("status" => 1, "info" => "成功"));
+        }else{
+            $this->ajaxReturn(array("status" => 0, "info" => "新增失败"));
+        }
     }
 
     public function doChangeDepartment() {
+        //修改报名信息
         $studentRecruitInfo = new StudentRecruitInfoModel();
-        $xh = I('session.xh', '');
+        $map["xh"] = I('session.xh', '');
+        $map["id"] = I('post.id');
         $changed['department1'] = I('post.department1', '');
         $changed['department2'] = I('post.department2', '');
-        $association = I('post.association');
-        if (!$xh) {
-            die('relogin');
+        $changed['quest1'] = I('post.quest1', '');
+        $changed['quest2'] = I('post.quest2', '');
+        $changed['quest3'] = I('post.quest3', '');
+        if (!$map["xh"]) {
+            $this->ajaxReturn(array("status" => 0, "info" => "未登录"));
         }
-        echo $studentRecruitInfo->studentChangeDepartment($xh,$changed, $association);
+        if ($studentRecruitInfo->where($map)->save($changed)) {
+            $this->ajaxReturn(array("status" => 1, "info" => "成功"));
+        }else{
+            $this->ajaxReturn(array("status" => 0, "info" => "更新失败"));
+        }
     }
-
+    public function delDepartment(){
+        //删除报名信息
+        $map["xh"] = I('session.xh', '');
+        $map["id"] = I('post.id');
+        if (!$map["xh"]) {
+            $this->ajaxReturn(array("status" => 0, "info" => "未登录"));
+        }
+        if ($studentRecruitInfo->where($map)->delete()) {
+            $this->ajaxReturn(array("status" => 1, "info" => "成功"));
+        }else{
+            $this->ajaxReturn(array("status" => 0, "info" => "删除失败"));
+        }
+    }
     public function doChangePassword() {
         $map["xh"] = I('session.xh', '');
         if (!$map["xh"]) {
