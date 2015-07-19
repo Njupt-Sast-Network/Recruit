@@ -37,8 +37,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav second-nav">
-        <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changeInfo" class="nav-link">修改信息</a></li>
         <li class="nav-contain active"><a href="http://localhost/index.php/Home/Index/changeDepartment" class="nav-link">申请报名</a></li>
+        <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changeInfo" class="nav-link">修改信息</a></li>
         <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changePassword" class="nav-link">修改密码</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->

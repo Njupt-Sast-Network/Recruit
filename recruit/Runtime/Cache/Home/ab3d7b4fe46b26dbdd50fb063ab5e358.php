@@ -53,14 +53,12 @@
         <form class="form-horizontal">
             <div class="form-group">
                 <label for="inputSex" class="col-sm-2 control-label">性别</label>
-                <!-- 性别这里写下拉框或者单选，数据库中0表示未选择，1表示男，2表示女 -->
                 <div class="col-sm-10">
                     <input type="text" class="form-control" placeholder="" id="inputSex">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputBirth" class="col-sm-2 control-label">生日</label>
-                <!-- 生日用3个下拉框来表示年月日 -->
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputBirth" placeholder="">
                     </div>
@@ -68,8 +66,7 @@
             <div class="form-group">
                 <label for="inputQQ" class="col-sm-2 control-label">QQ</label>
                     <div class="col-sm-10">
-                      <!-- 预填信息可以这么写，在value后面写原生php，下同 -->
-                        <input type="text" class="form-control" id="inputQQ" placeholder="" value="<?php  if ($stuinfo["qq"] != 0) { echo($stuinfo["qq"]); } ?>">
+                        <input type="text" class="form-control" id="inputQQ" placeholder="">
                     </div>
             </div>
             <div class="form-group">
@@ -90,11 +87,10 @@
                         <input type="text" class="form-control" id="inputDorm" placeholder="">
                     </div>
             </div>
-            <!-- 这边还差了几个信息，学院、专业、高中名称 -->
+            
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="button" class="btn btn-default" id="changeInfo">提交</button>
-                    <!-- 不要写type=submit，那样的意思是提交数据同时跳转至某页面，你用js处理的话根本写button或者不写都行 -->
+                    <button type="submit" class="btn btn-default" id="changeInfo">提交</button>
                 </div>
             </div>
         </form>
@@ -113,8 +109,8 @@
     <script>
         $(document).ready(function(){
           check();
-          $("#changeInfo").click(function(){
-            ajax();
+          $("changeInfo").click(function(){
+            //if()
           });
         });
 
@@ -176,8 +172,8 @@
             type : "POST",
             data : {
               "sex" : sex,
-              "birth" : birth,//生日这里分成三个，birthday-y、birthday-m、birthday-d，在doChangeInfo函数中有写
-              "qq" : QQ,//php是区分大小写的，后台QQ是小写的
+              "birth" : birth,
+              "QQ" : QQ,
               "Email" : Email,
               "TEL" : TEL,
               "dorm" : dorm
@@ -186,8 +182,7 @@
             dataType : "json",
             success : function(back){
               if(back.status == 1){
-                console.log(back);
-                //location.reload();
+                location.reload();
               } else {
                 alert(back.info);
               }

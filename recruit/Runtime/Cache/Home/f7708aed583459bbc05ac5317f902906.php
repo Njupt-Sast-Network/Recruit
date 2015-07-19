@@ -37,8 +37,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav second-nav">
-        <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changeInfo">修改信息</a></li>
         <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changeDepartment">申请报名</a></li>
+        <li class="nav-contain"><a href="http://localhost/index.php/Home/Index/changeInfo">修改信息</a></li>
         <li class="nav-contain active"><a href="http://localhost/index.php/Home/Index/changePassword">修改密码</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -87,13 +87,14 @@
                     type : "POST",  
                     url :"<?php echo U('Home/User/doChangeDepartment');?>",
                     data:{
-                      "prepassword":prepassword,
+                      "prepassword":prepassword,//你在这个函数里面还没获取到这两个变量呢！！！
                       "newpassword":newpassword,
-                      "confirmpassword":confirmpassword
+                      //"confirmpassword":confirmpassword
+                      //确认密码仅仅是给用户确认的，不需要传给后台
                     },
                     success :function(back){
                         if(back.status == 1) {
-                          location.reload();
+                          //location.reload();
                         } else {
                           alert(back.info);
                         }

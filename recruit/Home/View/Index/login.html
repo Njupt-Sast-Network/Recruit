@@ -76,11 +76,13 @@
         $.ajax({  
                     type : "POST",  
                     url : "{:U('Home/User/doLogin')}",
-                    data : {"studentid":studentid,"password":password},
+                    data : {"xh":studentid,"password":password},
                     dataType : "json",
                     success : function(back){
                         if(back.status == 1){
-                          location.reload();
+                          console.log(back);
+                          //location.reload();
+                          //成功后跳转至申请报名
                         } else {
                           alert(back.info);
                         }

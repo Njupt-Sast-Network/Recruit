@@ -57,9 +57,9 @@
               <input type="passWord" class="form-control" id="confirmPassWord1" placeholder="确认密码" name="false">
             </div>
             <div class="form-group" id="identifyingCode1">
-              <input type="passWord" class="form-control" id="inputIdentifyingCode1" placeholder="验证码">
+              <input type="text" class="form-control" id="inputIdentifyingCode1" placeholder="验证码">
               <div id="identifyingPicture">
-              <img src="#" alt="验证码" title="看不清，换一张">
+              <img src="__URL__/verify" alt="验证码" onClick="this.src=this.src+'?'+Math.random()" title="看不清，换一张">
             </div>
             </div>
           </form>
@@ -96,15 +96,14 @@ $("#reg").click(function(){
                       "password" : password
                     },
                     success :function(back){
-                      console.log(back);
                         if(back.status == 1){
-                          location.reload();
+                          location.reload();//注册成功后直接跳转至申请报名
                         } else {
                           alert(back.info);
                         }
                     },
                     error : function(){
-                      console.log("异常");
+                      alert("服务器异常！");
                     }
                 });
         } else {

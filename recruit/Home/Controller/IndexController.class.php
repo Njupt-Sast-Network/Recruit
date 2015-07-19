@@ -14,6 +14,12 @@ class IndexController extends Controller {
     public function login() {
         $this->display();
     }
+    public function verify(){
+        $Verify = new\Think\Verify();//使用验证码
+        $Verify->fontSize = 30;//验证码字体大小
+        $Verify->length   = 4;//验证码长度
+        $Verify->entry();
+    }
 
     // 注册
     // 向/Home/User/doReg进行POST
@@ -31,19 +37,27 @@ class IndexController extends Controller {
     // 注意：添加新的报名请向/Home/User/doRegAssociation进行POST
     // 修改志愿向/Home/User/doChangeDepartment
     public function changeDepartment() {
+        getStuInfo();//登陆检测
+        $map["xh"] = I("session.xh","");
+        $recruitInfo = M("student_recruit_info")->where($map)->select();
+        $this->assign("recruitInfo",$recruitInfo);//在前端用这个recruitInfo来存储此学生所有的报名信息
         $this->display();
     }
 
     // 修改个人信息
     // 向/Home/User/doChangeInfo进行POST
     public function changeInfo() {
-        //$this->assign('user', getStuInfo());
+        getStuInfo();//登陆检测
+        $map["xh"] = I('session.xh', '');
+        $stuinfo = M("student_basic_info")->where($map)->find();
+        $this->assign("stuinfo",$stuinfo);//在前端预填学生原来的信息
         $this->display();
     }
 
     // 修改密码
     // 向/Home/User/doChangeDepartment进行POST
     public function changePassword() {
+        getStuInfo();//登陆检测
         $this->display();
     }
 }

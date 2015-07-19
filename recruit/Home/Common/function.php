@@ -11,7 +11,7 @@ use Common\Model\StudentBasicInfoModel;
 function getStuInfo() {
     $xh = I('session.xh', '');
     if (!$xh) {
-        header('Location: /login');
+        header('Location: /Home/Index/login');
         die();
     }
     $stuinfo = new StudentBasicInfoModel();

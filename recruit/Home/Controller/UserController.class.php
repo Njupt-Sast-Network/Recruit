@@ -17,18 +17,20 @@ class UserController extends Controller {
 
     public function doLogin() {
         // echo "string";
-        $studentBasicInfo = new StudentBasicInfoModel();
-        $student = $studentBasicInfo->getStudentInfoByXh(I('post.xh', ''));
-        if (!$student) {
-            return 'fail';
-        }
-        $password = I('post.password', '');
-        if (md5('spf'.$password) != $student['password']) {
-            return 'fail';
+        // $studentBasicInfo = new StudentBasicInfoModel();
+        // $student = $studentBasicInfo->getStudentInfoByXh();
+        $map["xh"] = I('post.xh', '');
+        $map["password"] = md5('spf'.I('post.password', ''));
+        $studentinfo = M("student_basic_info")->where($map)->find();
+        if (!$studentinfo) {
+            $this->ajaxReturn(array("status" => 0, "info" => "用户名或密码错误", "data" => $map));
+        }else{
+            session_start();
+            unset($studentinfo["password"]);
+            session("xh",$studentinfo["xh"]);//登陆成功后将学生学号、姓名写入session
+            session("name",$studentinfo["name"]);
+            $this->ajaxReturn(array("status" => 1, "info" => "success", "data" => $studentinfo));
         };
-        session_start();
-        session(['xh'], $student['xh']);
-        echo 'ok';
     }
 
     public function doLogout() {
@@ -81,14 +83,19 @@ class UserController extends Controller {
         // 检查提交数据完整程度
         foreach($data as $key => $value) {
             if (!$value) {
-                die($key);
+                $this->ajaxReturn(array("status" => 0, "info" => $value."缺失"));
             } 
         }
         $data['password'] = md5('spf'.$data['password']);
-        if ($studentBasicInfo->addStudent($data)) {
-            echo 'ok';
-        } else {
-            echo 'fail';
+        $map["xh"] = $data["xh"];
+        if ($studentBasicInfo->where($map)->count() > 0) {
+            $this->ajaxReturn(array("status" => 0, "info" => "此学号已被注册,如果忘记密码请寻找社团管理员"));
+        }else{
+            $back = $studentBasicInfo->add($data);
+            $returndata["data"] = $back;
+            $returndata["info"] = "成功";
+            $returndata["status"] = 1;
+            $this->ajaxReturn($returndata);
         }
     }
 
@@ -123,24 +130,25 @@ class UserController extends Controller {
     }
 
     public function doChangePassword() {
-        $xh = I('session.xh', '');
-        if (!$xh) {
-            die('relogin');
+        $map["xh"] = I('session.xh', '');
+        if (!$map["xh"]) {
+            $this->ajaxReturn(array("status" => 0, "info" => "未登录"));
         }
         $old = md5('spf'.I('post.old', ''));
         $current = I('post.current', '');
-        $student = getStuInfo();
+        $student = M("student_basic_info")->where($map)->find();
         if ($student['password'] != $old) {
-            die('old_pass_mismatch');
+            $this->ajaxReturn(array("status" => 0, "info" => "旧密码不正确"));
         } else {
             if (strlen($current) < 8) {
-                die('too_short');
+                $this->ajaxReturn(array("status" => 0, "info" => "新密码太短"));
             }
             $res = D('StudentBasicInfo')->setStudentPassword($xh, md5('spf'.$current));
             if (!$res) {
-                die('fail');
+                $this->ajaxReturn(array("status" => 0, "info" => "更新失败"));
+            }else{
+                $this->ajaxReturn(array("status" => 1, "info" => "成功"));
             }
-            echo 'success';
         }
     }
 
@@ -158,10 +166,25 @@ class UserController extends Controller {
         // 检查提交数据完整程度
         foreach($data as $key => $value) {
             if (!$value) {
-                die($key);
+                $this->ajaxReturn(array("status" => 0, "info" => $value."缺失"));
             }
         }
-        echo D('StudentBasicInfo')->updateStudentInfo($student['xh'], $data);
+        $map["xh"] = I("session.xh", "");
+        $b = D('StudentBasicInfo')->where($map)->save($data);
+        if ($b){
+            $this->ajaxReturn(array("status" => 1, "info" => "成功"));
+        }else{
+            $this->ajaxReturn(array("status" => 0, "info" => "更新失败", "data" => $data));
+        };
+    }
+    public function associationinfo(){
+        //此接口用于查询社团信息，发送社团名称，返回社团的3个问题以及社团的所有部门
+        $name = I("associationname","");
+        $departments = M("association_departments")->where(array("association" => $name))->field("departmentName")->select();
+        $info = M("association_list")->where(array("associationname" => $name))->field("associationName,quest1,quest2,quest3")->find();
+        $info["departments"] = $departments;
+        $this->ajaxReturn(array("status" => 0, "data" => $info));
+
     }
 
 }

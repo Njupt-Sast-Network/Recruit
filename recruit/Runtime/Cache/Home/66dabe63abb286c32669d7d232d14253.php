@@ -57,9 +57,9 @@
               <input type="passWord" class="form-control" id="confirmPassWord1" placeholder="确认密码" name="false">
             </div>
             <div class="form-group" id="identifyingCode1">
-              <input type="passWord" class="form-control" id="inputIdentifyingCode1" placeholder="验证码">
+              <input type="text" class="form-control" id="inputIdentifyingCode1" placeholder="验证码">
               <div id="identifyingPicture">
-              <img src="#" alt="验证码" title="看不清，换一张">
+              <img src="/index.php/Home/Index/verify" alt="验证码" onClick="this.src=this.src+'?'+Math.random()" title="看不清，换一张">
             </div>
             </div>
           </form>
