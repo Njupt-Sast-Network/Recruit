@@ -7,7 +7,7 @@ class UserController extends Controller {
         $map["username"] = I("post.username");
         $map["password"] = md5("spf".I("post.password"));
         switch ($identity) {
-            case '1':
+            case '1'://部门管理员
                 $info = M("association_departments")->where($map)->find();
                 if (!$info) {
                     $this->ajaxReturn(array("status" => 0, "info" => "用户名或密码错误"));
@@ -19,7 +19,7 @@ class UserController extends Controller {
                     $this->ajaxReturn(array("status" => 1, "data" => $info));
                 }
                 break;
-            case '2':
+            case '2'://社团管理员
                 $info = M("association_list")->where($map)->find();
                 if (!$info) {
                     $this->ajaxReturn(array("status" => 0, "info" => "用户名或密码错误"));
@@ -30,7 +30,7 @@ class UserController extends Controller {
                     $this->ajaxReturn(array("status" => 1, "data" => $info));
                 }
                 break;
-            case '3':
+            case '3'://超级管理员
                 if ($map["username"] == "root" && $map["password"] == "e83e403a6ff7b6d4235d34d82edc896b") {
                     session("identity","超级管理员");
                     $this->ajaxReturn(array("status" => 1));

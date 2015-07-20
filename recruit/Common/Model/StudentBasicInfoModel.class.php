@@ -19,7 +19,7 @@ class StudentBasicInfoModel extends Model {
     public function setStudentPassword($xh, $password) {
         $condition['xh'] = $xh;
         $newPassword['password'] = md5('spf'.$password);
-        return $this->where($condition)->save(newPassword);
+        return $this->where($condition)->save($newPassword);
     }
 
     // 更新学生基本信息

@@ -8,8 +8,8 @@
     <title>SAST首页</title>
 
     <!-- Bootstrap -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/recruit/public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/recruit/public/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,7 +23,7 @@
       <div class="container" id="main">
       <!--logo图片-->
       <div class="logoImg">
-      <img src="/images/logo.png" class="img-responsive center-block">
+      <img src="/recruit/public/images/logo.png" class="img-responsive center-block">
     </div>
       <!--信息填写界面导航-->
       <ul class="nav nav-tabs" id="tab-list" role="tablist">
@@ -59,7 +59,7 @@
             <div class="form-group" id="identifyingCode1">
               <input type="text" class="form-control" id="inputIdentifyingCode1" placeholder="验证码">
               <div id="identifyingPicture">
-              <img src="/index.php/Home/Index/verify" alt="验证码" onClick="this.src=this.src+'?'+Math.random()" title="看不清，换一张">
+              <img src="/recruit/public/index.php/Home/Index/verify" alt="验证码" onClick="this.src=this.src+'?'+Math.random()" title="看不清，换一张">
             </div>
             </div>
           </form>
@@ -74,8 +74,8 @@
       <p class="test-muted">&copy; 校科协</p>
     </div>
     </div>
-    <script src="/js/jquery-1.11.2.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="/recruit/public/js/jquery-1.11.2.min.js"></script>
+    <script src="/recruit/public/js/bootstrap.min.js"></script>
     <!--<script src="../../../../public/js/ajax.js"></script>-->
     <script>
     
@@ -96,15 +96,14 @@ $("#reg").click(function(){
                       "password" : password
                     },
                     success :function(back){
-                      console.log(back);
                         if(back.status == 1){
-                          location.reload();
+                          location.reload();//注册成功后直接跳转至申请报名
                         } else {
                           alert(back.info);
                         }
                     },
                     error : function(){
-                      console.log("异常");
+                      alert("服务器异常！");
                     }
                 });
         } else {
