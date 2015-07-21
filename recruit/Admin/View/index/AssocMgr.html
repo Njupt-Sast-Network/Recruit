@@ -70,7 +70,33 @@
         </div>
         <div class="contianer">
             <!-- 主内容框 -->
-            <h3>当前管理社团：{$nowassociation}</h3>
+            <h3>当前管理社团：{$nowassociation} <button type="button" id="btnAddDept" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>  添加部门</button></h3>
+            <table class="table table-hover table-bordered table-condensed">
+                <tr>
+                    <th>部门ID</th>
+                    <th>部门名称</th>
+                    <th>登录账户名</th>
+                    <th>操作</th>
+                </tr>
+                <volist name="allDeptUser" id="vo">
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.departmentname}</td>
+                        <!-- 坑，数据库字段名是大写的，但是TP默认只认全小写 -->
+                        <td>{$vo.username}</td>
+                        <td>
+                            <form id="frmNewPwd{$vo.id}" style="display:none">
+                                <input type="text" id="newusrname{$vo.id}" placeholder="输入新用户名" />
+                                <input type="password" id="newpwd{$vo.id}" placeholder="输入新密码" />
+                                <button type="button" class="btn btn-primary btn-sm" id="btnConfirm{$vo.id}"><span class="glyphicon glyphicon-ok"></span> 确认修改</button>
+                                <button type="button" class="btn btn-sm" id="btnCancel{$vo.id}">取消</button>
+                            </form>
+                            <button type="button" id="btnRstPwd{$vo.id}" class="btn btn-primary" href="javascript:void(0);" onclick="handleDept('rstpwd',{$vo.id})"><span class="glyphicon glyphicon-retweet"></span> 重置账户和密码</button>
+                            <button type="button" id="btnDelDept{$vo.id}" class="btn btn-danger" href="javascript:void(0);" onclick="handleDept('del',{$vo.id})"><span class="glyphicon glyphicon-remove"></span> 删除部门</button>
+                        </td>
+                    </tr>
+                </volist>
+            </table>
         </div>
     </div>
     <!-- .div2 -->
@@ -83,18 +109,54 @@
 
     function SetWinHeight(obj) {
         var ifm = document.getElementById("recuritlist");
-
         var subWeb = document.frames ? document.frames["recuritlist"].document : ifm.contentDocument;
-
         if (ifm != null && subWeb != null) {
-
             ifm.height = subWeb.body.scrollHeight;
-
         }
     }
     $('#btncomctrl').click(function() {
         window.location.href = "__URL__/comctrl";
     })
+
+    function handleDept(action, id) {
+        switch (action) {
+            case 'rstpwd':
+                $('#frmNewPwd' + id).show(500); //显示对应的新用户名和密码框
+                $('#btnRstPwd' + id).hide(500); //并隐藏之前的按钮
+                $('#btnCancel' + id).click(function() {
+                    //点击取消按钮时
+                    $('#frmNewPwd' + id).hide(500); //隐藏对应的新用户名和密码框
+                    $('#btnRstPwd' + id).show(500); //并重新显示之前的按钮
+                });
+                $('#btnConfirm' + id).click(function() {
+                    var username = $('#newusrname' + id).val();
+                    var password = $('#newpwd' + id).val();
+                    $.post("{:U('Index/handleDept')}", {
+                            "action": 'rstpwd',
+                            "id": id,
+                            "username": username,
+                            "password": password
+                        },
+                        function(result) {
+                            console.log(result);
+                        })
+                });
+                break;
+            case 'del':
+                var deptName = $("#btnDelDept" + id).parent().prev().prev().text();
+                if (!(confirm('确认要删除' + deptName + '吗？') && confirm('真的确认要删除' + deptName + '吗？'))) {
+                    return;
+                };
+                $.post("{:U('Index/handleDept')}", {
+                        "action": 'del',
+                        "id": id
+                    },
+                    function(result) {
+                        console.log(result);
+                    });
+                break;
+        };
+    }
 
     </script>
 </body>

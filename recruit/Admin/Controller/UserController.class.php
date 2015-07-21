@@ -26,7 +26,8 @@ class UserController extends Controller {
                 }else{
                     unset($info["password"]);
                     session("identity","社团管理员");
-                    session("associationName",$info["associationName"]);
+                    session("associationName",$info["associationname"]);//数据库里取出来的数据的字段名默认是全小写的，屡屡被坑  by sdygt
+                    // dump($info);die();
                     $this->ajaxReturn(array("status" => 1, "data" => $info));
                 }
                 break;
