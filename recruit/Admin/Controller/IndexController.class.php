@@ -120,7 +120,7 @@ class IndexController extends Controller
 
         $db = M('association_departments');
 
-        if (I('session.identity') == '社团管理员') {
+        if (I('session.identity') == '社团管理员' && I('post.action') != 'add') {
             //这里判断请求操作的部门是否为该社团的部门
             $deptBelonging = $db->where('id=' . I('post.id'))->getField('association');
             if ($deptBelonging != I('session.associationName')) {
@@ -146,7 +146,26 @@ class IndexController extends Controller
                     $this->ajaxReturn(array('errno' => -1, 'errmsg' => 'SQL错误', 'sql' => $db->getLastSql()));
                 } elseif ($result === 0) {
                     $this->ajaxReturn(array('errno' => 3, 'errmsg' => '没有删除任何数据', 'sql' => $db->getLastSql()));
-                }else{
+                } else {
+                    $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
+                }
+                break;
+            case 'add':
+                if (I('post.association') != I('session.associationName')) {
+                    $this->ajaxReturn(array('errno' => 1, 'errmsg' => '权限不足'));
+                };
+                $_POST = I('post.');
+                $map['association'] = $_POST['association'];
+                $map['departmentname'] = $_POST['departmentname'];
+                if ($db->where($map)->select() !== array()) {
+                    $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该部门已存在'));
+                };
+                if ($db->where(array('username' => $_POST['username']))->select() !== array()) {
+                    $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该用户名已存在'));
+                }
+                $_POST['password'] = md5('spf' . $_POST['password']);
+                $db->create($_POST);
+                if ($db->add()) {
                     $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
                 }
                 break;
