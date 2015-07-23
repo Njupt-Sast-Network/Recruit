@@ -219,7 +219,39 @@ class IndexController extends Controller
         $allDeptUser = M("association_departments")->where($map)->field("id,departmentName,username")->select();
         $this->assign("allDeptUser", $allDeptUser);
         // dump($allDeptUser);
-
+        $quest = M("association_list")->where(array('associationName' => $nowassociation))->field('quest1,quest2,quest3')->find();
+        $this->assign("quest", $quest);
+        // dump($quest);die();
         $this->display();
+    }
+
+    public function handleEditQuestion()
+    {
+        if (!IS_AJAX) {
+            echo "非法操作";die();
+        }
+        if (I('session.identity') != "社团管理员" && I('session.identity') != "超级管理员") {
+            $this->ajaxReturn(array('errno' => 1, 'errmsg' => '权限不足'));
+        }
+
+        $dbAssocDept = M('association_departments');
+
+        if (I('session.identity') == '社团管理员') {
+            //这里判断请求操作的部门是否为该社团的部门
+            $deptBelonging = $dbAssocDept->where('id=' . I('post.id'))->getField('association');
+            if ($deptBelonging != I('session.associationName')) {
+                $this->ajaxReturn(array('errno' => 1, 'errmsg' => '权限不足'));
+            }
+        }
+        $dbAssocList = M('association_list');
+        $data['quest1'] = I('post.quest1');
+        $data['quest2'] = I('post.quest2');
+        $data['quest3'] = I('post.quest3');
+        $result = $dbAssocList->where(array('associationName'=>I('post.associationName')))->save($data);
+        if ($result===false) {
+            $this->ajaxReturn(array('errno' => -1, 'errmsg' => 'SQL错误', 'sql' => $dbAssocList->getLastSql()));
+        }else{
+            $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
+        }
     }
 }

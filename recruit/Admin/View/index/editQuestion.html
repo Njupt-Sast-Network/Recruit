@@ -80,6 +80,13 @@
         <div class="contianer">
             <!-- 主内容框 -->
             <h3>当前管理社团：{$nowassociation} </h3>
+            <form>
+                <h4>修改招新问题：</h4>
+                <input type="text" id="quest1" value="{$quest['quest1']}">
+                <input type="text" id="quest2" value="{$quest['quest2']}">
+                <input type="text" id="quest3" value="{$quest['quest3']}">
+                <button class="btn btn-primary" id="btnEditQuestConfirm">确认修改</button>
+            </form>
         </div>
     </div>
     <!-- .div2 -->
@@ -97,6 +104,24 @@
             ifm.height = subWeb.body.scrollHeight;
         }
     }
+
+    $('#btnEditQuestConfirm').click(function() {
+        var quest1 = $('#quest1').val();
+        var quest2 = $('#quest2').val();
+        var quest3 = $('#quest3').val();
+        if (quest1 == '' || quest2 == '' || quest3 == "") {
+            alert('问题不能为空');
+            return;
+        };
+        $.post('__URL__/handleEditQuestion', {
+            'associationName': '{$nowassociation}',
+            'quest1': quest1,
+            'quest2': quest2,
+            'quest3': quest3
+        }, function(result) {
+            console.log(result);
+        })
+    })
 
     </script>
 </body>
