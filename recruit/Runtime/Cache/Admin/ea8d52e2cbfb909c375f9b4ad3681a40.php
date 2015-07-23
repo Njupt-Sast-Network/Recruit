@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>招新管理员登录</title>
     <!-- Bootstrap -->
-    <link href="/recruit/public/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/recruit/public/css/style.css" rel="stylesheet">
-    <link href="/recruit/public/css/admin.css" rel="stylesheet">
+    <link href="/Recruit/public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Recruit/public/css/style.css" rel="stylesheet">
+    <link href="/Recruit/public/css/admin.css" rel="stylesheet">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
         <div class="container" id="main">
             <!--logo图片-->
             <div class="logoImg">
-                <img src="/recruit/public/images/logo.png" class="img-responsive center-block">
+                <img src="/Recruit/public/images/logo.png" class="img-responsive center-block">
             </div>
             <!--信息填写界面导航-->
             <ul class="nav nav-tabs" id="tab-list" role="tablist">
@@ -58,8 +58,8 @@
             <p class="test-muted">&copy; 校科协</p>
         </div>
     </div>
-    <script src="/recruit/public/js/jquery-1.11.2.min.js"></script>
-    <script src="/recruit/public/js/bootstrap.min.js"></script>
+    <script src="/Recruit/public/js/jquery-1.11.2.min.js"></script>
+    <script src="/Recruit/public/js/bootstrap.min.js"></script>
     <!--<script src="../../../../public/js/ajax.js"></script>-->
     <script>
     $(document).ready(function() {

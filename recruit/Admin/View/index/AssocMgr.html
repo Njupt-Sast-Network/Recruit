@@ -63,10 +63,19 @@
     <div class="div2">
         <div class="container">
             <button type="button" class="btn btn-primary" id="btncomctrl">报名信息</button>
-            <button type="button" class="btn btn-primary active">管理社团</button>
+            <!-- <button type="button" class="btn btn-primary active">管理社团</button> -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    管理社团 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="__URL__/AssocMgr">部门管理</a></li>
+                    <li><a href="__URL__/editQuestion">修改招新问题</a></li>
+                </ul>
+            </div>
             <button type="button" class="btn btn-primary">修改密码</button>
-            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span>  生成XLS</button>
-            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-check"></span>  结束部门招新</button>
+            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span> 生成XLS</button>
+            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-check"></span> 结束部门招新</button>
         </div>
         <div class="contianer">
             <!-- 主内容框 -->
@@ -202,10 +211,10 @@
                 };
                 $.post("{:U('Index/handleDept')}", {
                         "action": 'add',
-                        "association":'{$nowassociation}',
-                        "departmentname":newdeptname,
-                        "username":newusrname,
-                        "password":newpwd
+                        "association": '{$nowassociation}',
+                        "departmentname": newdeptname,
+                        "username": newusrname,
+                        "password": newpwd
                     },
                     function(result) {
                         if (result.errno == 0) {

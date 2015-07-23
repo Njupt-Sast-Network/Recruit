@@ -28,12 +28,12 @@
     }
 
     </style>
-    <link rel="stylesheet" href="/recruit/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Recruit/public/css/bootstrap.min.css">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="/recruit/public/js/jquery-1.11.2.min.js"></script>
+    <script src="/Recruit/public/js/jquery-1.11.2.min.js"></script>
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="/recruit/public/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/recruit/public/css/comcss.css">
+    <script src="/Recruit/public/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/Recruit/public/css/comcss.css">
 </head>
 
 <body>
@@ -58,7 +58,16 @@
     <div class="div2">
         <div class="container">
             <button type="button" class="btn btn-primary active">报名信息</button>
-            <button type="button" class="btn btn-primary" id="btnAssocMgr">管理社团</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    管理社团 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="/Recruit/public/index.php/Admin/Index/AssocMgr">部门管理</a></li>
+                    <li><a href="#">修改招新问题</a></li>
+                </ul>
+            </div>
+            <!-- <button type="button" class="btn btn-primary" id="btnAssocMgr">管理社团</button> -->
             <button type="button" class="btn btn-primary">修改密码</button>
             <button type="button" class="btn btn-success">生成XLS</button>
             <button type="button" class="btn btn-danger">结束部门招新</button>
@@ -100,13 +109,13 @@
                 <button id="shaixuan" class="btn btn-primary">筛选</button>
             </div>
         </form>
-        <iframe src="/recruit/public/index.php/Admin/Index/recuritlist" id="recuritlist" width="1000" align="center" height="200" name="win" onload="Javascript:SetWinHeight(this)" frameborder="0" scrolling="no"></iframe>
+        <iframe src="/Recruit/public/index.php/Admin/Index/recuritlist" id="recuritlist" width="1000" align="center" height="200" name="win" onload="Javascript:SetWinHeight(this)" frameborder="0" scrolling="no"></iframe>
     </div>
     <script type="text/javascript">
     $(document).on("change", "#nowass,#nowdep", function() {
         var nowass = $("#nowass").val();
         var nowdep = $("#nowdep").val();
-        location.href = "/recruit/public/index.php/Admin/Index/comctrl?nowassociation=" + nowass + "&nowdepartment=" + nowdep;
+        location.href = "/Recruit/public/index.php/Admin/Index/comctrl?nowassociation=" + nowass + "&nowdepartment=" + nowdep;
     });
 
     function SetWinHeight(obj) {
@@ -120,9 +129,6 @@
 
         }
     }
-    $('#btnAssocMgr').click(function() {
-        window.location.href = "/recruit/public/index.php/Admin/Index/AssocMgr";
-    })
 
     </script>
 </body>

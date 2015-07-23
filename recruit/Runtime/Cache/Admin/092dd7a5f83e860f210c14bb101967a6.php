@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>报名信息列表</title>
-    <link rel="stylesheet" href="/recruit/public/css/bootstrap.min.css">
-    <script src="/recruit/public/js/jquery-1.11.2.min.js"></script>
-    <script src="/recruit/public/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/recruit/public/css/comcss.css">
+    <link rel="stylesheet" href="/Recruit/public/css/bootstrap.min.css">
+    <script src="/Recruit/public/js/jquery-1.11.2.min.js"></script>
+    <script src="/Recruit/public/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/Recruit/public/css/comcss.css">
 </head>
 
 <body style="background-color: antiquewhite;">
