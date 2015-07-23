@@ -120,7 +120,7 @@ class IndexController extends Controller
 
         $db = M('association_departments');
 
-        if (I('session.identity') == '社团管理员') {
+        if (I('session.identity') == '社团管理员' && I('post.action') != 'add') {
             //这里判断请求操作的部门是否为该社团的部门
             $deptBelonging = $db->where('id=' . I('post.id'))->getField('association');
             if ($deptBelonging != I('session.associationName')) {
@@ -146,7 +146,26 @@ class IndexController extends Controller
                     $this->ajaxReturn(array('errno' => -1, 'errmsg' => 'SQL错误', 'sql' => $db->getLastSql()));
                 } elseif ($result === 0) {
                     $this->ajaxReturn(array('errno' => 3, 'errmsg' => '没有删除任何数据', 'sql' => $db->getLastSql()));
-                }else{
+                } else {
+                    $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
+                }
+                break;
+            case 'add':
+                if (I('post.association') != I('session.associationName')) {
+                    $this->ajaxReturn(array('errno' => 1, 'errmsg' => '权限不足'));
+                };
+                $_POST = I('post.');
+                $map['association'] = $_POST['association'];
+                $map['departmentname'] = $_POST['departmentname'];
+                if ($db->where($map)->select() !== array()) {
+                    $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该部门已存在'));
+                };
+                if ($db->where(array('username' => $_POST['username']))->select() !== array()) {
+                    $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该用户名已存在'));
+                }
+                $_POST['password'] = md5('spf' . $_POST['password']);
+                $db->create($_POST);
+                if ($db->add()) {
                     $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
                 }
                 break;
@@ -154,6 +173,53 @@ class IndexController extends Controller
                 $this->ajaxReturn(array('errno' => 2, 'errmsg' => '操作方法错误', 'action' => I('post.action')));
                 break;
         }
+    }
 
+    public function editQuestion()
+    {
+        $data["identity"] = I("session.identity", "");
+        switch ($data["identity"]) {
+            case '部门管理员':
+                $this->error('权限不足');
+                break;
+            case '社团管理员':
+                $associations[0]["associationName"] = I("session.associationName", "");
+                $map["association"] = I("session.associationName", "");
+                $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
+                $nowassociation = $associations[0]["associationName"];
+                $nowdepartment = $departments[0]["id"];
+                foreach ($departments as $de) {
+                    if ($de["id"] == I("get.nowdepartment")) {
+                        $nowdepartment = $de["id"];
+                        break;
+                    }
+                }
+                break;
+            case '超级管理员':
+                $associations = M("association_list")->field("associationName")->select();
+                $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
+                $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationname"];
+                $nowdepartment = I("get.nowdepartment", "") ? I("get.nowdepartment", "") : $departments[0]["id"];
+                break;
+            default:
+                redirect("index");
+                break;
+        }
+        $map["association"] = $nowassociation;
+        $alldepartment = M("association_departments")->where($map)->field("id,departmentName")->select();
+        $this->assign("nowassociation", $nowassociation);
+        $this->assign("nowdepartment", $nowdepartment);
+        $this->assign("identity", $data["identity"]);
+        $this->assign("associations", $associations);
+        $this->assign("departments", $departments);
+        $this->assign("alldepartment", $alldepartment);
+
+        //目前已经获得当前管理的社团名为$nowassociation,对应的部门列表为$alldepartment
+        //下面需要读出对应社团的部门列表
+        $allDeptUser = M("association_departments")->where($map)->field("id,departmentName,username")->select();
+        $this->assign("allDeptUser", $allDeptUser);
+        // dump($allDeptUser);
+
+        $this->display();
     }
 }

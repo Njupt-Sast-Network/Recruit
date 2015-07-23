@@ -59,84 +59,42 @@
             </select>
         </div>
     </div>
+    <!-- .div1 -->
     <div class="div2">
         <div class="container">
-            <button type="button" class="btn btn-primary active">报名信息</button>
+            <button type="button" class="btn btn-primary" id="btncomctrl">报名信息</button>
+            <!-- <button type="button" class="btn btn-primary active">管理社团</button> -->
             <div class="btn-group">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     管理社团 <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
                     <li><a href="__URL__/AssocMgr">部门管理</a></li>
-                    <li><a href="__URL__/editQuestion">修改招新问题</a></li>
+                    <li><a href="#">修改招新问题</a></li>
                 </ul>
             </div>
-            <!-- <button type="button" class="btn btn-primary" id="btnAssocMgr">管理社团</button> -->
             <button type="button" class="btn btn-primary">修改密码</button>
-            <button type="button" class="btn btn-success">生成XLS</button>
-            <button type="button" class="btn btn-danger">结束部门招新</button>
+            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span> 生成XLS</button>
+            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-check"></span> 结束部门招新</button>
         </div>
-        <form class="form-inline">
-            <div class="form-group">
-                <label for="xuehao">学号</label>
-                <input type="text" class="form-control" id="xuehao" placeholder="" style="max-width:100px">
-            </div>
-            <div class="form-group">
-                <label for="name">姓名</label>
-                <input type="text" class="form-control" id="name" placeholder="" style="max-width:100px">
-            </div>
-            <div class="form-group" style="margin-left:15px">
-                <label for="firstvolunteer">第一志愿</label>
-                <select class="form-control">
-                    <option>请选择...</option>
-                    <volist name="alldepartment" id="vap">
-                        <option value="{$vap.id}">{$vap.departmentname}</option>
-                    </volist>
-                </select>
-            </div>
-            <div class="form-group" style="margin-left:20px">
-                <label for="secondvolunteer">第二志愿</label>
-                <select class="form-control">
-                    <option>请选择...</option>
-                    <volist name="alldepartment" id="vap">
-                        <option value="{$vap.id}">{$vap.departmentname}</option>
-                    </volist>
-                </select>
-            </div>
-            <div class="form-group" style="margin-left:20px">
-                <label for="state">录取状态</label>
-                <select class="form-control">
-                    <option>请选择...</option>
-                    <option value="0">审核中</option>
-                    <option value="-1">被第一部门拒绝</option>
-                    <option value="-2">被第二部门拒绝</option>
-                    <volist name="alldepartment" id="vap">
-                        <option value="{$vap.departmentname}">{$vap.departmentname}</option>
-                    </volist>
-                </select>
-            </div>
-            <div class="form-group" style="margin-left:20px">
-                <button id="shaixuan" class="btn btn-primary">筛选</button>
-            </div>
-        </form>
-        <iframe src="__URL__/recuritlist" id="recuritlist" width="1000" align="center" height="200" name="win" onload="Javascript:SetWinHeight(this)" frameborder="0" scrolling="no"></iframe>
+        <div class="contianer">
+            <!-- 主内容框 -->
+            <h3>当前管理社团：{$nowassociation} </h3>
+        </div>
     </div>
+    <!-- .div2 -->
     <script type="text/javascript">
     $(document).on("change", "#nowass,#nowdep", function() {
         var nowass = $("#nowass").val();
         var nowdep = $("#nowdep").val();
-        location.href = "__URL__/comctrl?nowassociation=" + nowass + "&nowdepartment=" + nowdep;
+        location.href = "__URL__/editQuestion?nowassociation=" + nowass;
     });
 
     function SetWinHeight(obj) {
         var ifm = document.getElementById("recuritlist");
-
         var subWeb = document.frames ? document.frames["recuritlist"].document : ifm.contentDocument;
-
         if (ifm != null && subWeb != null) {
-
             ifm.height = subWeb.body.scrollHeight;
-
         }
     }
 
