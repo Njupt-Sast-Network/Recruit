@@ -39,7 +39,7 @@ class IndexController extends Controller
                 $associations = M("association_list")->field("associationName")->select();
                 $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
                 $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationname"]; //nowassociation和nowdepartment
-                session('associationName',$nowassociation);
+                session('associationName', $nowassociation);
                 $nowdepartment = I("get.nowdepartment", "") ? I("get.nowdepartment", "") : $departments[0]["id"]; //这两个意思是当前正在以某个社团的某个部门的身份进行操作
                 break; //因为超级管理员能够变成所有身份，所以get过来什么就变什么，不需要做权限检测
             default:
@@ -87,7 +87,7 @@ class IndexController extends Controller
                 $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
                 $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationname"];
                 $nowdepartment = I("get.nowdepartment", "") ? I("get.nowdepartment", "") : $departments[0]["id"];
-                session('associationName',$nowassociation);
+                session('associationName', $nowassociation);
                 break;
             default:
                 redirect("index");
