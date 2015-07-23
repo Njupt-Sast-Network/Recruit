@@ -19,6 +19,9 @@
     <![endif]-->
   </head>
   <body>
+    <?php 
+    dump($stuinfo["sex"] == '1');
+    ?>
     <div class="wrap">
       <!-- 导航栏 -->
       <nav class="navbar navbar-default navbar-inverse">
@@ -52,24 +55,63 @@
         <!-- 信息填写表单 -->
         <form class="form-horizontal">
             <div class="form-group">
+                <label for="inputName" class="col-sm-2 control-label">姓名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputName" placeholder="请输入姓名" value="<?php
+                        if($stuinfo["name"]) {
+                          echo($stuinfo["name"]);
+                        }
+                        ?>">
+                    </div>
+            </div>
+            <div class="form-group">
                 <label for="inputSex" class="col-sm-2 control-label">性别</label>
                 <!-- 性别这里写下拉框或者单选，数据库中0表示未选择，1表示男，2表示女 -->
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="" id="inputSex">
+                    <select class="form-control" id="inputSex">
+                        <option value="0">==请选择==</option>
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputBirth" class="col-sm-2 control-label">生日</label>
                 <!-- 生日用3个下拉框来表示年月日 -->
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputBirth" placeholder="">
+                    <div class="col-sm-4">
+                        <select class="form-control" id="inputYear" value="<?php
+                        if($stuinfo["birthday-y"] != 0) {
+                          echo($stuinfo["birthday-y"]);
+                        }
+                        ?>">
+                        <option value="0">请选择</option>
+                        </select>
                     </div>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="inputMonth" value="<?php
+                        if($stuinfo["birthday-m"] != 0) {
+                          echo($stuinfo["birthday-m"]);
+                        }
+                        ?>">
+                        <option value="0"></option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="inputDay" value="<?php
+                        if($stuinfo["birthday-d"] != 0) {
+                          echo($stuinfo["birthday-d"]);
+                        }
+                        ?>">
+                        <option value="0"></option>
+                        </select>
+                    </div>
+                    
             </div>
             <div class="form-group">
                 <label for="inputQQ" class="col-sm-2 control-label">QQ</label>
                     <div class="col-sm-10">
                       <!-- 预填信息可以这么写，在value后面写原生php，下同 -->
-                        <input type="text" class="form-control" id="inputQQ" placeholder="" value="<?php 
+                        <input type="text" class="form-control" id="inputQQ" placeholder="请输入QQ号" value="<?php 
                 if ($stuinfo["qq"] != 0) {
                   echo($stuinfo["qq"]);
                 }
@@ -79,19 +121,61 @@
             <div class="form-group">
                 <label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputEmail" placeholder="">
+                        <input type="text" class="form-control" id="inputEmail" placeholder="请输入邮箱" value="<?php
+                        if($stuinfo["mail"] != 0) {
+                          echo($stuinfo["mail"]);
+                        }
+                        ?>">
                     </div>
             </div>
             <div class="form-group">
                 <label for="inputTel" class="col-sm-2 control-label">电话</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputTel" placeholder="">
+                        <input type="text" class="form-control" id="inputTel" placeholder="请输入电话号码" value="<?php
+                        if($stuinfo["phone"] != 0) {
+                          echo($stuinfo["phone"]);
+                        }
+                        ?>">
                     </div>
             </div>
             <div class="form-group">
                 <label for="inputDorm" class="col-sm-2 control-label">宿舍</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputDorm" placeholder="">
+                        <input type="text" class="form-control" id="inputDorm" placeholder="请输入宿舍地址" value="<?php
+                        if($stuinfo["dorm"] != 0) {
+                          echo($stuinfo["dorm"]);
+                        }
+                        ?>">
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="inputCollege" class="col-sm-2 control-label">学院</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputCollege" placeholder="请输入学院名称" value="<?php
+                        if($stuinfo["college"] != 0) {
+                          echo($stuinfo["college"]);
+                        }
+                        ?>">
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="inputMajor" class="col-sm-2 control-label">专业</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputMajor" placeholder="请输入专业名称" value="<?php
+                        if($stuinfo["major"] != 0) {
+                          echo($stuinfo["major"]);
+                        }
+                        ?>">
+                    </div>
+            </div>
+            <div class="form-group">
+                <label for="inputGaozhong" class="col-sm-2 control-label">高中</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputGaozhong" placeholder="请输入高中名称" value="<?php
+                        if($stuinfo["gaozhong"] != 0) {
+                          echo($stuinfo["gaozhong"]);
+                        }
+                        ?>">
                     </div>
             </div>
             <!-- 这边还差了几个信息，学院、专业、高中名称 -->
@@ -116,75 +200,122 @@
     <!--<script src="../../../../public/js/ajax.js"></script>-->
     <script>
         $(document).ready(function(){
-          check();
+          // check();
+          var makeDay = timeTable();
+          $("#inputYear").change(makeDay);
+          $("#inputMonth").change(makeDay);
           $("#changeInfo").click(function(){
             ajax();
           });
         });
-
-        function check(){
-          $("#inputSex").focus(function(){
-            $("#inputSex").attr('placeholder','请输入性别');
-          });
-          $("#inputSex").blur(function(){
-            if($("#inputSex").attr('placeholder') == '请输入性别'){
-              $("#inputSex").attr('placeholder','');
-            }
-          });
-          $("#inputBirth").focus(function(){
-            $("#inputBirth").attr('placeholder','例如：1970-01-01');
-          });
-          $("#inputBirth").blur(function(){
-            if($("#inputBirth").attr('placeholder') == '例如：1970-01-01'){
-              $("#inputBirth").attr('placeholder','');
-            }
-          });
-          $("#inputQQ").focus(function(){
-            $("#inputQQ").attr('placeholder','请输入QQ号');
-          });
-          $("#inputQQ").blur(function(){
-            if($("#inputQQ").attr('placeholder') == '请输入QQ号'){
-              $("#inputQQ").attr('placeholder','');
-            }
-          });
-          $("#inputEmail").focus(function(){
-            $("#inputEmail").attr('placeholder','请输入邮箱');
-          });
-          $("#inputEmail").blur(function(){
-            if($("#inputEmail").attr('placeholder') == '请输入邮箱'){
-              $("#inputEmail").attr('placeholder','');
-            }
-          });
-          $("#inputTel").focus(function(){
-            $("#inputTel").attr('placeholder','请输入手机号');
-          });
-          $("#inputTel").blur(function(){
-            if($("#inputTel").attr('placeholder') == '请输入手机号'){
-              $("#inputTel").attr('placeholder','');
-            }
-          });
-          $("#inputDorm").focus(function(){
-            $("#inputDorm").attr('placeholder','例如：27#506-3');
-          });
-          $("#inputDorm").blur(function(){
-            if($("#inputDorm").attr('placeholder') == '例如：27#506-3'){
-              $("#inputDorm").attr('placeholder','');
-            }
+        
+        // 检查填没填全
+        function check() {
+          $(".form-horizontal").find(".form-group").each(function(){
+            var theinput = $(this).children(".col-sm-10").children(".form-control");
+            var tips = theinput.attr("placeholder");
+            // theinput.focus(function(){
+            //   theinput.attr("placeholder",tips);
+            // });
+            // theinput.blur(function(){
+            //   if(theinput.attr("placeholder") == tips){
+            //     theinput.attr("placeholder",tips);
+            //   }
+            // });
           });
         }
 
+        function timeTable() {
+
+          var Year = "",Month = "",Day = "";
+          var Dlength = 0;
+
+          function makeYears(){
+            for(var Y = 1990;Y<2006;Y++){
+              Year += "<option>" + Y + "</option>";
+            }
+            $("#inputYear").append(Year);
+          }
+
+          function makeMonth(){
+            for(var M = 1;M<13;M++){
+              Month += "<option>" + M + "</option>"
+            }
+            $("#inputMonth").append(Month);
+          }
+          
+          makeYears();
+          makeMonth();
+
+          return function makeDay(){
+            Day = "";
+            var Y = $("#inputYear").val();
+            var M = $("#inputMonth").val();   
+            switch (M)
+            {
+              case '1':
+              case '3':
+              case '5':
+              case '7':
+              case '8':
+              case '10':
+              case '12':
+                Dlength = 31;
+                break;
+              case '4':
+              case '6':
+              case '9':
+              case '11':
+                Dlength = 30;
+                break;
+              case '2':
+                if(Y%4 == 0){
+                  Dlength = 29;
+                } else {
+                  Dlength = 28;
+                }
+                break;
+            }
+            for(var D = 1;D <= Dlength;D++){
+              Day += "<option class='day'>" + D + "</option>"
+            }
+            $("#inputDay").html(Day);
+          };
+          
+        }
+
+
         function ajax(){
-          var sex = $("#inputSex").val(),birth = $("#inputBirth").val(),QQ = $("#inputQQ").val(),
-              Email = $("#inputEmail").val(),TEL = $("#inputTel").val(),dorm = $("#inputDorm").val();
+          var sex = $("#inputSex").val(),
+              qq = $("#inputQQ").val(),
+              mail = $("#inputEmail").val(),
+              phone = $("#inputTel").val(),
+              dorm = $("#inputDorm").val(),
+              college = $("#inputCollege").val(),
+              gaozhong = $("#inputGaozhong").val(),
+              major = $("#inputMajor").val(),
+              birthdayy = $("#inputYear").val(),
+              birthdaym = $("#inputMonth").val(),
+              birthdayd = $("#inputDay").val(),
+              name = $("#inputName").val();
+          console.log(sex);
           $.ajax({
             type : "POST",
             data : {
+              "name" : name,
               "sex" : sex,
-              "birth" : birth,//生日这里分成三个，birthday-y、birthday-m、birthday-d，在doChangeInfo函数中有写
-              "qq" : QQ,//php是区分大小写的，后台QQ是小写的
-              "Email" : Email,
-              "TEL" : TEL,
-              "dorm" : dorm
+              "birthday-y" : birthdayy,
+              "birthday-m" : birthdaym,
+              "birthday-d" : birthdayd,
+              //生日这里分成三个，birthday-y、birthday-m、birthday-d，在doChangeInfo函数中有写
+              "qq" : qq,
+              //php是区分大小写的，后台QQ是小写的
+              "mail" : mail,
+              "phone" : phone,
+              "dorm" : dorm,
+              "gaozhong" : gaozhong,
+              "major" : major,
+              "college" : college
             },
             url : "{:U('Home/User/doChangeInfo')}",
             dataType : "json",

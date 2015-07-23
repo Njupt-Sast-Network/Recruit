@@ -80,9 +80,10 @@
                     dataType : "json",
                     success : function(back){
                         if(back.status == 1){
-                          console.log(back);
+                          // console.log(back);
                           //location.reload();
                           //成功后跳转至申请报名
+                          window.location.href = '{:U('Home/Index/ChangeDepartment')}'
                         } else {
                           alert(back.info);
                         }

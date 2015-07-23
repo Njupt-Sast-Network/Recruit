@@ -82,10 +82,11 @@
                   <th><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
                     <button type="button" class="btn btn-default" id="depAdd">添加</button>
                   </div></th>
+
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <!-- <tr>
                   <th scope="row">1</th>
                   <td>科协</td>
                   <td>网络部</td>
@@ -95,8 +96,8 @@
                     <button type="button" class="btn btn-default" id="depChange">修改</button>
                     <button type="button" class="btn btn-default" id="depDelete">删除</button>
                   </div></td>
-                </tr>
-                <tr>
+                </tr> -->
+                <!-- <tr>
                   <th scope="row">1</th>
                   <td>社团</td>
                   <td>部门</td>
@@ -106,10 +107,23 @@
                     <button type="button" class="btn btn-default">修改</button>
                     <button type="button" class="btn btn-default">删除</button>
                   </div></td>
-                </tr>
+                </tr> -->
               </tbody>
           </table>
-     
+          <form>
+              <div class="form-group">
+                  <label for="ans1" id="quest1" class="quest">问题一:</label>
+                  <input type="text" class="form-control" id="ans1" placeholder="">
+              </div>
+              <div class="form-group">
+                  <label for="ans2" id="quest2" class="quest">问题二:</label>
+                  <input type="text" class="form-control" id="ans2" placeholder="">
+              </div>
+              <div class="form-group">
+                  <label for="ans3" id="quest3" class="quest">问题三:</label>
+                  <input type="text" class="form-control" id="ans3" placeholder="">
+              </div>
+          </form>
       </div> <!-- /container -->
     </div>
     <div class="footer">
@@ -119,8 +133,112 @@
     </div>
     <script src="__ROOT__/js/jquery-1.11.2.min.js"></script>
     <script src="__ROOT__/js/bootstrap.min.js"></script>
-    <script src="__ROOT__/js/index.js"></script>
     <!--<script src="../../../../public/js/ajax.js"></script>-->
+
+<script>
+
+function teamSelector() {
+  // 社团及部门数组
+  var teamNum = ['科协','外联','办公室'];
+  var teamDepartment = [];
+  teamDepartment[0] = ['电子部','计算机部','网络部'];
+  teamDepartment[1] = ['b1','b2','b3'];
+  teamDepartment[2] = ['c1','c2','c3'];
+  // 社团问题
+  var questArr = [];
+    questArr[0] = ['a?','b?','c?'];
+    questArr[1] = ['d','e','f'];
+
+  // 更新函数
+  function update(num) {
+    $(".questcontent").remove();
+    if($('#teamselect').val() == '==请选择=='){
+      newoption = '';
+    } else {
+      for(var i = 0,newoption = '';i<teamDepartment[num].length;i++){
+        newoption += "<option class='choice'>" + teamDepartment[num][i] + "</option>";
+        }
+      for(var s = 0; s < 3; s++){
+      $("#quest" + (s+1)).append("<span class='questcontent'>" + questArr[num][s] + "</span>");
+      }
+    }
+    var newSelect_1 = "<select class='form-control tSelector' id='department_1'>" + newoption + "</select>";
+    $('#department_1').replaceWith(newSelect_1);
+    var newSelect_2 = "<select class='form-control tSelector' id='department_2'>" + newoption + "</select>";
+    $('#department_2').replaceWith(newSelect_2);
+    // 更新问题
+    
+
+  }
+    // 检测变化
+  $('#teamselect').change(function(){
+    var team = $('#teamselect').val();
+    // 检测社团
+    for(var i = 0;i<teamNum.length;i++){
+      if(teamNum[i] == team){
+        break;
+      }
+    } 
+    update(i);
+  });
+
+}
+
+function addTeam() {
+  $("#depAdd").click(function(){
+    var association = $("#teamselect").val();
+    var department1 = $("#department_1").val();
+    var department2 = $("#department_2").val();
+    var quest1 = $("#ans1").val();
+    var quest2 = $("#ans2").val();
+    var quest3 = $("#ans3").val();
+    var url = "{:U('Home/User/doRegAssociation')}";
+    if($("#teamselect").val() == "==请选择=="){
+      alert("请选择一个社团");
+    } else if (!quest1||!quest2||!quest3) {
+      alert("请先回答问题");
+    } else {
+      $.ajax({
+        type : "POST",
+        url : url,
+        dataType : "json",
+        data : {
+            "association" : association,
+            "department1" : department1,
+            "department2" : department2,
+            "quest1" : quest1,
+            "quest2" : quest2,
+            "quest3" : quest3
+        },
+        // 发送请求数据，接收回调数据，反映在界面中
+      });
+    }
+    <?php
+    echo $res;
+    ?>
+  });
+}
+
+// function changeTeam() {
+//  $("depChange").click(function(){
+    
+//  });
+// }
+
+// function saveTeam() {
+
+// }
+
+// function deleteTeam() {
+
+// }
+
+$(document).ready(function(){
+  teamSelector();
+  addTeam();
+});
+
+</script>
 
   </body>
 </html>

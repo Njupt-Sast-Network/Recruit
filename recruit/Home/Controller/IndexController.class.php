@@ -34,7 +34,7 @@ class IndexController extends Controller {
     }
 
     // 报名、修改志愿
-    // 注意：添加新的报名请向/Home/User/doRegAssociation进行POST
+    // 注意：添加新的报名请向/Home/User/doRegAssociation 进行POST
     // 修改志愿向/Home/User/doChangeDepartment
     public function changeDepartment() {
         getStuInfo();//登陆检测

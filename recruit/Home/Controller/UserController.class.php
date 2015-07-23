@@ -179,6 +179,7 @@ class UserController extends Controller {
         $data['dorm'] = I('post.dorm', '');
         $data['college'] = I('post.college', '');
         $data['gaozhong'] = I('gaozhong', '');
+        $data['major'] = I('major', '');
         // 检查提交数据完整程度
         foreach($data as $key => $value) {
             if (!$value) {
