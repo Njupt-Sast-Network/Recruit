@@ -159,9 +159,9 @@ class UserController extends Controller {
             if (strlen($current) < 8) {
                 $this->ajaxReturn(array("status" => 0, "info" => "新密码太短"));
             }
-            $res = D('StudentBasicInfo')->setStudentPassword($xh, md5('spf'.$current));
+            $res = D('StudentBasicInfo')->setStudentPassword($xh, $current);
             if (!$res) {
-                $this->ajaxReturn(array("status" => 0, "info" => "更新失败"));
+                $this->ajaxReturn(array("status" => 0, "info" => $res));
             }else{
                 $this->ajaxReturn(array("status" => 1, "info" => "成功"));
             }
