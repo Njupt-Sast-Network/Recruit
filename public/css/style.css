@@ -128,6 +128,25 @@ span a:hover{
 }
 .tSelector {
 	width: auto;
+    display: inline-block;
+}
+#chooseTable {
+    margin: 10px 0 10px;
+    display: none;
+}
+#chooseAsso span {
+    color: #fff;
+}
+.depTable {
+    margin-left: 50px;
+    display: inline-block;
+}
+.depTable span {
+    color: #fff;
+}
+#depSave {
+    float: right;
+    margin-right: 50px;
 }
 
 
