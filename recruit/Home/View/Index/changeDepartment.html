@@ -19,9 +19,6 @@
     <![endif]-->
   </head>
   <body>
-    <?php 
-    dump($stuinfo);
-    ?>
     <div class="wrap">
       <!-- 导航栏 -->
       <nav class="navbar navbar-default navbar-inverse">
@@ -49,71 +46,35 @@
 </nav>
 
       <div class="container tablecontain" id="main" >
-          <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>社团</th>
-                  <th>部门1</th>
-                  <th>部门2</th>
-                  <th>录取状态</th>
-                  <th>操作</th>
-                </tr>
-                <tr>
-                  <th>#</th>
-                  <th>
-                    <select class="form-control tSelector" id="teamselect">
-                        <option>==请选择==</option>
-                        <option>科协</option>
-                        <option>外联</option>
-                        <option>办公室</option>
-                        <option>4</option>
-                        <option>5</option>
+          <div id="chooseAsso">
+            <span>社团:</span>
+            <select class="form-control tSelector" id="teamselect">
+              <option>==请选择==</option>
+              <option>科协</option>
+              <option>外联</option>
+              <option>办公室</option>
+              <option>4</option>
+              <option>5</option>
+          </select>
+          <button type="button" class="btn btn-default" id="depAdd">添加</button>
+          </div>
+          <div id="chooseTable">
+            <!-- <button type="button" class="btn btn-default" id="depSave">保存</button> -->
+            <div class="depWrap">
+              <div class="depTable">
+                <span>部门1</span>
+                <select class="form-control tSelector" id="department_1">
+                    
                     </select>
-                  </th>
-                  <th>
-                    <select class="form-control tSelector" id="department_1">
-
-                    </select>
-                  </th>
-                  <th>
-                    <select class="form-control tSelector" id="department_2">
+              </div>
+              <div class="depTable">
+                <span>部门2</span>
+                <select class="form-control tSelector" id="department_2">
                       
                     </select>
-                  </th>
-                  <th>#</th>
-                  <th><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                    <button type="button" class="btn btn-default" id="depAdd">添加</button>
-                  </div></th>
-
-                </tr>
-              </thead>
-              <tbody>
-                <!-- <tr>
-                  <th scope="row">1</th>
-                  <td>科协</td>
-                  <td>网络部</td>
-                  <td>电子部</td>
-                  <td></td>
-                  <td><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                    <button type="button" class="btn btn-default" id="depChange">修改</button>
-                    <button type="button" class="btn btn-default" id="depDelete">删除</button>
-                  </div></td>
-                </tr> -->
-                <!-- <tr>
-                  <th scope="row">1</th>
-                  <td>社团</td>
-                  <td>部门</td>
-                  <td>部门</td>
-                  <td>录取</td>
-                  <td><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                    <button type="button" class="btn btn-default">修改</button>
-                    <button type="button" class="btn btn-default">删除</button>
-                  </div></td>
-                </tr> -->
-              </tbody>
-          </table>
-          <form>
+              </div>
+            </div>
+            <form id="questTable">
               <div class="form-group">
                   <label for="ans1" id="quest1" class="quest">问题一:</label>
                   <input type="text" class="form-control" id="ans1" placeholder="">
@@ -127,6 +88,37 @@
                   <input type="text" class="form-control" id="ans3" placeholder="">
               </div>
           </form>
+          <button type="button" class="btn btn-default" id="depSave">保存</button>
+          </div>
+          <table class="table">
+              <thead>
+                <tr>
+                  <th>社团</th>
+                  <th>部门1</th>
+                  <th>部门2</th>
+                  <th>录取状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr>
+                  <th>
+                    科协
+                  </th>
+                  <th>
+                    网络部
+                  </th>
+                  <th>
+                    电子部
+                  </th>
+                  <th>#</th>
+                  <th><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                    <button type="button" class="btn btn-default" id="depChange">修改</button>
+                    <button type="button" class="btn btn-default" id="depDelet">删除</button>
+                  </div></th>
+                </tr> -->
+              </tbody>
+          </table>
       </div> <!-- /container -->
     </div>
     <div class="footer">
@@ -139,8 +131,12 @@
     <!--<script src="../../../../public/js/ajax.js"></script>-->
 
 <script>
+// 预加载相关信息
+function preAdd(){
 
-function teamSelector() {
+}
+// 生成部门选项组
+function teamSelector(){
   // 社团及部门数组
   var teamNum = ['科协','外联','办公室'];
   var teamDepartment = [];
@@ -157,7 +153,9 @@ function teamSelector() {
     $(".questcontent").remove();
     if($('#teamselect').val() == '==请选择=='){
       newoption = '';
+      $("#chooseTable").css("display","none");
     } else {
+      // $("#chooseTable").css("display","block");
       for(var i = 0,newoption = '';i<teamDepartment[num].length;i++){
         newoption += "<option class='choice'>" + teamDepartment[num][i] + "</option>";
         }
@@ -184,11 +182,10 @@ function teamSelector() {
     } 
     update(i);
   });
-
 }
-
-function addTeam() {
-  $("#depAdd").click(function(){
+// 新增部门及修改后的保存
+function addTeam(){
+  $("#depSave").click(function(){
     var association = $("#teamselect").val();
     var department1 = $("#department_1").val();
     var department2 = $("#department_2").val();
@@ -213,31 +210,55 @@ function addTeam() {
             "quest2" : quest2,
             "quest3" : quest3
         },
+        success : function(back){
+              // appendDepInfo();//测试位置
+              if(back.status == 1){
+                console.log(back);
+                appendDepInfo();//正常调用位置
+                //location.reload();
+              } else {
+                alert(back.info);
+              }
+            },
+        error : function(){
+              alert("异常");
+            }
         // 发送请求数据，接收回调数据，反映在界面中
       });
+    }
+    function appendDepInfo() {
+      var asso = $("#teamselect").val();
+      var dep1 = $("#department_1").val();
+      var dep2 = $("#department_2").val();
+      var content = "<tr><th>" + asso + "</th><th>" + dep1 + "</th><th>" + dep2 + "</th><th>#</th><th><div class='btn-group btn-group-sm' role='group' aria-label='Small button group'><button type='button' class='btn btn-default' id='depChange'>修改</button><button type='button' class='btn btn-default' id='depDelet'>删除</button></div></th></tr>"
+      $("tbody").append(content);
     }
     <?php
     echo $res;
     ?>
   });
 }
-
-// function changeTeam() {
-//  $("depChange").click(function(){
-    
-//  });
-// }
-
-// function saveTeam() {
-
-// }
-
-// function deleteTeam() {
-
-// }
+// 根据所选社团显示部门及问题
+function showTeam(){
+  $("#depAdd").click(function(){
+    if($("#teamselect").val() == "==请选择=="){
+      $("#chooseTable").css("display","none");
+      alert("请先选择一个社团");
+    } else {
+      $("#chooseTable").css("display","block");
+    }
+  })
+}
+// 更改部门
+function changeDep() {
+ $("depChange").click(function(){});
+}
+// 删除社团
+function deleteTeam() {}
 
 $(document).ready(function(){
   teamSelector();
+  showTeam();
   addTeam();
 });
 
