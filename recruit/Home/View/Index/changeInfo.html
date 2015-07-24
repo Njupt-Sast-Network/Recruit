@@ -19,6 +19,9 @@
     <![endif]-->
   </head>
   <body>
+            <?php
+        dump($stuinfo['birthday']);
+        ?>
     <div class="wrap">
       <!-- 导航栏 -->
       <nav class="navbar navbar-default navbar-inverse">
@@ -90,6 +93,7 @@
                     <div class="col-sm-4">
                         <select class="form-control" id="inputYear">
                         <option value="0">请选择</option>
+                        <option id="test">1</option>
                         </select>
                     </div>
                     <div class="col-sm-3">
@@ -197,18 +201,41 @@
     <!--<script src="../../../../public/js/ajax.js"></script>-->
     <script>
         $(document).ready(function(){
+          console.log($("#test"));
+          console.log($("#inputYear option[value='1']"));
           // check();
           var makeDay = timeTable();
+          preBirth();
           $("#inputYear").change(makeDay);
           $("#inputMonth").change(makeDay);
           $("#changeInfo").click(function(){
             ajax();
-          });
-          
-          console.log($('option[value=1993]'));          
+          });          
         });
-        
-        // 检查填没填全
+        //预填生日(待测)
+        function preBirth() {
+          var birthday = <?php echo $stuinfo['birthday']; ?>;
+          console.log(birthday);
+          var Y = "",M = "",D = "";
+          if(<?php echo $stuinfo; ?>){
+            for(var i = 0;i<birthday.length;i++){
+              if(i<=3){
+                Y.push(birthday[i]);
+              } else if (i>=5&&i<=6){
+                M.push(birthday[i]);
+              } else if (i>=8&&i<=9){
+                D.push(birthday[i]);
+              }
+            }
+          }
+
+         $("#inputYear option[value=" + Y + "]").attr("selected","selected");
+         $("#inputMonth option[value=" + M + "]").attr("selected","selected");
+         makeDay();
+         $("#inputDay option[value=" + D + "]").attr("selected","selected");
+
+        }
+        // 检查填没填全(感觉可以省略，后台有)
         function check() {
           $(".form-horizontal").find(".form-group").each(function(){
             var theinput = $(this).children(".col-sm-10").children(".form-control");
@@ -223,7 +250,7 @@
             // });
           });
         }
-
+        //生成日历
         function timeTable() {
 
           var Year = "",Month = "",Day = "";
@@ -279,12 +306,10 @@
               Day += "<option class='day'>" + D + "</option>"
             }
             $("#inputDay").html(Day);
-          };
-          
+          }; 
         }
-
-
-        function ajax(){
+        //ajax提交
+        function ajax() {
           var sex = $("#inputSex").val(),
               qq = $("#inputQQ").val(),
               mail = $("#inputEmail").val(),
