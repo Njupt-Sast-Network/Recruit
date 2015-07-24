@@ -56,7 +56,7 @@ class IndexController extends Controller {
     }
 
     // 修改密码
-    // 向/Home/User/doChangeDepartment进行POST
+    // 向/Home/User/doChangePassword进行POST
     public function changePassword() {
         getStuInfo();//登陆检测
         $this->display();
