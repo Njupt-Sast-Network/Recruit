@@ -146,6 +146,7 @@ class UserController extends Controller {
         }
     }
     public function doChangePassword() {
+        $xh = I('session.xh', '');
         $map["xh"] = I('session.xh', '');
         if (!$map["xh"]) {
             $this->ajaxReturn(array("status" => 0, "info" => "未登录"));
@@ -156,7 +157,7 @@ class UserController extends Controller {
         if ($student['password'] != $old) {
             $this->ajaxReturn(array("status" => 0, "info" => "旧密码不正确"));
         } else {
-            if (strlen($current) < 8) {
+            if (strlen($current) < 6) {
                 $this->ajaxReturn(array("status" => 0, "info" => "新密码太短"));
             }
             $res = D('StudentBasicInfo')->setStudentPassword($xh, $current);
