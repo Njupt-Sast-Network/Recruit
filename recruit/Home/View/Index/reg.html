@@ -97,7 +97,8 @@ $("#reg").click(function(){
                     },
                     success :function(back){
                         if(back.status == 1){
-                          location.reload();//注册成功后直接跳转至申请报名
+                          window.location.href = '{:U('Home/Index/ChangeDepartment')}'
+                          // location.reload();//注册成功后直接跳转至申请报名
                         } else {
                           alert(back.info);
                         }
