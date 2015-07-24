@@ -148,7 +148,9 @@ span a:hover{
     float: right;
     margin-right: 50px;
 }
-
+.col-sm-3,.col-sm-4,.col-sm-10 {
+    padding-left: 0;
+}
 
 @media (min-width:600px){.tablecontain{width: 500px;}}
 @media (min-width:992px){.tablecontain{width: 800px;}}
