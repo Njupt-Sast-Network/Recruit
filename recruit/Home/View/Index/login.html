@@ -28,10 +28,10 @@
       <!--信息填写界面导航-->
       <ul class="nav nav-tabs" id="tab-list" role="tablist">
         <li role="presentation" class="active first">
-          <a href="login.html" data-toggle="link" role="tab" aria-expanded="true" ><span>登陆</span></a>
+          <a href="__URL__/login" data-toggle="link" role="tab" aria-expanded="true" ><span>登陆</span></a>
         </li>
         <li role="presentation">
-          <a href="reg.html" data-toggle="link" role="tab" aria-expanded="true" ><span>注册</span></a>                                         <!--链接到注册页面-->
+          <a href="__URL__/reg" data-toggle="link" role="tab" aria-expanded="true" ><span>注册</span></a>                                         <!--链接到注册页面-->
         </li>
         <li role="presentation" id="forgetKeyWord">
           <a href="#" data-toggle="link"><span>忘记密码</span></a>
@@ -44,10 +44,10 @@
         <div role="tabpannel" class="tab-pane active" id="sign-in">
           <form role="form">
             <div class="form-group">
-              <input type="studentId" class="form-control" id="inputStudentId" placeholder="学号" name="false">
+              <input type="studentId" class="form-control" id="inputStudentId" placeholder="学号" checked="">
             </div>
             <div class="form-group">
-              <input type="passWord" class="form-control" id="inputPassWord" placeholder="密码" name="false">
+              <input type="passWord" class="form-control" id="inputPassWord" placeholder="密码" checked="">
             </div>
           </form>
           <!--信息提交按钮-->
@@ -72,7 +72,7 @@
     $("#login").click(function(){
       var studentid = $('#inputStudentId').val();
       var password = $('#inputPassWord').val();
-      if(($("#inputStudentId").attr("name")=="true")&&($("#inputPassWord").attr("name")=="true")){
+      if(($("#inputStudentId").attr("checked")=="checked")&&($("#inputPassWord").attr("checked")=="checked")){
         $.ajax({  
                     type : "POST",  
                     url : "{:U('Home/User/doLogin')}",
@@ -105,66 +105,67 @@
     var id = /^[BQ]+[0-9]{8}$/;
     if(!id.test($("#inputStudentId").val())){
         $("#inputStudentId").css("border-color","#8B0000");
-        $("#inputStudentId").attr("name","false");
+        $("#inputStudentId").attr("checked","");
     } else {
         $("#inputStudentId").css("border-color","#66afe9");
-        $("#inputStudentId").attr("name","true");
+        $("#inputStudentId").attr("checked","checked");
     }
 });    
-//is input property password(login)
+
+// //is input property password(login)
     $("#inputPassWord").blur(function(){
     if($("#inputPassWord").val().length == 0){
         $("#inputPassWord").css("border-color","#8B0000");
-        $("#inputPassWord").attr("name","false");
+        $("#inputPassWord").attr("checked","");
     } else {
         $("#inputPassWord").css("border-color","#66afe9");
-        $("#inputPassWord").attr("name","true");
+        $("#inputPassWord").attr("checked","checked");
     }
 }); 
-//is input property id(reg)
-$("#inputStudentId1").blur(function(){
-  var id = /^[BQ]+[0-9]{8}$/;
-    if(!id.test($("#inputStudentId1").val())){
-        $("#inputStudentId1").css("border-color","#8B0000");
-        $("#inputStudentId1").attr("name","false");
-    } else {
-        $("#inputStudentId1").css("border-color","#66afe9");
-        $("#inputStudentId1").attr("name","true");
-    }
-});
-//is input property name(reg)                             
-$("#inputName1").blur(function(){
-  var id = /[\u4e00-\u9fa5]{2,4}/;
-    if(!id.test($("#inputName1").val())){
-        $("#inputName1").css("border-color","#8B0000");
-        $("#inputName1").attr("name","false");
-    } else {
-        $("#inputName1").css("border-color","#66afe9");
-        $("#inputName1").attr("name","true");
-    }
-});
-//is input property password(reg)
-$("#inputPassWord1").blur(function(){
-  var id = /^[a-zA-Z0-9]\w{5,17}$/;
-    if(!id.test($("#inputPassWord1").val())){
-        $("#inputPassWord1").css("border-color","#8B0000");
-        $("#inputPassWord1").attr("name","false");
-    } else {
-        $("#inputPassWord1").css("border-color","#66afe9");
-        $("#inputPassWord1").attr("name","true");
-    }
-});
-//is input property password again(reg)
-$("#confirmPassWord1").blur(function(){
-  var id = /^[a-zA-Z0-9]\w{5,17}$/;
-    if(($("#inputPassWord1").val()==$("#confirmPassWord1").val())&&(id.test($("#inputPassWord1").val()))){
-        $("#confirmPassWord1").css("border-color","#66afe9");
-        $("#confirmPassWord1").attr("name","true");
-    } else {
-        $("#confirmPassWord1").css("border-color","#8B0000");
-        $("#confirmPassWord1").attr("name","false");
-    }
-});
+// //is input property id(reg)
+// $("#inputStudentId1").blur(function(){
+//   var id = /^[BQ]+[0-9]{8}$/;
+//     if(!id.test($("#inputStudentId1").val())){
+//         $("#inputStudentId1").css("border-color","#8B0000");
+//         $("#inputStudentId1").attr("name","false");
+//     } else {
+//         $("#inputStudentId1").css("border-color","#66afe9");
+//         $("#inputStudentId1").attr("name","true");
+//     }
+// });
+// //is input property name(reg)                             
+// $("#inputName1").blur(function(){
+//   var id = /[\u4e00-\u9fa5]{2,4}/;
+//     if(!id.test($("#inputName1").val())){
+//         $("#inputName1").css("border-color","#8B0000");
+//         $("#inputName1").attr("name","false");
+//     } else {
+//         $("#inputName1").css("border-color","#66afe9");
+//         $("#inputName1").attr("name","true");
+//     }
+// });
+// //is input property password(reg)
+// $("#inputPassWord1").blur(function(){
+//   var id = /^[a-zA-Z0-9]\w{5,17}$/;
+//     if(!id.test($("#inputPassWord1").val())){
+//         $("#inputPassWord1").css("border-color","#8B0000");
+//         $("#inputPassWord1").attr("name","false");
+//     } else {
+//         $("#inputPassWord1").css("border-color","#66afe9");
+//         $("#inputPassWord1").attr("name","true");
+//     }
+// });
+// //is input property password again(reg)
+// $("#confirmPassWord1").blur(function(){
+//   var id = /^[a-zA-Z0-9]\w{5,17}$/;
+//     if(($("#inputPassWord1").val()==$("#confirmPassWord1").val())&&(id.test($("#inputPassWord1").val()))){
+//         $("#confirmPassWord1").css("border-color","#66afe9");
+//         $("#confirmPassWord1").attr("name","true");
+//     } else {
+//         $("#confirmPassWord1").css("border-color","#8B0000");
+//         $("#confirmPassWord1").attr("name","false");
+//     }
+// });
 
 
 });
