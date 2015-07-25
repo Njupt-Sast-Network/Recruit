@@ -19,6 +19,9 @@
     <![endif]-->
   </head>
   <body>
+    <?php
+    dump($recruitInfo);
+    ?> 
     <div class="wrap">
       <!-- 导航栏 -->
       <nav class="navbar navbar-default navbar-inverse">
@@ -90,20 +93,58 @@
           </form>
           <button type="button" class="btn btn-default" id="depSave">保存</button>
           </div>
-          <table class="table">
+          <div style='clear:both'></div>
+          <div class="line"></div>
+          <div id="enrollWrap">
+            <!-- <div id="Table" class="enroll">
+            <div class="assoTable">
+              <span>社团:</span>
+            </div>
+            <div class="depWrap">
+              <div class="depTable">
+                <span>部门1:</span>
+                <select class="form-control tSelector" id="department_1">
+                    
+                    </select>
+              </div>
+              <div class="depTable">
+                <span>部门2:</span>
+                <select class="form-control tSelector" id="department_2">
+                      
+                    </select>
+              </div>
+            </div> -->
+            <!-- <form id="questTable">
+              <div class="form-group">
+                  <label for="ans1" id="quest1" class="quest">问题一:</label>
+                  <input type="text" class="form-control" id="ans1" placeholder="">
+              </div>
+              <div class="form-group">
+                  <label for="ans2" id="quest2" class="quest">问题二:</label>
+                  <input type="text" class="form-control" id="ans2" placeholder="">
+              </div>
+              <div class="form-group">
+                  <label for="ans3" id="quest3" class="quest">问题三:</label>
+                  <input type="text" class="form-control" id="ans3" placeholder="">
+              </div>
+          </form> -->
+          <!-- <button type="button" class="btn btn-default" id="depSave">保存</button>
+          </div> -->
+          </div>
+          <!-- <table class="table">
               <thead>
                 <tr>
                   <th>社团</th>
                   <th>部门1</th>
                   <th>部门2</th>
                   <th>录取状态</th>
-                  <th>操作</th>
+                  <th class="control">操作</th>
                 </tr>
               </thead>
               <tbody>
-                <!-- <tr>
+                <tr>
                   <th>
-                    科协
+                    科协<span>1</span>
                   </th>
                   <th>
                     网络部
@@ -112,13 +153,13 @@
                     电子部
                   </th>
                   <th>#</th>
-                  <th><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                  <th class="control-btn"><div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
                     <button type="button" class="btn btn-default" id="depChange">修改</button>
                     <button type="button" class="btn btn-default" id="depDelet">删除</button>
                   </div></th>
-                </tr> -->
+                </tr>
               </tbody>
-          </table>
+          </table> -->
       </div> <!-- /container -->
     </div>
     <div class="footer">
@@ -131,23 +172,37 @@
     <!--<script src="../../../../public/js/ajax.js"></script>-->
 
 <script>
-// 预加载相关信息
+// 预加载相关信息(完)
 function preAdd(){
-
+  //取出数组
+  if(<?php echo $recruitInfo; ?>){
+    var arr = [];
+    var a = <?php echo json_encode($recruitInfo); ?>;
+    for(var i = 0;i< <?php echo sizeof($recruitInfo); ?>;i++){
+      for(j in a[i]){
+      arr.push(a[i][j]);
+      }
+    }
+    console.log(arr);
+    var times = arr.length/9;
+    console.log(times);
+    add();
+  }
+  
+  function add() {
+    for(var k = 0;k<times;k++){
+      for(var m = 0;m<teamNum.length;m++){
+        if(arr[(4+k*9)] == teamNum[m]){
+          break;
+        }
+      }
+      var info = "<div id=" + arr[k*9] + " class='enroll'><div class='assoTable'><span>社团:</span><span>" + arr[(4+k*9)] + "</span></div><div class='depWrap'><div class='depTable'><span>部门1:</span><span>" + teamDepartment[m][arr[(2+k*9)]-1] + "</span></div><div class='depTable'><span>部门2:</span><span>" + teamDepartment[m][arr[(3+k*9)]-1] + "</span></div></div><div class='btn-group btn-group-sm' role='group' aria-label='Small button group'><button type='button' class='btn btn-default change-btn'>修改<span>" + arr[k*9] + "</span></button><button type='button' class='btn btn-default del-btn'>删除<span>" + arr[k*9] + "</span></button></div></div>"
+      $("#enrollWrap").append(info);
+    }
+  }
 }
-// 生成部门选项组
+// 生成部门选项组(完)
 function teamSelector(){
-  // 社团及部门数组
-  var teamNum = ['科协','外联','办公室'];
-  var teamDepartment = [];
-  teamDepartment[0] = ['电子部','计算机部','网络部'];
-  teamDepartment[1] = ['b1','b2','b3'];
-  teamDepartment[2] = ['c1','c2','c3'];
-  // 社团问题
-  var questArr = [];
-    questArr[0] = ['a?','b?','c?'];
-    questArr[1] = ['d','e','f'];
-
   // 更新函数
   function update(num) {
     $(".questcontent").remove();
@@ -157,7 +212,7 @@ function teamSelector(){
     } else {
       // $("#chooseTable").css("display","block");
       for(var i = 0,newoption = '';i<teamDepartment[num].length;i++){
-        newoption += "<option class='choice'>" + teamDepartment[num][i] + "</option>";
+        newoption += "<option class='choice' value=" + (i+1) + ">" + teamDepartment[num][i] + "</option>";
         }
       for(var s = 0; s < 3; s++){
       $("#quest" + (s+1)).append("<span class='questcontent'>" + questArr[num][s] + "</span>");
@@ -167,9 +222,7 @@ function teamSelector(){
     $('#department_1').replaceWith(newSelect_1);
     var newSelect_2 = "<select class='form-control tSelector' id='department_2'>" + newoption + "</select>";
     $('#department_2').replaceWith(newSelect_2);
-    // 更新问题
     
-
   }
     // 检测变化
   $('#teamselect').change(function(){
@@ -183,12 +236,14 @@ function teamSelector(){
     update(i);
   });
 }
-// 新增部门及修改后的保存
+// 新增部门及修改后的保存(完)
 function addTeam(){
   $("#depSave").click(function(){
+    appendDepInfo();//测试位置
     var association = $("#teamselect").val();
     var department1 = $("#department_1").val();
     var department2 = $("#department_2").val();
+
     var quest1 = $("#ans1").val();
     var quest2 = $("#ans2").val();
     var quest3 = $("#ans3").val();
@@ -211,10 +266,10 @@ function addTeam(){
             "quest3" : quest3
         },
         success : function(back){
-              // appendDepInfo();//测试位置
+              
               if(back.status == 1){
                 console.log(back);
-                appendDepInfo();//正常调用位置
+                // appendDepInfo();//正常调用位置
                 //location.reload();
               } else {
                 alert(back.info);
@@ -226,19 +281,19 @@ function addTeam(){
         // 发送请求数据，接收回调数据，反映在界面中
       });
     }
-    function appendDepInfo() {
-      var asso = $("#teamselect").val();
-      var dep1 = $("#department_1").val();
-      var dep2 = $("#department_2").val();
-      var content = "<tr><th>" + asso + "</th><th>" + dep1 + "</th><th>" + dep2 + "</th><th>#</th><th><div class='btn-group btn-group-sm' role='group' aria-label='Small button group'><button type='button' class='btn btn-default' id='depChange'>修改</button><button type='button' class='btn btn-default' id='depDelet'>删除</button></div></th></tr>"
-      $("tbody").append(content);
-    }
-    <?php
-    echo $res;
-    ?>
   });
 }
-// 根据所选社团显示部门及问题
+//添加社团信息（完）
+function appendDepInfo() {
+    var idrecord = "<?php echo $recruitInfo[0]['id']; ?>"
+    console.log(idrecord);
+    var asso = $("#teamselect").val();
+    var dep1 = $("#department_1").find('option:selected').text();
+    var dep2 = $("#department_2").find('option:selected').text();
+    var content = "<tr id=" + idrecord + "><th>" + asso + "</th><th>" + dep1 + "</th><th>" + dep2 + "</th><th>#</th><th><div class='btn-group btn-group-sm' role='group' aria-label='Small button group'><button type='button' class='btn btn-default' id='depChange'>修改</button><button type='button' class='btn btn-default' id='depDelet'>删除</button></div></th></tr>";
+    $("tbody").append(content);
+}
+// 根据所选社团显示部门及问题(完)
 function showTeam(){
   $("#depAdd").click(function(){
     if($("#teamselect").val() == "==请选择=="){
@@ -254,13 +309,62 @@ function changeDep() {
  $("depChange").click(function(){});
 }
 // 删除社团
-function deleteTeam() {}
+function deleteTeam() {
+  $("#enrollWrap").find(".del-btn").each(function(){
+    $(this).click(function(){
+      var id = $(this).find("span").html();
+      $.ajax({
+        type : 'POST',
+        url : "{:U('Home/User/delDepartment')}",
+        dataType : 'json',
+        data : {
+          "id" : id
+        },
+        success : function(back){
+          if(back.status == 1){
+            $(this).parent().parent().remove();
+            location.reload();
+          } else if (back.status == 0){
+            alert(back.info);
+          }
+        },
+        error : function(){
+          alert("异常");
+        }
+      });
+    });
+  });
+}
 
 $(document).ready(function(){
+  // 社团及部门数组
+  teamNum = ['科协','外联','办公室'];
+  teamDepartment = [];
+  teamDepartment[0] = ['电子部','计算机部','网络部'];
+  teamDepartment[1] = ['b1','b2','b3'];
+  teamDepartment[2] = ['c1','c2','c3'];
+  // 社团问题
+  questArr = [];
+    questArr[0] = ['a?','b?','c?'];
+    questArr[1] = ['d','e','f'];
+
   teamSelector();
   showTeam();
   addTeam();
+  preAdd();
+  deleteTeam();
+  // ss();
 });
+
+//测试函数
+function ss() {
+    var a = <?php echo json_encode($recruitInfo); ?>;
+    var arr = [];
+    for(i in a[0]){
+      arr.push(a[0][i]);
+    }
+    console.log(arr);
+}
 
 </script>
 

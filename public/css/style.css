@@ -144,6 +144,15 @@ span a:hover{
 .depTable span {
     color: #fff;
 }
+.enroll {
+    margin: 10px;
+    padding: 10px;
+    border: 3px solid #fff;
+    box-shadow: 5px 5px 2px #111;
+}
+#enrollWrap span {
+    color: #fff;
+}
 #depSave {
     float: right;
     margin-right: 50px;
@@ -151,13 +160,30 @@ span a:hover{
 .col-sm-3,.col-sm-4,.col-sm-10 {
     padding-left: 0;
 }
-
+.infoTable span {
+    display: none;
+}
+.btn span {
+    display: none;
+}
+.tablecontain span {
+    margin: 0 2px 0 2px;
+}
+.assoTable,.depWrap {
+    margin: 10px 0 10px;
+}
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: #555;
+    margin: 20px 0 20px;
+}
 @media (min-width:600px){.tablecontain{width: 500px;}}
 @media (min-width:992px){.tablecontain{width: 800px;}}
 @media (min-width:400px){#forgetKeyWord{margin-left: 110px;}}
 @media (max-width:400px){#identifyingPicture{margin:-34px 0 0 95px;}}
 @media (min-width:370px){#identifyingPicture{margin:-34px 0 0 120px;}}
-
+/*@media (max-width:400px){.control{display:none;}.control-btn{position: absolute;top: 50px;left: -100px;}}*/
 
 /*btn-primary 微调*/
 
