@@ -40,6 +40,8 @@ class IndexController extends Controller {
         getStuInfo();//登陆检测
         $map["xh"] = I("session.xh","");
         $recruitInfo = M("student_recruit_info")->where($map)->select();
+        $associations = M("association_list")->select();
+        $this->assign("associations",$associations);
         $this->assign("recruitInfo",$recruitInfo);//在前端用这个recruitInfo来存储此学生所有的报名信息
         //在前端一定要存着每条已有的报名信息的id号，删除和更新的时候一定要发送id号，否则无法执行
         $this->display();

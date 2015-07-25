@@ -139,7 +139,7 @@ class UserController extends Controller {
         if (!$map["xh"]) {
             $this->ajaxReturn(array("status" => 0, "info" => "未登录"));
         }
-        if ($studentRecruitInfo->where($map)->delete()) {
+        if (M("student_recruit_info")->where($map)->delete()) {
             $this->ajaxReturn(array("status" => 1, "info" => "成功"));
         }else{
             $this->ajaxReturn(array("status" => 0, "info" => "删除失败"));
@@ -199,7 +199,7 @@ class UserController extends Controller {
         //此接口用于查询社团信息，发送社团名称，返回社团的3个问题以及社团的所有部门
         $name = I("associationname","");
         $departments = M("association_departments")->where(array("association" => $name))->field("departmentName")->select();
-        $info = M("association_list")->where(array("associationname" => $name))->field("associationName,quest1,quest2,quest3")->find();
+        $info = M("association_list")->where(array("associationName" => $name))->field("associationName,quest1,quest2,quest3")->find();
         $info["departments"] = $departments;
         $this->ajaxReturn(array("status" => 0, "data" => $info));
 
