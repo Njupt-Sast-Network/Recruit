@@ -178,6 +178,10 @@ span a:hover{
     background-color: #555;
     margin: 20px 0 20px;
 }
+#status {
+    color: #fff;
+}
+
 @media (min-width:600px){.tablecontain{width: 500px;}}
 @media (min-width:992px){.tablecontain{width: 800px;}}
 @media (min-width:400px){#forgetKeyWord{margin-left: 110px;}}
