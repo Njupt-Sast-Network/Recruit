@@ -491,9 +491,9 @@
 
 
 
-//获取社团
+//获取部门
 //需要teamNum
-//生成teamDepartment
+//生成teamDepartment,depId
 //参数:num -- 所需社团对应代号
 function getDep(back,num) {
     var temp = [];
@@ -600,7 +600,7 @@ function preAdd() {
             status = "很遗憾，你没有被任一部门录取";
             break;
           }
-          var info = "<div id=" + arr[(k-1)*9] + " class='enroll'><div class='assoTable'><span>社团:</span><span>" + arr[(4+(k-1)*9)] + "</span></div><div class='depWrap'><div class='depTable'><span>部门1:</span><span>" + teamDepartment[m][arr[(2+(k-1)*9)]-1] + "</span></div><div class='depTable'><span>部门2:</span><span>" + teamDepartment[m][arr[(3+(k-1)*9)]-1] + "</span></div></div><div id='status' class='depWrap'>录取状态:" + status + "</div><div class='btn-group' role='group' aria-label='Small button group'><button type='button' class='btn btn-default change-btn'>修改<span>" + arr[(k-1)*9] + "</span></button><button type='button' class='btn btn-default del-btn'>删除<span>" + arr[(k-1)*9] + "</span></button></div></div>";
+          var info = "<div id=" + arr[(k-1)*9] + " class='enroll'><div class='assoTable'><span>社团:</span><span>" + arr[(4+(k-1)*9)] + "</span></div><div class='depWrap'><div class='depTable'><span>部门1:</span><span>" + teamDepartment[m][arr[(2+(k-1)*9)]-1] + "</span></div><div class='depTable'><span>部门2:</span><span>" + teamDepartment[m][arr[(3+(k-1)*9)]-1] + "</span></div></div><div id='status' class='depWrap'>录取状态:" + status + "</div><div class='btn-group'  id='prebtn' role='group' aria-label='Small button group'><button type='button' class='btn btn-default change-btn'>修改<span>" + arr[(k-1)*9] + "</span></button><button type='button' class='btn btn-default del-btn'>删除<span>" + arr[(k-1)*9] + "</span></button></div><div style='clear:both'></div></div>";
           $("#enrollWrap").append(info);
   }
 
@@ -710,9 +710,10 @@ function changeDep(arr) {
     var newSaveBtn = "<button type='button' class='btn btn-default change-save-btn' id='depChangeSave'>保存<span>" + id + "</span></button>";
     var newCancelBtn = "<button type='button' class='btn btn-default change-cancel-btn' id='depChangeCancel'>取消<span>" + id + "</span></button>";
     var newContent = "<div class='depWrap'><div class='depTable'><span>部门1</span><select class='form-control tSelector' id=" + 'f' + id + "></select></div><div class='depTable'><span>部门2</span><select class='form-control tSelector' id=" + 's' + id + "></select></div></div><form id='questTable'><div class='form-group'><label for='"+ id +"ans1' id='"+ id +"quest1' class='quest'>问题一:</label><input type='text' class='form-control' id='"+ id +"ans1' placeholder=''></div><div class='form-group'><label for='"+ id +"ans2' id='"+ id +"quest2' class='quest'>问题二:</label><input type='text' class='form-control' id='"+ id +"ans2' placeholder=''></div><div class='form-group'><label for='"+ id +"ans3' id='"+ id +"quest3' class='quest'>问题三:</label><input type='text' class='form-control' id='"+ id +"ans3' placeholder=''></div></form>";
-    
+    var oldOne = "<div id=" + id + " class='enroll'>" + $(this).parent().parent().html() + "</div>";
     // 改内容
-    $(this).parent().prev().html(newContent);
+    $(this).parent().prev().prev().html(newContent);
+    $(this).parent().prev().css("display","none");
     // 改按钮
     $(this).next().replaceWith(newCancelBtn);
     $(this).replaceWith(newSaveBtn);
@@ -721,7 +722,9 @@ function changeDep(arr) {
     // 按钮检测
      $("#enrollWrap").find(".change-cancel-btn").each(function(){
           $(this).click(function(){
-          location.reload();
+          $(this).parent().parent().replaceWith(oldOne);
+          changeDep(arr);
+          // location.reload();
           });
         });
 
@@ -807,9 +810,12 @@ function changeDep(arr) {
 // 删除社团(完)
 function deleteTeam() {
   $("#enrollWrap").find(".del-btn").each(function(){
+    var lock = 1;
     $(this).click(function(){
+      console.log($(this).parent().parent());
       var r = confirm("这将删除本条报名信息，确认删除吗？");
-      if(r == true){
+      if(r == true && lock == 1){
+        lock = 0;
         var id = $(this).find("span").html();
       $.ajax({
         type : 'POST',
@@ -819,8 +825,9 @@ function deleteTeam() {
           "id" : id
         },
         success : function(back){
+          lock = 1;
           if(back.status == 1){
-            $(this).parent().parent().remove();
+            // $(this).parent().parent().remove();
             location.reload();
           } else if (back.status == 0){
             alert(back.info);
@@ -855,6 +862,7 @@ $(document).ready(function(){
   teamNum = [];
   teamDepartment = [];
   questArr = [];
+  depId = [];
 
   makeAss();
   showTeam();
@@ -878,9 +886,8 @@ $(document).ready(function(){
       if(back.status == 0){
 
           getDep(back,tNum);
-          // console.log(back);
           getQuest(back,tNum);
-          console.log(questArr);
+          console.log(back.data);
           updata(tNum);
           addTeam();
         } else {
