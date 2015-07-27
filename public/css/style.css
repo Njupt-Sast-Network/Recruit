@@ -50,9 +50,9 @@ html {
 .second-nav {
 	margin: 0;
 }
-.second-nav li{
+/*.second-nav li{
 	height: 50px;
-}
+}*/
 .nav-contain{
 	padding: 15px 10px 15px 10px;
 }
@@ -138,7 +138,8 @@ span a:hover{
     color: #fff;
 }
 .depTable {
-    margin-left: 50px;
+    /*margin-left: 50px;*/
+    margin: 5px 0 5px;
     display: inline-block;
 }
 .depTable span {
@@ -147,8 +148,8 @@ span a:hover{
 .enroll {
     margin: 10px;
     padding: 10px;
-    border: 3px solid #fff;
-    box-shadow: 5px 5px 2px #111;
+    border-bottom: 1px solid #fff;
+    /*box-shadow: 5px 5px 2px #111;*/
 }
 #enrollWrap span {
     color: #fff;
@@ -159,6 +160,7 @@ span a:hover{
 }
 .col-sm-3,.col-sm-4,.col-sm-10 {
     padding-left: 0;
+    margin: 5px 0 5px 0;
 }
 .infoTable span {
     display: none;
@@ -181,12 +183,33 @@ span a:hover{
 #status {
     color: #fff;
 }
+#prebtn {
+    float: right;
+}
+.nav-link {
+    display: inline-block;
+    height: 50px;
+    /*line-height: 50px;*/
+    padding: 20px 0 20px;
+}
+.nav-contain {
+    padding: 0;
+}
+.nav>li>a {
+    padding: 0 10px 0 10px;
+}
+.navbar-nav>li>a {
+    line-height: 50px;
+}
+
 
 @media (min-width:600px){.tablecontain{width: 500px;}}
 @media (min-width:992px){.tablecontain{width: 800px;}}
 @media (min-width:400px){#forgetKeyWord{margin-left: 110px;}}
 @media (max-width:400px){#identifyingPicture{margin:-34px 0 0 95px;}}
 @media (min-width:370px){#identifyingPicture{margin:-34px 0 0 120px;}}
+@media (max-width:767px){.nav>li>a{padding: 0 5px 0 20px;} .nav-link{height: 30px;}
+                         .navbar-nav>li>a{line-height: 30px;} .form-group{margin: 0 0 10px 0;}}
 /*@media (max-width:400px){.control{display:none;}.control-btn{position: absolute;top: 50px;left: -100px;}}*/
 
 /*btn-primary 微调*/
