@@ -19,9 +19,9 @@
     <![endif]-->
   </head>
   <body>
-    <?php
+<!--     <?php
     dump($recruitInfo);
-    ?> 
+    ?>  -->
     <div class="wrap">
       <!-- 导航栏 -->
       <nav class="navbar navbar-default navbar-inverse">
@@ -125,13 +125,15 @@
 //生成teamDepartment,depId
 //参数:num -- 所需社团对应代号
 function getDep(back,num) {
-    var temp = [];
+    var temp1 = [],temp2 = [];
         for(var j = 0;j<back.data.departments.length;j++){
-            temp.push(back.data.departments[j].departmentname);
+            temp1.push(back.data.departments[j].departmentname);
+            temp2.push(back.data.departments[j].id);
         }
-        teamDepartment[num] = temp;
-        temp = [];
-        console.log(teamDepartment[num]);
+        teamDepartment[num] = temp1;
+        depId[num] = temp2;
+        // temp = [];
+        console.log(depId[num]);
 }
 
 //获取问题
@@ -176,7 +178,7 @@ function preAdd() {
       arr.push(a[i][j]);
       }
     }
-    console.log(arr);
+    // console.log(arr);
     var times = arr.length/9;
     add();
     return arr;
@@ -246,7 +248,7 @@ function updata(num) {
     } else {
       // $("#chooseTable").css("display","block");
       for(var i = 0,newoption = '';i<teamDepartment[num].length;i++){
-        newoption += "<option class='choice' value=" + (i+1) + ">" + teamDepartment[num][i] + "</option>";
+        newoption += "<option class='choice' value=" + depId[num][i] + ">" + teamDepartment[num][i] + "</option>";
         }
       for(var s = 0; s < 3; s++){
       $("#quest" + (s+1)).append("<span class='questcontent'>" + questArr[num][s] + "</span>");
