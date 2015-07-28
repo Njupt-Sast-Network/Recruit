@@ -523,7 +523,7 @@ $(document).ready(function(){
   showTeam();
   makeTeamSelect();
   var arr = preAdd();
-  // addTeam();
+  addTeam();
   deleteTeam();
   changeDep(arr);
 
@@ -544,7 +544,7 @@ $(document).ready(function(){
           getQuest(back,tNum);
           // console.log(back.data);
           updata(tNum);
-          addTeam();
+          // addTeam();
         } else {
           alert(back.status);
         }
