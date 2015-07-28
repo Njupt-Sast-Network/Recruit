@@ -19,9 +19,9 @@
     <![endif]-->
   </head>
   <body>
-<!--     <?php
+    <?php
     dump($recruitInfo);
-    ?>  -->
+    ?> 
     <div class="wrap">
       <!-- 导航栏 -->
       <nav class="navbar navbar-default navbar-inverse">
@@ -134,6 +134,7 @@ function getDep(back,num) {
         depId[num] = temp2;
         // temp = [];
         console.log(depId[num]);
+        console.log(teamDepartment[num]);
 }
 
 //获取问题
@@ -178,7 +179,7 @@ function preAdd() {
       arr.push(a[i][j]);
       }
     }
-    // console.log(arr);
+    console.log(arr);
     var times = arr.length/9;
     add();
     return arr;
@@ -191,6 +192,8 @@ function preAdd() {
         if(arr[(4+k*9)] == teamNum[m]){
           break;
         }
+        // console.log(m);
+        //m为部门序号
       }
       $.ajax({
         type : 'POST',
@@ -204,7 +207,7 @@ function preAdd() {
           if(back.status == 0){
             getDep(back,m);
             getQuest(back,m);
-            preContent(k+1);
+            preContent(k+1,m);
           }
         },
         error : function(){
@@ -212,7 +215,7 @@ function preAdd() {
         }
       });
     }
-  function preContent(k) {
+  function preContent(k,m) {
     var status = "";
           switch(arr[(k-1)*9+8]){
           case "0":
@@ -231,7 +234,16 @@ function preAdd() {
             status = "很遗憾，你没有被任一部门录取";
             break;
           }
-          var info = "<div id=" + arr[(k-1)*9] + " class='enroll'><div class='assoTable'><span>社团:</span><span>" + arr[(4+(k-1)*9)] + "</span></div><div class='depWrap'><div class='depTable'><span>部门1:</span><span>" + teamDepartment[m][arr[(2+(k-1)*9)]-1] + "</span></div><div class='depTable'><span>部门2:</span><span>" + teamDepartment[m][arr[(3+(k-1)*9)]-1] + "</span></div></div><div id='status' class='depWrap'>录取状态:" + status + "</div><div class='btn-group'  id='prebtn' role='group' aria-label='Small button group'><button type='button' class='btn btn-default change-btn'>修改<span>" + arr[(k-1)*9] + "</span></button><button type='button' class='btn btn-default del-btn'>删除<span>" + arr[(k-1)*9] + "</span></button></div><div style='clear:both'></div></div>";
+          var preDep1 = "", preDep2 = "";
+          for(var i = 0;i<teamDepartment[m].length;i++){
+            if(arr[(2+(k-1)*9)] == depId[m][i]){
+              preDep1 = teamDepartment[m][i];
+            }
+            if(arr[(3+(k-1)*9)] == depId[m][i]){
+              preDep2 = teamDepartment[m][i];
+            }
+          }
+          var info = "<div id=" + arr[(k-1)*9] + " class='enroll'><div class='assoTable'><span>社团:</span><span>" + arr[(4+(k-1)*9)] + "</span></div><div class='depWrap'><div class='depTable'><span>部门1:</span><span>" + preDep1 + "</span></div><div class='depTable'><span>部门2:</span><span>" + preDep2 + "</span></div></div><div id='status' class='depWrap'>录取状态:" + status + "</div><div class='btn-group'  id='prebtn' role='group' aria-label='Small button group'><button type='button' class='btn btn-default change-btn'>修改<span>" + arr[(k-1)*9] + "</span></button><button type='button' class='btn btn-default del-btn'>删除<span>" + arr[(k-1)*9] + "</span></button></div><div style='clear:both'></div></div>";
           $("#enrollWrap").append(info);
   }
 
@@ -372,16 +384,28 @@ function changeDep(arr) {
         break;
         }
       }
+      // value和部门id匹配
+      // var preDep1 = "", preDep2 = "";
+      // var times = arr.length/2;
+      // for(var s = 0;s<teamDepartment[i].length;s++){
+      //   if(arr[(2+(times-1)*9)] == depId[i][s]){
+      //     preDep1 = teamDepartment[i][s];
+      //   }
+      //   if(arr[(3+(k-1)*9)] == depId[i][s]){
+      //     preDep2 = teamDepartment[i][s];
+      //   }
+      // }
+      // 生成选项
       for(var k = 0,newoption1 = '',newoption2 = '';k<teamDepartment[i].length;k++){
-        if((k+1) == arr[j+2]){
-          newoption1 += "<option class='choice' value=" + (k+1) + " " + "selected='selected'>" + teamDepartment[i][k] + "</option>";
+        if(depId[i][k] == arr[j+2]){
+          newoption1 += "<option class='choice' value=" + depId[i][k] + " " + "selected='selected'>" + teamDepartment[i][k] + "</option>";
         } else {
-          newoption1 += "<option class='choice' value=" + (k+1) + ">" + teamDepartment[i][k] + "</option>";
+          newoption1 += "<option class='choice' value=" + depId[i][k] + ">" + teamDepartment[i][k] + "</option>";
         }
-        if((k+1) == arr[j+3]){
-          newoption2 += "<option class='choice' value=" + (k+1) + " " + "selected='selected'>" + teamDepartment[i][k] + "</option>";
+        if(depId[i][k] == arr[j+3]){
+          newoption2 += "<option class='choice' value=" + depId[i][k] + " " + "selected='selected'>" + teamDepartment[i][k] + "</option>";
         } else {
-          newoption2 += "<option class='choice' value=" + (k+1) + ">" + teamDepartment[i][k] + "</option>";
+          newoption2 += "<option class='choice' value=" + depId[i][k] + ">" + teamDepartment[i][k] + "</option>";
         }
       }
       // console.log(newoption);
@@ -499,7 +523,7 @@ $(document).ready(function(){
   showTeam();
   makeTeamSelect();
   var arr = preAdd();
-  addTeam();
+  // addTeam();
   deleteTeam();
   changeDep(arr);
 
@@ -518,7 +542,7 @@ $(document).ready(function(){
 
           getDep(back,tNum);
           getQuest(back,tNum);
-          console.log(back.data);
+          // console.log(back.data);
           updata(tNum);
           addTeam();
         } else {
