@@ -198,7 +198,7 @@ class UserController extends Controller {
     public function associationinfo(){
         //此接口用于查询社团信息，发送社团名称，返回社团的3个问题以及社团的所有部门
         $name = I("associationname","");
-        $departments = M("association_departments")->where(array("association" => $name))->field("departmentName")->select();
+        $departments = M("association_departments")->where(array("association" => $name))->field("id,departmentName")->select();
         $info = M("association_list")->where(array("associationName" => $name))->field("associationName,quest1,quest2,quest3")->find();
         $info["departments"] = $departments;
         $this->ajaxReturn(array("status" => 0, "data" => $info));
