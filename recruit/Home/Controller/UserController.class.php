@@ -102,16 +102,10 @@ class UserController extends Controller {
             $this->ajaxReturn(array("status" => 0, "info" => $value."缺失"));
             }
         }
-        $map["xh"] = $data['xh'];
-        $map["association"] = $data['association'];
-        $rec = M("student_recruit_info");
-        if ($rec->where($map)->count() > 0) {
-            $this->ajaxReturn(array("status" => 0, "info" => "你已经报名了这个社团"));
-        }
         $data['quest1'] = I('post.quest1', '');
         $data['quest2'] = I('post.quest2', '');
         $data['quest3'] = I('post.quest3', '');
-        $res = $rec->add($data);
+        $res = $studentRecruitInfo->studentRegisterAssociation($data['xh'], $data);
         if ($res) {
             $this->ajaxReturn(array("status" => 1, "info" => "成功"));
         }else{
