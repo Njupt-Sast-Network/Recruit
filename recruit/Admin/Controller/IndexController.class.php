@@ -46,6 +46,8 @@ class IndexController extends Controller
                 redirect("index");
                 break;
         }
+        $_SESSION["nowassociation"] = $nowassociation;
+        $_SESSION["nowdepartment"] = $nowdepartment;
         $map["association"] = $nowassociation;
         $alldepartment = M("association_departments")->where($map)->field("id,departmentName")->select();
         $this->assign("nowassociation", $nowassociation);
@@ -59,9 +61,56 @@ class IndexController extends Controller
     }
     public function recuritlist()
     {
+        $allrecruit = M("student_recruit_info")->where(array("association"=>$_SESSION["nowassociation"]))->select();
+        $basic = M("student_basic_info");
+        $tmpdepartments = M("association_departments")->select();
+        foreach ($tmpdepartments as $vt) {
+            $departments[$vt["id"]] = $vt;//用id为下标序列化部门列表
+        }
+        $this->assign("departments",$departments);
+        foreach ($allrecruit as $p => $vr) {
+            $map["xh"] = $vr["xh"];
+            $allrecruit[$p]["name"] = $basic->where($map)->getField("name");
+            $allrecruit[$p]["departmentname1"] = $departments[$vr["department1"]]["departmentname"];
+            $allrecruit[$p]["departmentname2"] = $departments[$vr["department2"]]["departmentname"];
+            if (($vr["acceptstate"] == 0 && $vr["department1"] == $_SESSION["nowdepartment"]) || ($vr["acceptstate"] == -1 && $vr["department2"] == $_SESSION["nowdepartment"])) {
+                $allrecruit[$p]["able"] = 1;
+            }else{
+                $allrecruit[$p]["able"] = 0;
+            }
+        }
+        $this->assign("recruit",$allrecruit);
         $this->display();
     }
-
+    public function apply(){
+        //录取
+        if (!isset($_POST)) {
+            $this->error("未选择");
+        }
+        $id = $_POST["id"];
+        $info = M("student_recruit_info")->where('id='.$id)->find();
+        if (($info["acceptstate"] == 0 && $info["department1"] == $_SESSION["nowdepartment"]) || ($info["acceptstate"] == -1 && $info["department2"] == $_SESSION["nowdepartment"])) {
+                M("student_recruit_info")->where('id='.$id)->setField("acceptState",$_SESSION["nowdepartment"]);
+                $this->success("成功");
+        }else{
+            $this->error("无权限访问");
+        }
+    }
+    public function refuse(){
+        //拒绝
+        if (!isset($_POST)) {
+            $this->error("未选择");
+        }
+        $id = $_POST["id"];
+        $info = M("student_recruit_info")->where('id='.$id)->find();
+        if (($info["acceptstate"] == 0 && $info["department1"] == $_SESSION["nowdepartment"]) || ($info["acceptstate"] == -1 && $info["department2"] == $_SESSION["nowdepartment"])) {
+            $status = $info["acceptstate"] - 1;
+            M("student_recruit_info")->where('id='.$id)->setField("acceptState",$status);
+            $this->success($status);
+        }else{
+            $this->error("无权限访问");
+        }
+    }
     public function AssocMgr()
     {
         $data["identity"] = I("session.identity", "");
@@ -158,11 +207,11 @@ class IndexController extends Controller
                 };
                 $_POST = I('post.');
                 $map['association'] = $_POST['association'];
-                $map['departmentname'] = $_POST['departmentname'];
-                if ($db->where($map)->select() !== array()) {
+                $map['departmentName'] = $_POST['departmentName'];
+                if ($db->where($map)->count() > 0) {
                     $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该部门已存在'));
                 };
-                if ($db->where(array('username' => $_POST['username']))->select() !== array()) {
+                if ($db->where(array('username' => $_POST['username']))->count() > 0) {
                     $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该用户名已存在'));
                 }
                 $_POST['password'] = md5('spf' . $_POST['password']);

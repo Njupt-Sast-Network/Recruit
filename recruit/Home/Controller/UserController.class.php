@@ -109,7 +109,7 @@ class UserController extends Controller {
         if ($res) {
             $this->ajaxReturn(array("status" => 1, "info" => "成功"));
         }else{
-            $this->ajaxReturn(array("status" => 0, "info" => "新增失败"));
+            $this->ajaxReturn(array("status" => 0, "info" => "你已经报名了这个社团"));
         }
     }
 

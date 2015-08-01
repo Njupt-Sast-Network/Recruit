@@ -91,14 +91,12 @@
             </form>
             <table class="table table-hover table-bordered table-condensed">
                 <tr>
-                    <th>部门ID</th>
                     <th>部门名称</th>
                     <th>登录账户名</th>
                     <th>操作</th>
                 </tr>
                 <volist name="allDeptUser" id="vo">
                     <tr>
-                        <td>{$vo.id}</td>
                         <td>{$vo.departmentname}</td>
                         <!-- 坑，数据库字段名是大写的，但是TP默认只认全小写 -->
                         <td>{$vo.username}</td>
@@ -215,7 +213,7 @@
                 $.post("{:U('Index/handleDept')}", {
                         "action": 'add',
                         "association": '{$nowassociation}',
-                        "departmentname": newdeptname,
+                        "departmentName": newdeptname,
                         "username": newusrname,
                         "password": newpwd
                     },
@@ -224,8 +222,7 @@
                             alert('添加成功');
                             window.location.reload(true);
                         } else {
-                            alert('添加失败');
-                            console.log(result);
+                            alert(result.errmsg);
                         };
                     });
                 break;
