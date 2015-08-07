@@ -48,3 +48,5 @@ recruit/Runtime/Logs/Common/15_07_18.log
 /recruit/Runtime/
 recruit/Runtime/*
 recruit/Runtime
+recruit/Admin/Conf/config.php
+recruit/Home/Conf/config.php
