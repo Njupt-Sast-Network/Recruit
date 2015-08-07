@@ -18,7 +18,7 @@ class UserController extends Controller
                 } else {
                     unset($info["password"]);
                     session("identity", "部门管理员");
-                    session("departmentName", $info["departmentName"]);
+                    session("departmentName", $info["departmentname"]);
                     session("associationName", $info["association"]);
                     $this->ajaxReturn(array("status" => 1, "data" => $info));
                 }
