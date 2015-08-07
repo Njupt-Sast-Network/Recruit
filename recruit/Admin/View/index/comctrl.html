@@ -62,6 +62,7 @@
     <div class="div2">
         <div class="container">
             <button type="button" class="btn btn-primary active">报名信息</button>
+            <?php if ($_SESSION["identity"] == "社团管理员" || $_SESSION["identity"] == "超级管理员") {?>
             <div class="btn-group">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     管理社团 <span class="caret"></span>
@@ -73,6 +74,8 @@
             </div>
             <!-- <button type="button" class="btn btn-primary" id="btnAssocMgr">管理社团</button> -->
             <button type="button" class="btn btn-primary">修改密码</button>
+            <?php } ?>
+            <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
             <button type="button" class="btn btn-success">生成XLS</button>
             <button type="button" class="btn btn-danger">结束部门招新</button>
         </div>

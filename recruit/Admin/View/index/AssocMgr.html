@@ -46,7 +46,7 @@
             社团列表
             <select class="form-control" id="nowass">
                 <volist name="associations" id="as">
-                    <option value="{$as.associationname}" <?php if ($as[ "associationname"]==$nowassociation) { echo "selected=selected"; } ?>>{$as.associationname}</option>
+                    <option value="{$as.associationName}" <?php if ($as[ "associationName"]==$nowassociation) { echo "selected=selected"; } ?>>{$as.associationName}</option>
                 </volist>
             </select>
         </div>
@@ -74,6 +74,7 @@
                 </ul>
             </div>
             <button type="button" class="btn btn-primary">修改密码</button>
+            <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
             <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span> 生成XLS</button>
             <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-check"></span> 结束部门招新</button>
         </div>

@@ -305,4 +305,8 @@ class IndexController extends Controller
             $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
         }
     }
+    public function loginout(){
+        session(null);
+        $this->redirect("index");
+    }
 }
