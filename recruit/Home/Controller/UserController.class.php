@@ -83,6 +83,8 @@ class UserController extends Controller {
             $this->ajaxReturn(array("status" => 0, "info" => "此学号已被注册,如果忘记密码请寻找社团管理员"));
         }else{
             $back = $studentBasicInfo->add($data);
+            session("xh",$data["xh"]);//登陆成功后将学生学号、姓名写入session
+            session("name",$data["name"]);
             $returndata["data"] = $back;
             $returndata["info"] = "成功";
             $returndata["status"] = 1;
