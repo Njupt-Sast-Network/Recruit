@@ -34,7 +34,7 @@
           <a href="__URL__/reg" data-toggle="link" role="tab" aria-expanded="true" ><span>注册</span></a>
         </li>
         <li role="presentation" id="forgetKeyWord">
-          <a href="#" data-toggle="link"><span>忘记密码</span></a>
+          <a href="#" data-toggle="link" id="forget"><span>忘记密码</span></a>
         </li>
       </ul>
 
@@ -80,7 +80,10 @@
     <script>
     
 $(document).ready(function(){
-        //array of judgement
+
+$("#forget").click(function(){
+  alert("请联系社团管理员，告知其学号姓名后重置密码");
+});
 $("#reg").click(function(){
         var xh = $("#inputStudentId1").val();
         var name = $("#inputName1").val();

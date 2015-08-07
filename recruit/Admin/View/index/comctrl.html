@@ -46,7 +46,7 @@
             社团列表
             <select class="form-control" id="nowass">
                 <volist name="associations" id="as">
-                    <option value="{$as.associationname}" <?php if ($as[ "associationname"]==$nowassociation) { echo "selected=selected"; } ?>>{$as.associationname}</option>
+                    <option value="{$as.associationName}" <?php if ($as[ "associationName"]==$nowassociation) { echo "selected=selected"; } ?>>{$as.associationName}</option>
                 </volist>
             </select>
         </div>
@@ -54,6 +54,7 @@
             部门列表
             <select class="form-control" id="nowdep">
                 <volist name="departments" id="de">
+                    <?php dump($de); ?>
                     <option value="{$de.id}" association="{$de.association}" <?php if ($de[ "id"]==$nowdepartment) { echo "selected=selected"; } ?>>{$de.departmentname}</option>
                 </volist>
             </select>
