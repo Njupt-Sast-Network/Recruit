@@ -205,6 +205,8 @@ function preAdd() {
             getDep(back,m);
             getQuest(back,m);
             preContent(k+1,m);
+            console.log(arr[(k-1)*9+8]);
+            disableBtn();
           }
         },
         error : function(){
@@ -242,6 +244,18 @@ function preAdd() {
           }
           var info = "<div id=" + arr[(k-1)*9] + " class='enroll'><div class='assoTable'><span>社团:</span><span>" + arr[(4+(k-1)*9)] + "</span></div><div class='depWrap'><div class='depTable'><span>部门1:</span><span>" + preDep1 + "</span></div><div class='depTable'><span>部门2:</span><span>" + preDep2 + "</span></div></div><div id='status' class='depWrap'>录取状态:" + status + "</div><div class='btn-group'  id='prebtn' role='group' aria-label='Small button group'><button type='button' class='btn btn-default change-btn'>修改<span>" + arr[(k-1)*9] + "</span></button><button type='button' class='btn btn-default del-btn'>删除<span>" + arr[(k-1)*9] + "</span></button></div><div style='clear:both'></div></div>";
           $("#enrollWrap").append(info);
+  }
+  function disableBtn() {
+    $(".del-btn").each(function(){
+      if($(this).parent().prev().html() != "录取状态:暂无结果"){
+        $(this).attr("disabled","disabled");
+      }
+    });
+    $(".change-btn").each(function(){
+      if($(this).parent().prev().html() != "录取状态:暂无结果"){
+        $(this).attr("disabled","disabled");
+      }
+    });
   }
 
   }
