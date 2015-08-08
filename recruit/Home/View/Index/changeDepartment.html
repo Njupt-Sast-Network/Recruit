@@ -124,7 +124,7 @@
 function getDep(back,num) {
     var temp1 = [],temp2 = [];
         for(var j = 0;j<back.data.departments.length;j++){
-            temp1.push(back.data.departments[j].departmentname);
+            temp1.push(back.data.departments[j].departmentName);
             temp2.push(back.data.departments[j].id);
         }
         teamDepartment[num] = temp1;
@@ -198,7 +198,7 @@ function preAdd() {
         dataType : 'json',
         async : false,
         data : {
-          "associationname" : teamNum[m]
+          "associationName" : teamNum[m]
         },
         success : function(back){
           if(back.status == 0){
@@ -532,7 +532,7 @@ $(document).ready(function(){
     url : "{:U('Home/User/associationinfo')}",
     dataType : 'json',
     data : {
-        "associationname" : teamNum[tNum-1],
+        "associationName" : teamNum[tNum-1],
         },
     success : function(back){
       if(back.status == 0){

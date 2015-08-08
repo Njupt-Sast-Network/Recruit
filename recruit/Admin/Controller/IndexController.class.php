@@ -38,7 +38,7 @@ class IndexController extends Controller
             case '超级管理员':
                 $associations = M("association_list")->field("associationName")->select();
                 $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
-                $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationname"]; //nowassociation和nowdepartment
+                $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationName"]; //nowassociation和nowdepartment
                 session('associationName', $nowassociation);
                 $nowdepartment = I("get.nowdepartment", "") ? I("get.nowdepartment", "") : $departments[0]["id"]; //这两个意思是当前正在以某个社团的某个部门的身份进行操作
                 break; //因为超级管理员能够变成所有身份，所以get过来什么就变什么，不需要做权限检测
@@ -71,8 +71,8 @@ class IndexController extends Controller
         foreach ($allrecruit as $p => $vr) {
             $map["xh"] = $vr["xh"];
             $allrecruit[$p]["name"] = $basic->where($map)->getField("name");
-            $allrecruit[$p]["departmentname1"] = $departments[$vr["department1"]]["departmentname"];
-            $allrecruit[$p]["departmentname2"] = $departments[$vr["department2"]]["departmentname"];
+            $allrecruit[$p]["departmentName1"] = $departments[$vr["department1"]]["departmentName"];
+            $allrecruit[$p]["departmentName2"] = $departments[$vr["department2"]]["departmentName"];
             if (($vr["acceptstate"] == 0 && $vr["department1"] == $_SESSION["nowdepartment"]) || ($vr["acceptstate"] == -1 && $vr["department2"] == $_SESSION["nowdepartment"])) {
                 $allrecruit[$p]["able"] = 1;
             }else{
@@ -134,7 +134,7 @@ class IndexController extends Controller
             case '超级管理员':
                 $associations = M("association_list")->field("associationName")->select();
                 $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
-                $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationname"];
+                $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationName"];
                 $nowdepartment = I("get.nowdepartment", "") ? I("get.nowdepartment", "") : $departments[0]["id"];
                 session('associationName', $nowassociation);
                 break;
@@ -249,7 +249,7 @@ class IndexController extends Controller
             case '超级管理员':
                 $associations = M("association_list")->field("associationName")->select();
                 $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
-                $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationname"];
+                $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationName"];
                 $nowdepartment = I("get.nowdepartment", "") ? I("get.nowdepartment", "") : $departments[0]["id"];
                 break;
             default:

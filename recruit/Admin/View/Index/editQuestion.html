@@ -54,7 +54,7 @@
             部门列表
             <select class="form-control" id="nowdep">
                 <volist name="departments" id="de">
-                    <option value="{$de.id}" association="{$de.association}" <?php if ($de[ "id"]==$nowdepartment) { echo "selected=selected"; } ?>>{$de.departmentname}</option>
+                    <option value="{$de.id}" association="{$de.association}" <?php if ($de[ "id"]==$nowdepartment) { echo "selected=selected"; } ?>>{$de.departmentName}</option>
                 </volist>
             </select>
         </div>

@@ -7,3 +7,5 @@ New recruit website for NJUPT
     'DB_PARAMS' => array(\PDO::ATTR_CASE => \PDO::CASE_NATURAL),
     'URL_CASE_INSENSITIVE' => false,
 ```
+
+然后把数据库的`association_departments`表中的`departmentname`字段改为`departmentName`。
