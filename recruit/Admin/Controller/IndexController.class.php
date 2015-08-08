@@ -37,6 +37,7 @@ class IndexController extends Controller
                 break;
             case '超级管理员':
                 $associations = M("association_list")->field("associationName")->select();
+                $map['association'] = I('get.nowassociation');
                 $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
                 $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationName"]; //nowassociation和nowdepartment
                 session('associationName', $nowassociation);

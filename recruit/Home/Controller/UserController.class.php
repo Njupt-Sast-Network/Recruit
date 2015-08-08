@@ -107,7 +107,7 @@ class UserController extends Controller
         $data['association'] = I('post.association', '');
         foreach ($data as $key => $value) {
             if (!$value) {
-                $this->ajaxReturn(array("status" => 0, "info" => $value . "缺失"));
+                $this->ajaxReturn(array("status" => 0, "info" => $key . "缺失"));
             }
         }
         $data['quest1'] = I('post.quest1', '');
