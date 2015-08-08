@@ -198,6 +198,7 @@
     <script>
         $(document).ready(function(){
           // check();
+          var count = 0;
           var makeDay = timeTable();
           var preDay = preBirth();
           $("#inputYear").change(makeDay);
@@ -206,8 +207,19 @@
             makeDay();
             preDay();
           }
+          check();
           $("#changeInfo").click(function(){
-            ajax();
+            count = 0;
+            $(".form-control").each(function(){
+              if($(this).val() == ''){
+                count += 1;
+              }
+            });
+            if(count != 0){
+              alert("请完善您的个人信息");
+            } else {
+              ajax();
+            }
           });          
         });
         //预填生日
@@ -221,19 +233,18 @@
          return function(){$("#inputDay option[value=" + data[2] + "]").attr("selected","selected");};
 
         }
-        // 检查填没填全(感觉可以省略，后台有)
+        // 检查填没填全
         function check() {
-          $(".form-horizontal").find(".form-group").each(function(){
-            var theinput = $(this).children(".col-sm-10").children(".form-control");
-            var tips = theinput.attr("placeholder");
-            // theinput.focus(function(){
-            //   theinput.attr("placeholder",tips);
-            // });
-            // theinput.blur(function(){
-            //   if(theinput.attr("placeholder") == tips){
-            //     theinput.attr("placeholder",tips);
-            //   }
-            // });
+          $(".form-control").each(function(){
+            $(this).blur(function(){
+              if($(this).val() == ''){
+                $(this).addClass("unChecked")
+                       .removeClass("checked");
+              } else {
+                $(this).addClass("checked")
+                       .removeClass("unChecked");
+              }
+            });
           });
         }
         //生成日历
@@ -333,8 +344,8 @@
             dataType : "json",
             success : function(back){
               if(back.status == 1){
-                console.log(back);
-                //location.reload();
+                alert("更新成功");
+                location.reload();
               } else {
                 alert(back.info);
               }
