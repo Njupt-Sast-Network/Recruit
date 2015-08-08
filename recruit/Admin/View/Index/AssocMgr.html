@@ -214,13 +214,12 @@
                 $.post("{:U('Index/handleDept')}", {
                         "action": 'add',
                         "association": '{$nowassociation}',
-                        "departmentname": newdeptname,
+                        "departmentName": newdeptname,
                         "username": newusrname,
                         "password": newpwd
                     },
                     function(result) {
                         if (result.errno == 0) {
-                            console.log(result);
                             alert('添加成功');
                             window.location.reload(true);
                         } else {

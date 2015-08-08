@@ -217,7 +217,7 @@ class IndexController extends Controller
                 $_POST['password'] = md5('spf' . $_POST['password']);
                 $db->create($_POST);
                 if ($db->add()) {
-                    $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success','sql'=>$db->getLastSql()));
+                    $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
                 }
                 break;
             default:
