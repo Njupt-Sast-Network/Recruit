@@ -27,8 +27,8 @@
                 <tr recruitid="{$va.id}">
                     <td>{$va.xh}</td>
                     <td>{$va.name}</td>
-                    <td>{$va.departmentname1}</td>
-                    <td>{$va.departmentname2}</td>
+                    <td>{$va.departmentName1}</td>
+                    <td>{$va.departmentName2}</td>
                     <td class="status"><?php 
             switch ($va["acceptstate"]) {
                 case 0:
@@ -41,7 +41,7 @@
                     echo "彻底没戏";
                     break;
                 default:
-                    echo $departments[$va["acceptstate"]]["departmentname"].'录取';
+                    echo $departments[$va["acceptstate"]]["departmentName"].'录取';
                     break;
             } ?></td>
                     <td>
@@ -70,7 +70,7 @@
     </p>
 <script type="text/javascript">
 $(document).ready(function(){
-    var nowdepartment = '<?php echo $departments[$_SESSION["nowdepartment"]]["departmentname"]; ?>';
+    var nowdepartment = '<?php echo $departments[$_SESSION["nowdepartment"]]["departmentName"]; ?>';
     $(document).on("click",".accept",function(){
         var that = $(this).parents("tr");
         var id = that.attr("recruitid");

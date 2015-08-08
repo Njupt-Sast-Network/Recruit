@@ -54,7 +54,7 @@
             部门列表
             <select class="form-control" id="nowdep">
                 <volist name="departments" id="de">
-                    <option value="{$de.id}" association="{$de.association}" <?php if ($de[ "id"]==$nowdepartment) { echo "selected=selected"; } ?>>{$de.departmentname}</option>
+                    <option value="{$de.id}" association="{$de.association}" <?php if ($de[ "id"]==$nowdepartment) { echo "selected=selected"; } ?>>{$de.departmentName}</option>
                 </volist>
             </select>
         </div>
@@ -93,7 +93,7 @@
                 <select class="form-control">
                     <option>请选择...</option>
                     <volist name="alldepartment" id="vap">
-                        <option value="{$vap.id}">{$vap.departmentname}</option>
+                        <option value="{$vap.id}">{$vap.departmentName}</option>
                     </volist>
                 </select>
             </div>
@@ -102,7 +102,7 @@
                 <select class="form-control">
                     <option>请选择...</option>
                     <volist name="alldepartment" id="vap">
-                        <option value="{$vap.id}">{$vap.departmentname}</option>
+                        <option value="{$vap.id}">{$vap.departmentName}</option>
                     </volist>
                 </select>
             </div>
@@ -114,7 +114,7 @@
                     <option value="-1">被第一部门拒绝</option>
                     <option value="-2">被第二部门拒绝</option>
                     <volist name="alldepartment" id="vap">
-                        <option value="{$vap.departmentname}">{$vap.departmentname}</option>
+                        <option value="{$vap.departmentName}">{$vap.departmentName}</option>
                     </volist>
                 </select>
             </div>
