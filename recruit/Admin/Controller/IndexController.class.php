@@ -207,12 +207,12 @@ class IndexController extends Controller
                 };
                 $_POST = I('post.');
                 $map['association'] = $_POST['association'];
-                $map['departmentname'] = $_POST['departmentName'];
+                $map['departmentName'] = $_POST['departmentName'];
                 if ($db->where($map)->count() > 0) {
-                    $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该部门已存在','sql'=>$db->getLastSql()));
+                    $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该部门已存在'));
                 };
                 if ($db->where(array('username' => $_POST['username']))->count() > 0) {
-                    $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该用户名已存在','sql'=>$db->getLastSql()));
+                    $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该用户名已存在'));
                 }
                 $_POST['password'] = md5('spf' . $_POST['password']);
                 $db->create($_POST);
