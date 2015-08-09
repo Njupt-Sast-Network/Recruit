@@ -19,6 +19,9 @@
     <![endif]-->
   </head>
   <body>
+    <?php
+    dump ($stuinfo);
+    ?>
     <div class="wrap">
       <!-- 导航栏 -->
       <nav class="navbar navbar-default navbar-inverse">
@@ -66,7 +69,7 @@
                 <!-- 性别这里写下拉框或者单选，数据库中0表示未选择，1表示男，2表示女 -->
                 <div class="col-sm-10">
                     <select class="form-control" id="inputSex">
-                        <option value="0">==请选择==</option>
+                        <!-- <option value="0">==请选择==</option> -->
                         <option value="1" 
                         <?php
                         if($stuinfo['sex'] == '1'){
@@ -89,17 +92,17 @@
                 <!-- 生日用3个下拉框来表示年月日 -->
                     <div class="col-sm-4">
                         <select class="form-control" id="inputYear">
-                        <option value="0">请选择</option>
+                        <!-- <option value="0">请选择</option> -->
                         </select>
                     </div>
                     <div class="col-sm-3">
                         <select class="form-control" id="inputMonth">
-                        <option value="0"></option>
+                        <!-- <option value="0"></option> -->
                         </select>
                     </div>
                     <div class="col-sm-3">
                         <select class="form-control" id="inputDay">
-                        <option value="0"></option>
+                        <!-- <option value="0"></option> -->
                         </select>
                     </div>
                     
@@ -108,7 +111,7 @@
                 <label for="inputQQ" class="col-sm-2 control-label">QQ</label>
                     <div class="col-sm-10">
                       <!-- 预填信息可以这么写，在value后面写原生php，下同 -->
-                        <input type="text" class="form-control" id="inputQQ" placeholder="请输入QQ号" value="<?php 
+                        <input type="text" class="form-control" id="inputQQ" placeholder="请输入QQ号" notice="2-4位中文字符" value="<?php 
                 if ($stuinfo["qq"] != 0) {
                   echo($stuinfo["qq"]);
                 }
@@ -139,7 +142,7 @@
                 <label for="inputDorm" class="col-sm-2 control-label">宿舍</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputDorm" placeholder="请输入宿舍地址" value="<?php
-                        if($stuinfo["dorm"] != 0) {
+                        if($stuinfo["dorm"] != '') {
                           echo($stuinfo["dorm"]);
                         }
                         ?>">
@@ -149,7 +152,7 @@
                 <label for="inputCollege" class="col-sm-2 control-label">学院</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputCollege" placeholder="请输入学院名称" value="<?php
-                        if($stuinfo["college"] != 0) {
+                        if($stuinfo["college"] != '') {
                           echo($stuinfo["college"]);
                         }
                         ?>">
@@ -159,7 +162,7 @@
                 <label for="inputMajor" class="col-sm-2 control-label">专业</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputMajor" placeholder="请输入专业名称" value="<?php
-                        if($stuinfo["major"] != 0) {
+                        if($stuinfo["major"] != '') {
                           echo($stuinfo["major"]);
                         }
                         ?>">
@@ -169,7 +172,7 @@
                 <label for="inputGaozhong" class="col-sm-2 control-label">高中</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputGaozhong" placeholder="请输入高中名称" value="<?php
-                        if($stuinfo["gaozhong"] != 0) {
+                        if($stuinfo["gaozhong"] != '') {
                           echo($stuinfo["gaozhong"]);
                         }
                         ?>">
@@ -211,10 +214,12 @@
           $("#changeInfo").click(function(){
             count = 0;
             $(".form-control").each(function(){
-              if($(this).val() == ''){
+              console.log($(this).attr("checked"));
+              if(!$(this).attr("checked")){
                 count += 1;
               }
             });
+            console.log(count);
             if(count != 0){
               alert("请完善您的个人信息");
             } else {
@@ -235,14 +240,36 @@
         }
         // 检查填没填全
         function check() {
+          function regexList() {
+            this.inputName = /^[\u4e00-\u9fa5]{2,4}$/;
+            this.inputQQ = /^\d{5,10}$/;
+            this.inputEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            this.inputTel = /^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8}$/;
+          }
+          var regexMatch = new regexList();
           $(".form-control").each(function(){
+            if($(this).val()){
+              $(this).attr("checked","checked");
+            }
+            var id = $(this).attr("id");
             $(this).blur(function(){
-              if($(this).val() == ''){
-                $(this).addClass("unChecked")
-                       .removeClass("checked");
+              if(regexMatch[id]){
+                var reg = regexMatch[id];
+                if(!reg.test($(this).val())){
+                  $(this).removeAttr("checked");
+                  $(this).css("border-color","#8B0000");
+                } else {
+                  $(this).attr("checked","checked");
+                  $(this).css("border-color","#66afe9");
+                }
               } else {
-                $(this).addClass("checked")
-                       .removeClass("unChecked");
+                if(!$(this).val()){
+                  $(this).removeAttr("checked");
+                  $(this).css("border-color","#8B0000");
+                } else {
+                  $(this).attr("checked","checked");
+                  $(this).css("border-color","#66afe9");
+                }
               }
             });
           });
