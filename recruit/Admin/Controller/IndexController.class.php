@@ -308,9 +308,21 @@ class IndexController extends Controller
             $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
         }
     }
-
+    public function changePwd()
+    {
+        if (I("session.identity", "") !== "超级管理员" || I("session.identity", "") !== "社团管理员") {
+            $this->error('您无权限操作此页面！');
+        }
+        $this->display();
+    }
     public function changePwdStep1()
     {
+        if (I("session.identity", "") !== "超级管理员" || I("session.identity", "") !== "社团管理员") {
+            $this->ajaxReturn(array('status' => -1, 'msg' => "权限不足"));
+        }
+        if (!IS_AJAX) {
+            echo "非法操作";die();
+        }
         $db = D('StudentBasicInfo');
         $result = $db->getStudentInfoByXh(I('post.xh', null, '/^[BHYQ][\d]+/i'));
         if ($result === null || $result['name'] !== I('post.name')) {
@@ -330,6 +342,12 @@ class IndexController extends Controller
 
     public function changePwdStep2()
     {
+        if (I("session.identity", "") !== "超级管理员" || I("session.identity", "") !== "社团管理员") {
+            $this->ajaxReturn(array('status' => -1, 'msg' => "权限不足"));
+        }
+        if (!IS_AJAX) {
+            echo "非法操作";die();
+        }
         $_POST = I('post.');
         if ($_POST['token'] !== session('token') || $_POST['token'] !== md5('NjuptSast' . $_POST['id'] . $_POST['xh'])) {
             $this->ajaxReturn(array('status' => -1, 'msg' => 'Token 不正确'));
