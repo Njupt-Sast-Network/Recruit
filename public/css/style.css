@@ -35,7 +35,7 @@ html {
 	margin:0 50px 10px 50px;
 }
 .first{
-	margin-left: 50px;
+	margin-left: 40px;
 }
 .RL{
 	margin-bottom: 15px;
@@ -204,12 +204,16 @@ span a:hover{
 
 @media (min-width:600px){.tablecontain{width: 500px;}}
 @media (min-width:992px){.tablecontain{width: 800px;}}
+/*@media (min-width:400){.RL>li{margin: 0;}}*/
 @media (min-width:400px){#forgetKeyWord{margin-left: 110px;}}
-@media (max-width:400px){#identifyingPicture{margin:-34px 0 0 95px;}}
+@media (max-width:400px){#identifyingPicture{margin:-34px 0 0 95px;}.RL>li{margin: 0;}}
 @media (min-width:370px){#identifyingPicture{margin:-34px 0 0 120px;}}
 @media (max-width:767px){.nav>li>a{padding: 0 5px 0 20px;} .nav-link{height: 30px;}
-                         .navbar-nav>li>a{line-height: 30px;} .form-group{margin: 0 0 10px 0;}}
-/*@media (max-width:400px){.control{display:none;}.control-btn{position: absolute;top: 50px;left: -100px;}}*/
+                         .navbar-nav>li>a{line-height: 30px;} .form-group{margin: 0 0 10px 0;}
+                         .RL>li>a{padding: 0 10px 0 10px;}}
+/*@media (max-width:400px){.control{display:none;}
+                           .control-btn{position: absolute;top: 50px;left: -100px;}}*/
+/*@media (min-width:600px){.tablecontain{width: 500px;}}*/
 
 /*btn-primary 微调*/
 
