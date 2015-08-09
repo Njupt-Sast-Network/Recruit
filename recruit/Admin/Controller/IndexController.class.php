@@ -62,13 +62,13 @@ class IndexController extends Controller
     }
     public function recuritlist()
     {
-        $allrecruit = M("student_recruit_info")->where(array("association"=>$_SESSION["nowassociation"]))->select();
+        $allrecruit = M("student_recruit_info")->where(array("association" => $_SESSION["nowassociation"]))->select();
         $basic = M("student_basic_info");
         $tmpdepartments = M("association_departments")->select();
         foreach ($tmpdepartments as $vt) {
-            $departments[$vt["id"]] = $vt;//用id为下标序列化部门列表
+            $departments[$vt["id"]] = $vt; //用id为下标序列化部门列表
         }
-        $this->assign("departments",$departments);
+        $this->assign("departments", $departments);
         foreach ($allrecruit as $p => $vr) {
             $map["xh"] = $vr["xh"];
             $allrecruit[$p]["name"] = $basic->where($map)->getField("name");
@@ -76,39 +76,41 @@ class IndexController extends Controller
             $allrecruit[$p]["departmentName2"] = $departments[$vr["department2"]]["departmentName"];
             if (($vr["acceptstate"] == 0 && $vr["department1"] == $_SESSION["nowdepartment"]) || ($vr["acceptstate"] == -1 && $vr["department2"] == $_SESSION["nowdepartment"])) {
                 $allrecruit[$p]["able"] = 1;
-            }else{
+            } else {
                 $allrecruit[$p]["able"] = 0;
             }
         }
-        $this->assign("recruit",$allrecruit);
+        $this->assign("recruit", $allrecruit);
         $this->display();
     }
-    public function apply(){
+    public function apply()
+    {
         //录取
         if (!isset($_POST)) {
             $this->error("未选择");
         }
         $id = $_POST["id"];
-        $info = M("student_recruit_info")->where('id='.$id)->find();
+        $info = M("student_recruit_info")->where('id=' . $id)->find();
         if (($info["acceptstate"] == 0 && $info["department1"] == $_SESSION["nowdepartment"]) || ($info["acceptstate"] == -1 && $info["department2"] == $_SESSION["nowdepartment"])) {
-                M("student_recruit_info")->where('id='.$id)->setField("acceptState",$_SESSION["nowdepartment"]);
-                $this->success("成功");
-        }else{
+            M("student_recruit_info")->where('id=' . $id)->setField("acceptState", $_SESSION["nowdepartment"]);
+            $this->success("成功");
+        } else {
             $this->error("无权限访问");
         }
     }
-    public function refuse(){
+    public function refuse()
+    {
         //拒绝
         if (!isset($_POST)) {
             $this->error("未选择");
         }
         $id = $_POST["id"];
-        $info = M("student_recruit_info")->where('id='.$id)->find();
+        $info = M("student_recruit_info")->where('id=' . $id)->find();
         if (($info["acceptstate"] == 0 && $info["department1"] == $_SESSION["nowdepartment"]) || ($info["acceptstate"] == -1 && $info["department2"] == $_SESSION["nowdepartment"])) {
             $status = $info["acceptstate"] - 1;
-            M("student_recruit_info")->where('id='.$id)->setField("acceptState",$status);
+            M("student_recruit_info")->where('id=' . $id)->setField("acceptState", $status);
             $this->success($status);
-        }else{
+        } else {
             $this->error("无权限访问");
         }
     }
@@ -306,7 +308,19 @@ class IndexController extends Controller
             $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
         }
     }
-    public function loginout(){
+
+    public function changePwd()
+    {
+        if (!IS_AJAX) {
+            $this->display();
+            return;
+        }
+        
+
+    }
+
+    public function loginout()
+    {
         session(null);
         $this->redirect("index");
     }

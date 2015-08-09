@@ -73,21 +73,16 @@
                     <li><a href="__URL__/editQuestion">修改招新问题</a></li>
                 </ul>
             </div>
-            <button type="button" class="btn btn-primary" onclick="javascript:window.location.href='{:U('Index/changePwd')}'">修改新生密码</button>
+            <button type="button" class="btn btn-primary">修改新生密码</button>
             <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
             <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span> 生成XLS</button>
             <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-check"></span> 结束部门招新</button>
         </div>
-        <div class="contianer">
+        <div class="container">
             <!-- 主内容框 -->
-            <h3>当前管理社团：{$nowassociation} </h3>
-            <form>
-                <h4>修改招新问题：</h4>
-                <input type="text" id="quest1" value="{$quest['quest1']}">
-                <input type="text" id="quest2" value="{$quest['quest2']}">
-                <input type="text" id="quest3" value="{$quest['quest3']}">
-                <button class="btn btn-primary" id="btnEditQuestConfirm">确认修改</button>
-            </form>
+            <input type="text" id="xh" placeholder="更改目标的学号">
+            <input type="text" id="name" placeholder="更改目标的姓名">
+            <button class="btn btn-primary" id="btnQuery">查询</button>
         </div>
     </div>
     <!-- .div2 -->
@@ -95,7 +90,7 @@
     $(document).on("change", "#nowass,#nowdep", function() {
         var nowass = $("#nowass").val();
         var nowdep = $("#nowdep").val();
-        location.href = "__URL__/editQuestion?nowassociation=" + nowass;
+        location.href = "__URL__/AssocMgr?nowassociation=" + nowass;
     });
 
     function SetWinHeight(obj) {
@@ -109,22 +104,19 @@
         window.location.href = "__URL__/comctrl";
     })
 
-    $('#btnEditQuestConfirm').click(function() {
-        var quest1 = $('#quest1').val();
-        var quest2 = $('#quest2').val();
-        var quest3 = $('#quest3').val();
-        if (quest1 == '' || quest2 == '' || quest3 == "") {
-            alert('问题不能为空');
-            return;
+    $('#btnQuery').click(function() {
+        var xh = $('#xh').val();
+        var name = $('#name').val();
+        var xhregex = /^[BQH]+[0-9]{8}$/;
+        var nameregex = /[\u4e00-\u9fa5]{2,6}/
+        if (!xhregex.test(xh)) {
+            alert("学号格式错");return;
         };
-        $.post('__URL__/handleEditQuestion', {
-            'associationName': '{$nowassociation}',
-            'quest1': quest1,
-            'quest2': quest2,
-            'quest3': quest3
-        }, function(result) {
-            console.log(result);
-        })
+        if (!nameregex.test(name)) {
+            alert("姓名格式错");return;
+        };
+       
+        
     })
 
     </script>

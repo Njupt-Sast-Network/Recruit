@@ -160,7 +160,7 @@ $("#inputName1").blur(function(){
   if(!$("#inputName1").val()){
   $("#inputName1").attr("placeholder","姓名");
  }
-  var id = /[\u4e00-\u9fa5]{2,4}/;
+  var id = /[\u4e00-\u9fa5]{2,6}/;
     if(!id.test($("#inputName1").val())){
         $("#inputName1").css("border-color","#8B0000");
         $("#inputName1").attr("checked","");

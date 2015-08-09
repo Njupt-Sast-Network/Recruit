@@ -62,22 +62,21 @@
     <div class="div2">
         <div class="container">
             <button type="button" class="btn btn-primary active">报名信息</button>
-            <?php if ($_SESSION["identity"] == "社团管理员" || $_SESSION["identity"] == "超级管理员") {?>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    管理社团 <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="__URL__/AssocMgr">部门管理</a></li>
-                    <li><a href="__URL__/editQuestion">修改招新问题</a></li>
-                </ul>
-            </div>
-            <!-- <button type="button" class="btn btn-primary" id="btnAssocMgr">管理社团</button> -->
-            <button type="button" class="btn btn-primary">修改密码</button>
-            <?php } ?>
-            <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
-            <button type="button" class="btn btn-success">生成XLS</button>
-            <button type="button" class="btn btn-danger">结束部门招新</button>
+            <!-- <?php //if ($_SESSION["identity"] == "社团管理员" || $_SESSION["identity"] == "超级管理员") {?> -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        管理社团 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="__URL__/AssocMgr">部门管理</a></li>
+                        <li><a href="__URL__/editQuestion">修改招新问题</a></li>
+                    </ul>
+                </div>
+                <!-- <button type="button" class="btn btn-primary" id="btnAssocMgr">管理社团</button> -->
+                <button type="button" class="btn btn-primary" onclick="javascript:window.location.href='__URL__/changePwd'">修改新生密码</button>
+                <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
+                <button type="button" class="btn btn-success">生成XLS</button>
+                <button type="button" class="btn btn-danger">结束部门招新</button>
         </div>
         <form class="form-inline">
             <div class="form-group">
