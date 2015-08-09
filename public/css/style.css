@@ -17,10 +17,10 @@ html {
   display: block;
 }
 }
-#tab-list{
+#tab-list {
 	margin:15px;
 }
-.tab-content{
+.tab-content {
 	padding:0 15px;
 }
 #main {
@@ -37,7 +37,7 @@ html {
 .first{
 	margin-left: 50px;
 }
-.nav{
+.RL{
 	margin-bottom: 15px;
 }
 .nav-tabs>li>a {

@@ -19,9 +19,6 @@
     <![endif]-->
   </head>
   <body>
-    <?php
-    dump ($stuinfo);
-    ?>
     <div class="wrap">
       <!-- 导航栏 -->
       <nav class="navbar navbar-default navbar-inverse">
@@ -43,6 +40,9 @@
         <li class="nav-contain"><a href="__URL__/changeDepartment" class="nav-link">申请报名</a></li>
         <li class="nav-contain active"><a href="__URL__/changeInfo" class="nav-link">修改信息</a></li>
         <li class="nav-contain"><a href="__URL__/changePassword" class="nav-link">修改密码</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" id="logout">注销</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -200,7 +200,7 @@
     <!--<script src="../../../../public/js/ajax.js"></script>-->
     <script>
         $(document).ready(function(){
-          // check();
+          logOut();
           var count = 0;
           var makeDay = timeTable();
           var preDay = preBirth();
@@ -380,6 +380,18 @@
             error : function(){
               alert("异常");
             }
+          });
+        }
+        function logOut() {
+          $("#logout").click(function(){
+            console.log(1);
+            $.ajax({
+              type : "POST",
+              url : "{:U('Home/User/doLogout')}",
+              success : function(){
+                window.location.href = '{:U('Home/Index/login')}';
+              }
+            });
           });
         }
     </script>
