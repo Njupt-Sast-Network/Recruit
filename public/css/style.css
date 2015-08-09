@@ -201,6 +201,9 @@ span a:hover{
 .navbar-nav>li>a {
     line-height: 50px;
 }
+.checkbox {
+  margin: 0 50px 0 50px;
+}
 
 @media (min-width:600px){.tablecontain{width: 500px;}}
 @media (min-width:992px){.tablecontain{width: 800px;}}
@@ -210,7 +213,7 @@ span a:hover{
 @media (min-width:370px){#identifyingPicture{margin:-34px 0 0 120px;}}
 @media (max-width:767px){.nav>li>a{padding: 0 5px 0 20px;} .nav-link{height: 30px;}
                          .navbar-nav>li>a{line-height: 30px;} .form-group{margin: 0 0 10px 0;}
-                         .RL>li>a{padding: 0 10px 0 10px;}}
+                         .RL>li>a{padding: 0 10px 0 10px;}.checkbox{margin: 0;}}
 /*@media (max-width:400px){.control{display:none;}
                            .control-btn{position: absolute;top: 50px;left: -100px;}}*/
 /*@media (min-width:600px){.tablecontain{width: 500px;}}*/
