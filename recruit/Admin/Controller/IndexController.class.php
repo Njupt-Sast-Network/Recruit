@@ -309,14 +309,35 @@ class IndexController extends Controller
         }
     }
 
-    public function changePwd()
+    public function changePwdStep1()
     {
-        if (!IS_AJAX) {
-            $this->display();
+        $db = D('StudentBasicInfo');
+        $result = $db->getStudentInfoByXh(I('post.xh', null, '/^[BHYQ][\d]+/i'));
+        if ($result === null || $result['name'] !== I('post.name')) {
+            $this->ajaxReturn(array('status' => 1, 'errmsg' => '未找到匹配的学号姓名'));
+        }
+        $token = md5('NjuptSast' . $result['id'] . $result['xh']);
+        session('token', $token);
+        $this->ajaxReturn(array(
+            'status' => 0,
+            'errmsg' => 'found',
+            'data' => array(
+                'id' => $result['id'],
+                'token' => $token,
+            ),
+        ));
+    }
+
+    public function changePwdStep2()
+    {
+        $_POST = I('post.');
+        if ($_POST['token'] !== session('token') || $_POST['token'] !== md5('NjuptSast' . $_POST['id'] . $_POST['xh'])) {
+            $this->ajaxReturn(array('status' => -1, 'msg' => 'Token 不正确'));
             return;
         }
-        
-
+        $db = D('StudentBasicInfo');
+        $db->setStudentPassword($_POST['xh'], $_POST['password']);
+        $this->ajaxReturn(array('status' => 0, 'msg' => 'success'));
     }
 
     public function loginout()

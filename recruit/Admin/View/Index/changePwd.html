@@ -80,9 +80,17 @@
         </div>
         <div class="container">
             <!-- 主内容框 -->
-            <input type="text" id="xh" placeholder="更改目标的学号">
-            <input type="text" id="name" placeholder="更改目标的姓名">
-            <button class="btn btn-primary" id="btnQuery">查询</button>
+            <fieldset class="step1">
+                <input type="text" id="xh" placeholder="更改目标的学号">
+                <input type="text" id="name" placeholder="更改目标的姓名">
+                <button class="btn btn-primary" id="btnQuery">查询</button>
+            </fieldset>
+            <div class="step2" style="display:none">
+                <input type="password" id="newpwd" placeholder="新密码">
+                <input type="password" id="newpwd2" placeholder="重复密码">
+                <button class="btn btn-primary" id="btnCommitPwd">确认修改</button>
+                <button class="btn" id="btnCancel">取消</button>
+            </div>
         </div>
     </div>
     <!-- .div2 -->
@@ -105,18 +113,66 @@
     })
 
     $('#btnQuery').click(function() {
-        var xh = $('#xh').val();
-        var name = $('#name').val();
+        xh = $('#xh').val();
+        name = $('#name').val();
         var xhregex = /^[BQH]+[0-9]{8}$/;
         var nameregex = /[\u4e00-\u9fa5]{2,6}/
         if (!xhregex.test(xh)) {
-            alert("学号格式错");return;
+            alert("学号格式错");
+            return;
         };
         if (!nameregex.test(name)) {
-            alert("姓名格式错");return;
+            alert("姓名格式错");
+            return;
         };
-       
-        
+        $.post("__URL__/changePwdStep1", {
+            "xh": xh,
+            "name": name
+        }, function(back) {
+            if (back.status == 0) {
+                $('.step1').attr('disabled', true);
+                $('.step2').show(500);
+                token = back.data.token;
+                id = back.data.id;
+
+            } else {
+                alert(back.errmsg);
+            };
+        })
+    })
+
+    $('#btnCancel').click(function() {
+        $('.step1').attr('disabled', false);
+        $('.step2').hide(500);
+    })
+    $('#btnCommitPwd').click(function() {
+        var newpwd = $('#newpwd').val();
+        var newpwd2 = $('#newpwd2').val();
+        if (newpwd != newpwd2) {
+            alert("两次密码不一致！");
+            return;
+        };
+        if (!confirm('确认修改 ' + name + ' 的密码吗？')) {
+            return;
+        };
+        $.post('__URL__/changePwdStep2', {
+            "id": id,
+            "xh": xh,
+            "token": token,
+            "password": newpwd
+        }, function(back) {
+            if (back.status != 0) {
+                alert(back.msg);
+                return;
+            };
+            alert('修改成功！请告知新生新的密码');
+            $('#xh').val("");
+            $('#name').val("");
+            $('#newpwd').val("");
+            $('#newpwd2').val("");
+            $('.step1').attr('disabled', false);
+            $('.step2').hide(500);
+        })
     })
 
     </script>
