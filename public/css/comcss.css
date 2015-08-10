@@ -13,3 +13,14 @@
 	float: left;
 	padding: 50px;
 }
+.btn.btn-primary{margin-left: 10px;margin-right: 10px;}
+.question{
+    line-height: 27px;padding-left: 3px;padding-right: 3px;display: block;
+    margin: 2px 0 20px 38px;width: 500px;
+}
+.form_question{
+    width: 600px;
+}
+#btnEditQuestConfirm{
+    float: right;margin-right: 62px;
+}
