@@ -26,19 +26,37 @@
     .table tr td {
         vertical-align: center;
     }
-    .step1{
-        width: 450px;height: 50px;line-height: 27px;
+    
+    .step1 {
+        width: 450px;
+        height: 50px;
+        line-height: 27px;
     }
-    .step1 input,.step2 input{
-        padding-left: 3px;padding-right: 3px;
+    
+    .step1 input,
+    .step2 input {
+        padding-left: 3px;
+        padding-right: 3px;
     }
-    #btnQuery{
+    
+    #btnQuery {
         float: right;
+        margin-top: 0;
+        margin-left: 0;
     }
-    #btnCommitPwd{float: right;}
-    .step2{
-        width: 542px;height: 50px;line-height: 27px;
+    
+    #btnCommitPwd {
+        float: right;
+        margin-top: 0;
+        margin-left: 4px;
     }
+    
+    .step2 {
+        width: 542px;
+        height: 50px;
+        line-height: 27px;
+    }
+
     </style>
     <link rel="stylesheet" href="__ROOT__/css/bootstrap.min.css">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
@@ -85,7 +103,7 @@
                     <li><a href="__URL__/editQuestion">修改招新问题</a></li>
                 </ul>
             </div>
-            <button type="button" class="btn btn-primary">修改新生密码</button>
+            <button type="button" class="btn btn-primary active">修改新生密码</button>
             <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
             <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span> 生成XLS</button>
             <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-check"></span> 结束部门招新</button>
@@ -95,12 +113,12 @@
             <fieldset class="step1">
                 <input type="text" id="xh" placeholder="更改目标的学号">
                 <input type="text" id="name" placeholder="更改目标的姓名">
-                <button class="btn btn-primary" id="btnQuery">查询</button>
+                <button class="btn btn-primary" id="btnQuery"><span class="glyphicon glyphicon-search"></span> 查询</button>
             </fieldset>
             <div class="step2" style="display:none">
                 <input type="password" id="newpwd" placeholder="新密码">
                 <input type="password" id="newpwd2" placeholder="重复密码">
-                <button class="btn btn-primary" id="btnCommitPwd">确认修改</button>
+                <button class="btn btn-primary" id="btnCommitPwd"><span class="glyphicon glyphicon-ok"></span> 确认修改</button>
                 <button class="btn" id="btnCancel">取消</button>
             </div>
         </div>
