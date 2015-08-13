@@ -355,6 +355,7 @@ class IndexController extends Controller
         }
         $db = D('StudentBasicInfo');
         $db->setStudentPassword($_POST['xh'], $_POST['password']);
+        session('token', null);
         $this->ajaxReturn(array('status' => 0, 'msg' => 'success'));
     }
 
