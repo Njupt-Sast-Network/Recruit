@@ -174,7 +174,7 @@ $("#inputPassWord1").blur(function(){
   if(!$("#inputPassWord1").val()){
   $("#inputPassWord1").attr("placeholder","密码");
   }
-  var id = /^[a-zA-Z0-9]\w{5,17}$/;
+  var id = /^[\w\W]{6,16}$/;
     if(!id.test($("#inputPassWord1").val())){
         $("#inputPassWord1").css("border-color","#8B0000");
         $("#inputPassWord1").attr("checked","");
@@ -185,7 +185,7 @@ $("#inputPassWord1").blur(function(){
 });
 //is input property password again(reg)
 $("#confirmPassWord1").blur(function(){
-  var id = /^[a-zA-Z0-9]\w{5,17}$/;
+  var id = /^[\w\W]{6,16}$/;
     if(($("#inputPassWord1").val()==$("#confirmPassWord1").val())&&(id.test($("#inputPassWord1").val()))){
         $("#confirmPassWord1").css("border-color","#66afe9");
         $("#confirmPassWord1").attr("checked","checked");

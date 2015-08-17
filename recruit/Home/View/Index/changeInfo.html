@@ -111,7 +111,7 @@
                 <label for="inputQQ" class="col-sm-2 control-label">QQ</label>
                     <div class="col-sm-10">
                       <!-- 预填信息可以这么写，在value后面写原生php，下同 -->
-                        <input type="text" class="form-control" id="inputQQ" placeholder="请输入QQ号" notice="2-4位中文字符" value="<?php 
+                        <input type="text" class="form-control" id="inputQQ" placeholder="请输入QQ号" value="<?php 
                 if ($stuinfo["qq"] != 0) {
                   echo($stuinfo["qq"]);
                 }
@@ -212,21 +212,27 @@
           }
           check();
           $("#changeInfo").click(function(){
-            count = 0;
+            var count = 0;
             $(".form-control").each(function(){
-              console.log($(this).attr("checked"));
               if(!$(this).attr("checked")){
-                count += 1;
+                var placeholder = $(this).attr("placeholder");
+                if (placeholder) {
+                  alert(placeholder);
+                  count++;
+                  return false;
+                }else{
+                  alert("请完善您的个人信息");
+                  count++;
+                  return false;
+                };
+                return false;
               }
-            });
-            console.log(count);
-            if(count != 0){
-              alert("请完善您的个人信息");
-            } else {
-              ajax();
-            }
-          });          
+          });
+          if (!count) {
+            ajax();
+          };          
         });
+        })
         //预填生日
         function preBirth() {
           var birthday = "<?php echo $stuinfo['birthday'].""; ?>";
