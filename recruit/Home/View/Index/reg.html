@@ -12,10 +12,7 @@
     <link href="__ROOT__/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
   <body>
@@ -101,7 +98,6 @@ $("#reg").click(function(){
                     success :function(back){
                         if(back.status == 1){
                           window.location.href = '{:U('Home/Index/changeDepartment')}'
-                          // location.reload();//注册成功后直接跳转至申请报名
                         } else {
                           alert(back.info);
                         }
@@ -116,35 +112,13 @@ $("#reg").click(function(){
           } else if($("#inputName1").attr("checked")==""){
             alert("请正确输入姓名，2-4个汉字");
           } else if($("#inputPassWord1").attr("checked")==""){
-            alert("请正确输入密码，以字母或数字开头，长度在6-18之间，只能包含字符、数字和下划线。");
+            alert("请正确输入密码，长度在6-18之间");
           } else {
             alert("两次输入密码不一致");
           }
         }
 });
      
-// //is input property id(login)
-// $("#inputStudentId").blur(function(){
-//     var id = /^[BQ]+[0-9]{8}$/;
-//     if(!id.test($("#inputStudentId").val())){
-//         $("#inputStudentId").css("border-color","#8B0000");
-//         $("#inputStudentId").attr("name","false");
-//     } else {
-//         $("#inputStudentId").css("border-color","#66afe9");
-//         $("#inputStudentId").attr("name","true");
-//     }
-// });    
-// //is input property password(login)
-// $("#inputPassWord").blur(function(){
-//     if($("#inputPassWord").val().length == 0){
-//         $("#inputPassWord").css("border-color","#8B0000");
-//         $("#inputPassWord").attr("name","false");
-//     } else {
-//         $("#inputPassWord").css("border-color","#66afe9");
-//         $("#inputPassWord").attr("name","true");
-//     }
-// }); 
-//is input property id(reg)
 $("#inputStudentId1").blur(function(){
   var id = /^[BQH]+[0-9]{8}$/;
     if(!id.test($("#inputStudentId1").val())){
@@ -155,7 +129,6 @@ $("#inputStudentId1").blur(function(){
         $("#inputStudentId1").attr("checked","checked");
     }
 });
-//is input property name(reg)                             
 $("#inputName1").blur(function(){
   if(!$("#inputName1").val()){
   $("#inputName1").attr("placeholder","姓名");
@@ -169,7 +142,6 @@ $("#inputName1").blur(function(){
         $("#inputName1").attr("checked","checked");
     }
 });
-//is input property password(reg)
 $("#inputPassWord1").blur(function(){
   if(!$("#inputPassWord1").val()){
   $("#inputPassWord1").attr("placeholder","密码");
@@ -183,7 +155,6 @@ $("#inputPassWord1").blur(function(){
         $("#inputPassWord1").attr("checked","checked");
     }
 });
-//is input property password again(reg)
 $("#confirmPassWord1").blur(function(){
   var id = /^[\w\W]{6,16}$/;
     if(($("#inputPassWord1").val()==$("#confirmPassWord1").val())&&(id.test($("#inputPassWord1").val()))){
@@ -194,7 +165,6 @@ $("#confirmPassWord1").blur(function(){
         $("#confirmPassWord1").attr("checked","");
     }
 });
-// prompt about name
 $("#inputName1").focus(function(){
   $("#inputName1").attr("placeholder","2-4位汉字");
 });
