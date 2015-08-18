@@ -8,6 +8,9 @@
     <script src="__ROOT__/js/jquery-1.11.2.min.js"></script>
     <script src="__ROOT__/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="__ROOT__/css/comcss.css">
+    <style>
+    a:visited button{background-color: #6BA2D2;}
+    </style>
 </head>
 
 <body style="background-color: antiquewhite;">
@@ -30,7 +33,7 @@
                     <td>{$va.departmentName1}</td>
                     <td>{$va.departmentName2}</td>
                     <td class="status"><?php 
-            switch ($va["acceptstate"]) {
+            switch ($va["acceptState"]) {
                 case 0:
                     echo "审查中";
                     break;
@@ -41,13 +44,15 @@
                     echo "彻底没戏";
                     break;
                 default:
-                    echo $departments[$va["acceptstate"]]["departmentName"].'录取';
+                    echo $departments[$va["acceptState"]]["departmentName"].'录取';
                     break;
             } ?></td>
                     <td>
+                        <a href='__URL__/detail/xh/{$va.xh}' target="_parent">
                         <button type="button" class="btn  btn-primary btn-sm btn2-margin ">
                             信息
                         </button>
+                        </a>
                         <?php if ($va["able"]) {?>
                         <button type="button" class="btn btn-success btn-sm accept">
                             录取
@@ -61,12 +66,14 @@
             </volist>
         </tbody>
     </table>
-    <p> 共计 700个</p>
+    <p> 共计 {$count}个</p>
     <p>每页显示
-        <input type="text" class="" id="" placeholder="" style="max-width:40px"> 当前页
-        <button type="button" class="btn btn-primary btn-sm"> - </button>
-        <input type="text" class="" id="" placeholder="" style="max-width:40px"> /<span>70</span>
-        <button type="button" class="btn btn-primary btn-sm"> + </button>
+        <input type="text" class="" id="num" placeholder="" style="max-width:40px" value="{$num}">
+        <button type="button" class="btn btn-primary btn-sm" id="changenum">确定</button>
+        <button type="button" class="btn btn-primary btn-sm" style="width:30px;" id="pagesubtract"> - </button>
+        <input type="text" class="" id="page" placeholder="" style="max-width:40px" value="{$page}"> /<span>{$allpage}</span>
+        <button type="button" class="btn btn-primary btn-sm" style="width:30px;" id="pageadd"> + </button>
+        <button type="button" class="btn btn-primary btn-sm" id="changepage">跳转</button>
     </p>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -101,7 +108,45 @@ $(document).ready(function(){
             };
         });
     });
+    $(document).on("click","#changenum",function(){
+        //修改每页显示个数
+        var url = geturl("num");
+        window.location.href = url;
+    });
+    $(document).on("click","#pageadd",function(){
+        var page = parseInt($("#page").val()) + 1;
+        $("#page").val(page);
+        var url = geturl("page");
+        window.location.href = url;
+    });
+    $(document).on("click","#pagesubtract",function(){
+        var page = parseInt($("#page").val()) - 1;
+        $("#page").val(page);
+        var url = geturl("page");
+        window.location.href = url;
+    });
+    $(document).on("click","#changepage",function(){
+        var url = geturl("page");
+        window.location.href = url;
+    });
 
+    function geturl(name){
+        var num = $("#"+name+"").val();
+        var url = window.document.location.href.toString();
+        var u = url.split("?");
+        url = "__URL__/recuritlist?";
+        if(typeof(u[1]) == "string"){
+            u = u[1].split("&");
+            for(var i in u){
+                if (u[i] && u[i].indexOf(name) == -1  && u[i].indexOf("page") == -1) {
+                    var j = u[i].split("=");
+                    url += j[0] + "=" + j[1] + "&";
+                };
+            }
+        }
+        url += name + "=" + num;
+        return url;
+    }
 });    
 
 </script>

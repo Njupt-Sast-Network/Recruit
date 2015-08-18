@@ -22,11 +22,12 @@
     .container .btn.btn-primary {
         float: left;
     }
-    
+    .form-group{
+        margin-top: 10px;
+    }
     .table tr td {
         vertical-align: center;
     }
-
     </style>
     <link rel="stylesheet" href="__ROOT__/css/bootstrap.min.css">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
@@ -89,8 +90,8 @@
             </div>
             <div class="form-group" style="margin-left:15px">
                 <label for="firstvolunteer">第一志愿</label>
-                <select class="form-control">
-                    <option>请选择...</option>
+                <select class="form-control" id="department1">
+                    <option value="">请选择...</option>
                     <volist name="alldepartment" id="vap">
                         <option value="{$vap.id}">{$vap.departmentName}</option>
                     </volist>
@@ -98,8 +99,8 @@
             </div>
             <div class="form-group" style="margin-left:20px">
                 <label for="secondvolunteer">第二志愿</label>
-                <select class="form-control">
-                    <option>请选择...</option>
+                <select class="form-control" id="department2">
+                    <option value="">请选择...</option>
                     <volist name="alldepartment" id="vap">
                         <option value="{$vap.id}">{$vap.departmentName}</option>
                     </volist>
@@ -107,18 +108,21 @@
             </div>
             <div class="form-group" style="margin-left:20px">
                 <label for="state">录取状态</label>
-                <select class="form-control">
-                    <option>请选择...</option>
+                <select class="form-control" id="acceptState">
+                    <option value="">请选择...</option>
                     <option value="0">审核中</option>
                     <option value="-1">被第一部门拒绝</option>
                     <option value="-2">被第二部门拒绝</option>
                     <volist name="alldepartment" id="vap">
-                        <option value="{$vap.departmentName}">{$vap.departmentName}</option>
+                        <option value="{$vap.id}">{$vap.departmentName}</option>
                     </volist>
                 </select>
             </div>
             <div class="form-group" style="margin-left:20px">
-                <button id="shaixuan" class="btn btn-primary">筛选</button>
+                <button type="button" id="shaixuan" class="btn btn-primary">筛选</button>
+            </div>
+            <div class="form-group" style="margin-left:20px">
+                <button type="button" id="saveout" class="btn btn-primary">导出这批人的word</button>
             </div>
         </form>
         <iframe src="__URL__/recuritlist" id="recuritlist" width="1000" align="center" height="200" name="win" onload="Javascript:SetWinHeight(this)" frameborder="0" scrolling="no"></iframe>
@@ -129,6 +133,26 @@
         var nowdep = $("#nowdep").val();
         location.href = "__URL__/comctrl?nowassociation=" + nowass + "&nowdepartment=" + nowdep;
     });
+    $(document).on("click","#shaixuan",function(){
+        var data = getcondition();
+        var url = "__URL__/recuritlist?";
+        for (p in data){
+            if (data[p]) {
+                url = url + p + "=" + data[p] + "&";
+            };
+        }
+        $("#recuritlist").attr("src",url);
+    });
+    //获取筛选条件
+    function getcondition(){
+        var data = {};
+        data.xh = $("#xuehao").val();
+        data.name = $("#name").val();
+        data.department1 = $("#department1").val();
+        data.department2 = $("#department2").val();
+        data.acceptState = $("#acceptState").val();
+        return data;
+    }
 
     function SetWinHeight(obj) {
         var ifm = document.getElementById("recuritlist");

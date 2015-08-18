@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新生录取</title>
+    <style type="text/css">
+    .btn2-margin {
+        margin-left: -4px;
+    }
+    
+    .container {
+        margin-bottom: 20px;
+        width: 100%!important;
+    }
+    
+    .container .btn {
+        float: right;
+        margin-left: 10px;
+    }
+    
+    .container .btn.btn-primary {
+        float: left;
+    }
+    
+    .table tr td {
+        vertical-align: center;
+    }
+    
+    .step1 {
+        width: 450px;
+        height: 50px;
+        line-height: 27px;
+    }
+    
+    .step1 input,
+    .step2 input {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+    
+    #btnQuery {
+        float: right;
+        margin-top: 0;
+        margin-left: 0;
+    }
+    
+    #btnCommitPwd {
+        float: right;
+        margin-top: 0;
+        margin-left: 4px;
+    }
+    
+    .step2 {
+        width: 542px;
+        height: 50px;
+        line-height: 27px;
+    }
+
+    </style>
+    <link rel="stylesheet" href="__ROOT__/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="__ROOT__/js/jquery-1.11.2.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="__ROOT__/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="__ROOT__/css/comcss.css">
+</head>
+
+<body>
+    <div class="div1">
+        <h2>欢迎登录 <br>
+        <span style="">njupt招新管理系统</span>
+        </h2>
+        <h5>您当前的身份为：{$identity}</h5>
+        <div>
+            社团列表
+            <select class="form-control" id="nowass">
+                <volist name="associations" id="as">
+                    <option value="{$as.associationName}" <?php if ($as[ "associationName"]==$nowassociation) { echo "selected=selected"; } ?>>{$as.associationName}</option>
+                </volist>
+            </select>
+        </div>
+        <div>
+            部门列表
+            <select class="form-control" id="nowdep">
+                <volist name="departments" id="de">
+                    <option value="{$de.id}" association="{$de.association}" <?php if ($de[ "id"]==$nowdepartment) { echo "selected=selected"; } ?>>{$de.departmentName}</option>
+                </volist>
+            </select>
+        </div>
+    </div>
+    <!-- .div1 -->
+    <div class="div2">
+        <div class="container">
+            <button type="button" class="btn btn-primary" id="btncomctrl">报名信息</button>
+            <!-- <button type="button" class="btn btn-primary active">管理社团</button> -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    管理社团 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="__URL__/AssocMgr">部门管理</a></li>
+                    <li><a href="__URL__/editQuestion">修改招新问题</a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-primary">修改新生密码</button>
+            <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
+            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span> 生成XLS</button>
+            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-check"></span> 结束部门招新</button>
+        </div>
+        <div class="container">
+            <h3>姓名：{$basic.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号：{$basic.xh}</h3>
+            <p>录取状态：<?php 
+            switch ($recruit["acceptState"]) {
+                case 0:
+                    echo "审查中";
+                    break;
+                case -1:
+                    echo "被第一部门拒绝";
+                    break;
+                case -2:
+                    echo "彻底没戏";
+                    break;
+                default:
+                    echo $departments[$recruit["acceptState"]]["departmentName"].'录取';
+                    break;
+            } ?></p>
+            <p>报名第一部门：<?php echo $departments[$recruit["department1"]]["departmentName"] ?></p>
+            <p>报名第二部门：<?php echo $departments[$recruit["department2"]]["departmentName"] ?></p>
+            <p>性别：<?php switch ($basic["sex"]) {
+                case '1':
+                    echo "男";
+                    break;
+                case '2':
+                    echo "女";
+                default:
+                    echo "未选择";
+                    break;
+            } ?></p>
+            <p>电话：{$basic.phone}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;qq：{$basic.qq}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱：{$basic.mail}</p>
+            <p>生日：{$basic.birthday}</p>
+            <p>问题一回答：{$recruit.quest1}</p>
+            <p>问题二回答：{$recruit.quest2}</p>
+            <p>问题三回答：{$recruit.quest3}</p>
+            <p>学院：{$basic.college}</p>
+            <p>专业：{$bacis.major}</p>
+            <p>宿舍：{$basic.dorm}</p>
+            <p>高中：{$basic.college}</p>
+        </div>
+    </div>
+    <!-- .div2 -->
+    <script type="text/javascript">
+    $(document).on("change", "#nowass,#nowdep", function() {
+        var nowass = $("#nowass").val();
+        var nowdep = $("#nowdep").val();
+        location.href = "__URL__/AssocMgr?nowassociation=" + nowass;
+    });
+
+    function SetWinHeight(obj) {
+        var ifm = document.getElementById("recuritlist");
+        var subWeb = document.frames ? document.frames["recuritlist"].document : ifm.contentDocument;
+        if (ifm != null && subWeb != null) {
+            ifm.height = subWeb.body.scrollHeight;
+        }
+    }
+    $('#btncomctrl').click(function() {
+        window.location.href = "__URL__/comctrl";
+    })
+    </script>
+</body>
+
+</html>
+

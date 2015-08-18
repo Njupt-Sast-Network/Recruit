@@ -74,13 +74,51 @@ class IndexController extends Controller
             $allrecruit[$p]["name"] = $basic->where($map)->getField("name");
             $allrecruit[$p]["departmentName1"] = $departments[$vr["department1"]]["departmentName"];
             $allrecruit[$p]["departmentName2"] = $departments[$vr["department2"]]["departmentName"];
-            if (($vr["acceptstate"] == 0 && $vr["department1"] == $_SESSION["nowdepartment"]) || ($vr["acceptstate"] == -1 && $vr["department2"] == $_SESSION["nowdepartment"])) {
+            if (($vr["acceptState"] == 0 && $vr["department1"] == $_SESSION["nowdepartment"]) || ($vr["acceptState"] == -1 && $vr["department2"] == $_SESSION["nowdepartment"])) {
                 $allrecruit[$p]["able"] = 1;
             } else {
                 $allrecruit[$p]["able"] = 0;
             }
         }
-        $this->assign("recruit", $allrecruit);
+        if (isset($_GET["xh"])) { $condition["xh"] = $_GET["xh"]; }
+        if (isset($_GET["name"])) { $condition["name"] = $_GET["name"]; }
+        if (isset($_GET["department1"])) { $condition["department1"] = $_GET["department1"]; }
+        if (isset($_GET["department2"])) { $condition["department2"] = $_GET["department2"]; }
+        if (isset($_GET["acceptState"])) { $condition["acceptState"] = $_GET["acceptState"]; }
+        $count = 0;
+        foreach ($allrecruit as $one) {
+            $b = true;
+            foreach ($condition as $cname => $va) {
+                if (!strstr($one[$cname], $va)) {
+                    $b = false;
+                    break;
+                }
+            }
+            if ($b) {
+                $count++;
+                $shaixuan[] = $one;
+            }
+        }
+        $num = (int)$_GET["num"] ? (int)$_GET["num"] : 20;
+        $page = (int)$_GET["page"] ? (int)$_GET["page"] : 1;
+        $allpage = ceil($count / $num);
+        if ($page > $allpage) {
+            $page = $allpage;
+        }
+        $start = ($page - 1) * $num;
+        $end = $page * $num;
+        for ($i = $start; $i < $end; $i++) { 
+            if (!isset($shaixuan[$i])) {
+                break;
+            }
+            $final[] = $shaixuan[$i];
+        }
+        $this->assign("count",$count);
+        $this->assign("num",$num);
+        $this->assign("page",$page);
+        $this->assign("allpage",$allpage);
+        $this->assign("recruit", $final);
+        // dump($departments);
         $this->display();
     }
     public function apply()
@@ -91,7 +129,7 @@ class IndexController extends Controller
         }
         $id = $_POST["id"];
         $info = M("student_recruit_info")->where('id=' . $id)->find();
-        if (($info["acceptstate"] == 0 && $info["department1"] == $_SESSION["nowdepartment"]) || ($info["acceptstate"] == -1 && $info["department2"] == $_SESSION["nowdepartment"])) {
+        if (($info["acceptState"] == 0 && $info["department1"] == $_SESSION["nowdepartment"]) || ($info["acceptState"] == -1 && $info["department2"] == $_SESSION["nowdepartment"])) {
             M("student_recruit_info")->where('id=' . $id)->setField("acceptState", $_SESSION["nowdepartment"]);
             $this->success("成功");
         } else {
@@ -106,8 +144,8 @@ class IndexController extends Controller
         }
         $id = $_POST["id"];
         $info = M("student_recruit_info")->where('id=' . $id)->find();
-        if (($info["acceptstate"] == 0 && $info["department1"] == $_SESSION["nowdepartment"]) || ($info["acceptstate"] == -1 && $info["department2"] == $_SESSION["nowdepartment"])) {
-            $status = $info["acceptstate"] - 1;
+        if (($info["acceptState"] == 0 && $info["department1"] == $_SESSION["nowdepartment"]) || ($info["acceptState"] == -1 && $info["department2"] == $_SESSION["nowdepartment"])) {
+            $status = $info["acceptState"] - 1;
             M("student_recruit_info")->where('id=' . $id)->setField("acceptState", $status);
             $this->success($status);
         } else {
@@ -363,5 +401,77 @@ class IndexController extends Controller
     {
         session(null);
         $this->redirect("index");
+    }
+    public function detail(){
+        $data["identity"] = I("session.identity", "");
+        switch ($data["identity"]) {
+            case '部门管理员':
+                $associations[0]["associationName"] = I("session.associationName", ""); // 首先有个associatitons和departments，这两个东西存的是当前身份下能够操作的社团（们）和部门（们）
+                $map["departmentName"] = I("session.departmentName", "");
+                $departments[0] = M("association_departments")->where($map)->field("id,departmentName")->find(); //这两个东西来产生页面上左边的那两个下拉框，给用户选择变成哪些身份的权利
+                $nowassociation = $associations[0]["associationName"];
+                $nowdepartment = $departments[0]["id"]; //同样的，部门管理员权限最小，只能操作当前社团的当前部门，所以完全不管get过来什么，当前部门都是这个部门
+                break;
+            case '社团管理员':
+                $associations[0]["associationName"] = I("session.associationName", "");
+                $map["association"] = I("session.associationName", "");
+                $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
+                $nowassociation = $associations[0]["associationName"]; //社团管理员的当前社团必定为自己的社团，所以不管get过来什么
+
+                $nowdepartment = $departments[0]["id"];
+                foreach ($departments as $de) {
+                    //对本社团的所有部门进行一次遍历，假如其中的某个部门正好等于get过来的那个部门，那就把当前部门改成get过来的那个部门，否则就是第一个部门
+                    if ($de["id"] == I("get.nowdepartment")) {
+                        $nowdepartment = $de["id"];
+                        break;
+                    }
+                }
+                break;
+            case '超级管理员':
+                $associations = M("association_list")->field("associationName")->select();
+                $map['association'] = I('get.nowassociation');
+                $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
+                $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationName"]; //nowassociation和nowdepartment
+                session('associationName', $nowassociation);
+                $nowdepartment = I("get.nowdepartment", "") ? I("get.nowdepartment", "") : $departments[0]["id"]; //这两个意思是当前正在以某个社团的某个部门的身份进行操作
+                break; //因为超级管理员能够变成所有身份，所以get过来什么就变什么，不需要做权限检测
+            default:
+                redirect("index");
+                break;
+        }
+        $_SESSION["nowassociation"] = $nowassociation;
+        $_SESSION["nowdepartment"] = $nowdepartment;
+        $map["association"] = $nowassociation;
+        $alldepartment = M("association_departments")->where($map)->field("id,departmentName")->select();
+        $this->assign("nowassociation", $nowassociation);
+        $this->assign("nowdepartment", $nowdepartment);
+        $this->assign("identity", $data["identity"]);
+        $this->assign("associations", $associations);
+        for ($i=0; $i < count($departments); $i++) { 
+            $dep[$departments[$i]["id"]] = $departments[$i];
+        }
+        $this->assign("departments", $dep);
+        $this->assign("alldepartment", $alldepartment);
+
+        if (isset($_GET["xh"])) {
+            $xh = $_GET["xh"];
+        }else{
+            $this->error("请选择新生");
+        }
+        $map["xh"] = $xh;
+        $info = M("student_basic_info")->where($map)->find();
+        if (!$info) {
+            $this->error("查无此人");
+        }
+        $map["association"] = $nowassociation;
+        $recruit = M("student_recruit_info")->where($map)->find();
+        if (!$recruit){
+            $this->error("此新生为报名你的社团");
+        }
+        
+
+        $this->assign("basic",$info);
+        $this->assign("recruit",$recruit);
+        $this->display();
     }
 }
