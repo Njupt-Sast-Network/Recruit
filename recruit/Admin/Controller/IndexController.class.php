@@ -80,11 +80,11 @@ class IndexController extends Controller
                 $allrecruit[$p]["able"] = 0;
             }
         }
-        if (isset($_GET["xh"])) { $condition["xh"] = $_GET["xh"]; }
-        if (isset($_GET["name"])) { $condition["name"] = $_GET["name"]; }
-        if (isset($_GET["department1"])) { $condition["department1"] = $_GET["department1"]; }
-        if (isset($_GET["department2"])) { $condition["department2"] = $_GET["department2"]; }
-        if (isset($_GET["acceptState"])) { $condition["acceptState"] = $_GET["acceptState"]; }
+        if (isset($_GET["xh"])) {$condition["xh"] = $_GET["xh"];}
+        if (isset($_GET["name"])) {$condition["name"] = $_GET["name"];}
+        if (isset($_GET["department1"])) {$condition["department1"] = $_GET["department1"];}
+        if (isset($_GET["department2"])) {$condition["department2"] = $_GET["department2"];}
+        if (isset($_GET["acceptState"])) {$condition["acceptState"] = $_GET["acceptState"];}
         $count = 0;
         foreach ($allrecruit as $one) {
             $b = true;
@@ -99,24 +99,24 @@ class IndexController extends Controller
                 $shaixuan[] = $one;
             }
         }
-        $num = (int)$_GET["num"] ? (int)$_GET["num"] : 20;
-        $page = (int)$_GET["page"] ? (int)$_GET["page"] : 1;
+        $num = (int) $_GET["num"] ? (int) $_GET["num"] : 20;
+        $page = (int) $_GET["page"] ? (int) $_GET["page"] : 1;
         $allpage = ceil($count / $num);
         if ($page > $allpage) {
             $page = $allpage;
         }
         $start = ($page - 1) * $num;
         $end = $page * $num;
-        for ($i = $start; $i < $end; $i++) { 
+        for ($i = $start; $i < $end; $i++) {
             if (!isset($shaixuan[$i])) {
                 break;
             }
             $final[] = $shaixuan[$i];
         }
-        $this->assign("count",$count);
-        $this->assign("num",$num);
-        $this->assign("page",$page);
-        $this->assign("allpage",$allpage);
+        $this->assign("count", $count);
+        $this->assign("num", $num);
+        $this->assign("page", $page);
+        $this->assign("allpage", $allpage);
         $this->assign("recruit", $final);
         // dump($departments);
         $this->display();
@@ -402,7 +402,8 @@ class IndexController extends Controller
         session(null);
         $this->redirect("index");
     }
-    public function detail(){
+    public function detail()
+    {
         $data["identity"] = I("session.identity", "");
         switch ($data["identity"]) {
             case '部门管理员':
@@ -447,7 +448,7 @@ class IndexController extends Controller
         $this->assign("nowdepartment", $nowdepartment);
         $this->assign("identity", $data["identity"]);
         $this->assign("associations", $associations);
-        for ($i=0; $i < count($departments); $i++) { 
+        for ($i = 0; $i < count($departments); $i++) {
             $dep[$departments[$i]["id"]] = $departments[$i];
         }
         $this->assign("departments", $dep);
@@ -455,7 +456,7 @@ class IndexController extends Controller
 
         if (isset($_GET["xh"])) {
             $xh = $_GET["xh"];
-        }else{
+        } else {
             $this->error("请选择新生");
         }
         $map["xh"] = $xh;
@@ -465,13 +466,12 @@ class IndexController extends Controller
         }
         $map["association"] = $nowassociation;
         $recruit = M("student_recruit_info")->where($map)->find();
-        if (!$recruit){
-            $this->error("此新生为报名你的社团");
+        if (!$recruit) {
+            $this->error("此新生未报名你的社团");
         }
-        
 
-        $this->assign("basic",$info);
-        $this->assign("recruit",$recruit);
+        $this->assign("basic", $info);
+        $this->assign("recruit", $recruit);
         $this->display();
     }
 }

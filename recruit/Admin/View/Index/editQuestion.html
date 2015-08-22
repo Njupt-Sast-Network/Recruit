@@ -62,20 +62,20 @@
     <!-- .div1 -->
     <div class="div2">
         <div class="container">
-            <button type="button" class="btn btn-primary" id="btncomctrl">报名信息</button>
+            <button type="button" class="btn btn-primary" id="btncomctrl"><span class="glyphicon glyphicon-info-sign"></span> 报名信息</button>
             <!-- <button type="button" class="btn btn-primary active">管理社团</button> -->
             <div class="btn-group">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    管理社团 <span class="caret"></span>
+                    <span class="glyphicon glyphicon-cog"></span> 管理社团 <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
                     <li><a href="__URL__/AssocMgr">部门管理</a></li>
                     <li><a href="__URL__/editQuestion">修改招新问题</a></li>
                 </ul>
             </div>
-            <button type="button" class="btn btn-primary" onclick="javascript:window.location.href='{:U('Index/changePwd')}'">修改新生密码</button>
-            <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
-            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span> 生成XLS</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:window.location.href='{:U('Index/changePwd')}'"><span class="glyphicon glyphicon-pencil"></span> 修改新生密码</button>
+            <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'"><span class="glyphicon glyphicon-log-out"></span> 注销</button>
+            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-download-alt"></span> 生成XLS</button>
             <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-check"></span> 结束部门招新</button>
         </div>
         <div class="contianer">
