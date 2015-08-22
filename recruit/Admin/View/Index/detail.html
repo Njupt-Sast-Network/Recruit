@@ -56,6 +56,10 @@
         height: 50px;
         line-height: 27px;
     }
+    
+    #btnBack {
+        float: right;
+    }
 
     </style>
     <link rel="stylesheet" href="__ROOT__/css/bootstrap.min.css">
@@ -110,7 +114,9 @@
         </div>
         <div class="container">
             <h3>姓名：{$basic.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号：{$basic.xh}</h3>
-            <p>录取状态：<?php 
+            <button type="button" class="btn btn-primary" id="btnBack" onclick="javascript:window.history.back(-1);"><span class="glyphicon glyphicon-chevron-left"></span> 返回</button>
+            <p>录取状态：
+                <?php 
             switch ($recruit["acceptState"]) {
                 case 0:
                     echo "审查中";
@@ -124,10 +130,16 @@
                 default:
                     echo $departments[$recruit["acceptState"]]["departmentName"].'录取';
                     break;
-            } ?></p>
-            <p>报名第一部门：<?php echo $departments[$recruit["department1"]]["departmentName"] ?></p>
-            <p>报名第二部门：<?php echo $departments[$recruit["department2"]]["departmentName"] ?></p>
-            <p>性别：<?php switch ($basic["sex"]) {
+            } ?>
+            </p>
+            <p>报名第一部门：
+                <?php echo $departments[$recruit["department1"]]["departmentName"] ?>
+            </p>
+            <p>报名第二部门：
+                <?php echo $departments[$recruit["department2"]]["departmentName"] ?>
+            </p>
+            <p>性别：
+                <?php switch ($basic["sex"]) {
                 case '1':
                     echo "男";
                     break;
@@ -136,7 +148,8 @@
                 default:
                     echo "未选择";
                     break;
-            } ?></p>
+            } ?>
+            </p>
             <p>电话：{$basic.phone}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;qq：{$basic.qq}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱：{$basic.mail}</p>
             <p>生日：{$basic.birthday}</p>
             <p>问题一回答：{$recruit.quest1}</p>
@@ -166,6 +179,7 @@
     $('#btncomctrl').click(function() {
         window.location.href = "__URL__/comctrl";
     })
+
     </script>
 </body>
 
