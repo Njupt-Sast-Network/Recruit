@@ -121,6 +121,107 @@ class IndexController extends Controller
         // dump($departments);
         $this->display();
     }
+    public function downloadallxls()
+    {
+
+        $allrecruit = M("student_recruit_info")->where(array("association" => $_SESSION["nowassociation"]))->select();
+        $basic = M("student_basic_info");
+        $tmpdepartments = M("association_departments")->select();
+        foreach ($tmpdepartments as $vt) {
+            $departments[$vt["id"]] = $vt; //用id为下标序列化部门列表
+        }
+        $this->assign("departments", $departments);
+        foreach ($allrecruit as $p => $vr) {
+            $map["xh"] = $vr["xh"];
+            $allrecruit[$p]["name"] = $basic->where($map)->getField("name");
+            $allrecruit[$p]["departmentName1"] = $departments[$vr["department1"]]["departmentName"];
+            $allrecruit[$p]["departmentName2"] = $departments[$vr["department2"]]["departmentName"];
+            if (($vr["acceptState"] == 0 && $vr["department1"] == $_SESSION["nowdepartment"]) || ($vr["acceptState"] == -1 && $vr["department2"] == $_SESSION["nowdepartment"])) {
+                $allrecruit[$p]["able"] = 1;
+            } else {
+                $allrecruit[$p]["able"] = 0;
+            }
+        }
+        if (isset($_GET["xh"])) {$condition["xh"] = $_GET["xh"];}
+        if (isset($_GET["name"])) {$condition["name"] = $_GET["name"];}
+        if (isset($_GET["department1"])) {$condition["department1"] = $_GET["department1"];}
+        if (isset($_GET["department2"])) {$condition["department2"] = $_GET["department2"];}
+        if (isset($_GET["acceptState"])) {$condition["acceptState"] = $_GET["acceptState"];}
+        $count = 0;
+        foreach ($allrecruit as $one) {
+            $b = true;
+            foreach ($condition as $cname => $va) {
+                if (!strstr($one[$cname], $va)) {
+                    $b = false;
+                    break;
+                }
+            }
+            if ($b) {
+                $count++;
+                $shaixuan[] = $one;
+            }
+        }
+        $num = (int) $_GET["num"] ? (int) $_GET["num"] : 20;
+        $page = (int) $_GET["page"] ? (int) $_GET["page"] : 1;
+        $allpage = ceil($count / $num);
+        if ($page > $allpage) {
+            $page = $allpage;
+        }
+        $start = ($page - 1) * $num;
+        $end = $page * $num;
+        for ($i = $start; $i < $end; $i++) {
+            if (!isset($shaixuan[$i])) {
+                break;
+            }
+            $final[] = $shaixuan[$i];
+        }
+        
+        vendor('PHPExcel');
+        $i=4;
+        $php_path = dirname(__FILE__) . '/';
+        $excelurl = $php_path.'../../../public/download/all.xls';
+        $objPHPExcel = \PHPExcel_IOFactory::load($excelurl);
+        foreach($basic as $k=>$v){
+    $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue('B'.$i, $v['name'])
+                ->setCellValue('A'.$i, $v['xh'])
+                ->setCellValue('C'.$i, $v['phone'])
+                ->setCellValue('D'.$i, $v['departmentName1'])
+                ->setCellValue('G'.$i, $v['departmentName2'])
+                ->setCellValue('H'.$i, $v['email'])
+                ->setCellValue('I'.$i, $v['qq'])
+                ->setCellValue('J'.$i, $v['dorm']);
+        switch ($v["acceptState"]) {
+                case 0:
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, '审查中');
+                    break;
+                case -1:
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, '被第一部门拒绝'); 
+                    break;
+                case -2:
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, '彻底没戏');
+                    break;
+                default:
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, $departments[$v["acceptState"]]["departmentName"].'录取');
+                    break;
+                }
+    $i++;
+    }
+    ob_end_clean();  //清空缓存 
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control:must-revalidate,post-check=0,pre-check=0");
+    header("Content-Type:application/force-download");
+    header("Content-Type:application/vnd.ms-execl");
+    header("Content-Type:application/octet-stream");
+    header("Content-Type:application/download");
+    header('Content-Disposition:attachment;filename=报名统计表.xls');//设置文件的名称
+    header("Content-Transfer-Encoding:binary");
+    $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+    $objWriter->save('php://output');
+    exit;
+
+    }
     public function apply()
     {
         //录取
