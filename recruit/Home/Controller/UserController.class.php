@@ -215,7 +215,20 @@ class UserController extends Controller
         $info = M("association_list")->where(array("associationName" => $name))->field("associationName,quest1,quest2,quest3")->find();
         $info["departments"] = $departments;
         $this->ajaxReturn(array("status" => 0, "data" => $info));
+    }
 
+    public function isInfoComplete()
+    {
+        $xh = isset($_GET['xh']) ? I('get.xh') : I('session.xh');
+        $data = D('StudentBasicInfo')->getStudentInfoByXh($xh);
+        // unset($data['id']);
+        // unset($data['password']);
+        // unset($data['name']);
+        if ($data['birthday'] !== "0000-00-00" && $data['qq'] && $data['mail'] && $data['phone']) {
+            $this->ajaxReturn(array("result"=>true));
+        } else {
+            $this->ajaxReturn(array("result"=>false));
+        }
     }
 
 }

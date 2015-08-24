@@ -40,10 +40,15 @@ class IndexController extends Controller {
         getStuInfo();//登陆检测
         $map["xh"] = I("session.xh","");
         $recruitInfo = M("student_recruit_info")->where($map)->select();
-        $associations = M("association_list")->select();
+        // $associations = M("association_list")->select();
+        $obj_associations = M("association_list")->getField('id,associationName,quest1,quest2,quest3');
+        //↑↑↑↑并不需要向前端输出所有字段，会导致安全问题（因为包含了密码和后台登陆用户名）
+        foreach ($obj_associations as $key => $value) {
+            $associations[] = $value;//然而由于TP一些奇怪的特性又不得不这么折腾一下
+        }
         $this->assign("associations",$associations);
         $this->assign("recruitInfo",$recruitInfo);//在前端用这个recruitInfo来存储此学生所有的报名信息
-        //在前端一定要存着每条已有的报名信息的id号，删除和更新的时候一定要发送id号，否则无法执行
+        // 在前端一定要存着每条已有的报名信息的id号，删除和更新的时候一定要发送id号，否则无法执行
         $this->display();
     }
 
