@@ -124,7 +124,7 @@ class IndexController extends Controller
     public function downloadallxls()
     {
 
-        $allrecruit = M("student_recruit_info")->where(array("association" => $_SESSION["nowassociation"]))->select();
+        $allrecruit = M('student_download')->where(array("association" => $_SESSION["nowassociation"]))->select();
         $basic = M("student_basic_info");
         $tmpdepartments = M("association_departments")->select();
         foreach ($tmpdepartments as $vt) {
@@ -181,32 +181,50 @@ class IndexController extends Controller
         $php_path = dirname(__FILE__) . '/';
         $excelurl = $php_path.'../../../public/download/all.xls';
         $objPHPExcel = \PHPExcel_IOFactory::load($excelurl);
-        foreach($basic as $k=>$v){
+        foreach($final as $k=>$v){
     $objPHPExcel->setActiveSheetIndex(0)
                 ->setCellValue('B'.$i, $v['name'])
                 ->setCellValue('A'.$i, $v['xh'])
-                ->setCellValue('C'.$i, $v['phone'])
-                ->setCellValue('D'.$i, $v['departmentName1'])
-                ->setCellValue('G'.$i, $v['departmentName2'])
-                ->setCellValue('H'.$i, $v['email'])
+                ->setCellValue('D'.$i, $v['phone'])
+                ->setCellValue('E'.$i, $v['departmentName1'])
+                ->setCellValue('F'.$i, $v['departmentName2'])
+                ->setCellValue('H'.$i, $v['mail'])
                 ->setCellValue('I'.$i, $v['qq'])
-                ->setCellValue('J'.$i, $v['dorm']);
+                ->setCellValue('J'.$i, $v['dorm'])
+                ->setCellValue('K'.$i, $v['college'])
+                ->setCellValue('L'.$i, $v['major'])
+                ->setCellValue('M'.$i, $v['birthday'])
+                ->setCellValue('N'.$i, $v['gaozhong'])
+                ->setCellValue('O'.$i, $v['quest1'])
+                ->setCellValue('P'.$i, $v['quest2'])
+                ->setCellValue('Q'.$i, $v['quest3']);
         switch ($v["acceptState"]) {
                 case 0:
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, '审查中');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$i, '审查中');
                     break;
                 case -1:
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, '被第一部门拒绝'); 
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$i, '被第一部门拒绝'); 
                     break;
                 case -2:
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, '彻底没戏');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$i, '彻底没戏');
                     break;
                 default:
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$i, $departments[$v["acceptState"]]["departmentName"].'录取');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$i, $departments[$v["acceptState"]]["departmentName"].'录取');
                     break;
+                }
+        switch ($v["sex"]) {
+                case 1:
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$i, '男');
+                    break;
+                case 2:
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$i, '女'); 
+                    break;
+                
                 }
     $i++;
     }
+        $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue('A1', $final[0]['association'].'招新报名统计表');
     ob_end_clean();  //清空缓存 
     header("Pragma: public");
     header("Expires: 0");
@@ -215,7 +233,7 @@ class IndexController extends Controller
     header("Content-Type:application/vnd.ms-execl");
     header("Content-Type:application/octet-stream");
     header("Content-Type:application/download");
-    header('Content-Disposition:attachment;filename=报名统计表.xls');//设置文件的名称
+    header('Content-Disposition:attachment;filename='.$final[0]['association'].'报名统计表.xls');//设置文件的名称
     header("Content-Transfer-Encoding:binary");
     $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
     $objWriter->save('php://output');

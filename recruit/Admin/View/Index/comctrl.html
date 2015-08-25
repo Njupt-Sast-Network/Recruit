@@ -79,7 +79,7 @@
 
                 <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
                 <button type="button" id="saveout" class="btn btn-primary" style="float:right">生成Word</button>
-                <button type="button" class="btn btn-success" onclick="javascript:window.location.href='__URL__/downloadallxls'">生成XLS</button>
+                <button type="button" id="saveexcel" class="btn btn-success" >生成XLS</button>
                 <button type="button" class="btn btn-danger">结束部门招新</button>
         </div>
         <form class="form-inline">
@@ -143,7 +143,23 @@
         }
         $("#recuritlist").attr("src",url);
     });
-    //获取筛选条件
+    $(document).on("click","#saveexcel",function(){
+        var data = {};
+        data.xh = $("#xuehao").val();
+        data.name = $("#name").val();
+        data.department1 = $("#department1").val();
+        data.department2 = $("#department2").val();
+        data.acceptState = $("#acceptState").val();
+        var url = "__URL__/downloadallxls?";
+        for (p in data){
+            if (data[p]) {
+                url = url + p + "=" + data[p] + "&";
+            };
+        }
+        location.href = url;
+    });
+
+
     function getcondition(){
         var data = {};
         data.xh = $("#xuehao").val();
