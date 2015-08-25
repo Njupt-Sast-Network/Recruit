@@ -9,11 +9,11 @@ class UserController extends Controller
     {
         $identity = I("post.identity", "");
         $map["username"] = I("post.username");
-        $map["password"] = md5("spf" . I("post.password"));
+        // $map["password"] = md5("spf" . I("post.password"));
         switch ($identity) {
             case '1': //部门管理员
                 $info = M("association_departments")->where($map)->find();
-                if (!$info) {
+                if ($info === null || password_verify(I('post.password'), $info['password']) === false) {
                     $this->ajaxReturn(array("status" => 0, "info" => "用户名或密码错误"));
                 } else {
                     unset($info["password"]);
@@ -25,18 +25,17 @@ class UserController extends Controller
                 break;
             case '2': //社团管理员
                 $info = M("association_list")->where($map)->find();
-                if (!$info) {
+                if ($info === null || password_verify(I('post.password'), $info['password']) === false) {
                     $this->ajaxReturn(array("status" => 0, "info" => "用户名或密码错误"));
                 } else {
                     unset($info["password"]);
                     session("identity", "社团管理员");
                     session("associationName", $info["associationName"]); //数据库里取出来的数据的字段名默认是全小写的，屡屡被坑  by sdygt
-                    // dump($info);die();
                     $this->ajaxReturn(array("status" => 1, "data" => $info));
                 }
                 break;
             case '3': //超级管理员
-                if ($map["username"] == "root" && $map["password"] == "e83e403a6ff7b6d4235d34d82edc896b") {
+                if ($map["username"] == "root" && password_verify(I('post.password'),'$2y$09$ldE9qs0cjIAoDc1DPUuql.lG2HOEmY8C5fQvr.IakODCwT6cvFPaC')) {
                     session("identity", "超级管理员");
                     $this->ajaxReturn(array("status" => 1));
                 } else {
