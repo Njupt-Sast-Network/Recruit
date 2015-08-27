@@ -150,12 +150,129 @@
             </div>
             <div class="form-group">
                 <label for="inputCollege" class="col-sm-2 control-label">学院</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputCollege" placeholder="请输入学院名称" value="<?php
-                        if($stuinfo["college"] != '') {
-                          echo($stuinfo["college"]);
-                        }
-                        ?>">
+                    <div class="col-sm-10"> 
+                        <select class="form-control" id="inputCollege">
+                            <option value="">==请选择==</option>
+                            <option value="通信与信息工程学院" 
+                            <?php
+                            if($stuinfo['college'] == '通信与信息工程学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >通信与信息工程学院</option>
+                            <option value="电子科学与工程学院" 
+                            <?php
+                            if($stuinfo['college'] == '电子科学与工程学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >电子科学与工程学院</option>
+                            <option value="光电工程学院" 
+                            <?php
+                            if($stuinfo['college'] == '光电工程学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >光电工程学院</option>
+                            <option value="计算机学院、软件学院" 
+                            <?php
+                            if($stuinfo['college'] == '计算机学院、软件学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >计算机学院、软件学院</option>
+                            <option value="自动化学院" 
+                            <?php
+                            if($stuinfo['college'] == '自动化学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >自动化学院</option>
+                            <option value="材料科学与工程学院" 
+                            <?php
+                            if($stuinfo['college'] == '材料科学与工程学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >材料科学与工程学院</option>
+                            <option value="物联网学院" 
+                            <?php
+                            if($stuinfo['college'] == '物联网学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >物联网学院</option>
+                            <option value="理学院" 
+                            <?php
+                            if($stuinfo['college'] == '理学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >理学院</option>
+                            <option value="地理与生物信息学院" 
+                            <?php
+                            if($stuinfo['college'] == '地理与生物信息学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >地理与生物信息学院</option>
+                            <option value="传媒与艺术学院（文化艺术中心）" 
+                            <?php
+                            if($stuinfo['college'] == '传媒与艺术学院（文化艺术中心）'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >传媒与艺术学院（文化艺术中心）</option>
+                            <option value="管理学院" 
+                            <?php
+                            if($stuinfo['college'] == '管理学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >管理学院</option>
+                            <option value="经济学院" 
+                            <?php
+                            if($stuinfo['college'] == '经济学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >经济学院</option>
+                            <option value="人文与社会科学学院" 
+                            <?php
+                            if($stuinfo['college'] == '人文与社会科学学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >人文与社会科学学院</option>
+                            <option value="外国语学院" 
+                            <?php
+                            if($stuinfo['college'] == '外国语学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >外国语学院</option>
+                            <option value="教育科学与技术学院" 
+                            <?php
+                            if($stuinfo['college'] == '教育科学与技术学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >教育科学与技术学院</option>
+                            <option value="贝尔英才学院" 
+                            <?php
+                            if($stuinfo['college'] == '贝尔英才学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >贝尔英才学院</option>
+                            <option value="海外教育学院" 
+                            <?php
+                            if($stuinfo['college'] == '海外教育学院'){
+                              echo "selected = 'selected'";
+                            }
+                            ?>
+                            >海外教育学院</option>
+                        </select>
                     </div>
             </div>
             <div class="form-group">
@@ -232,7 +349,7 @@
             ajax();
           };          
         });
-        })
+        });
         //预填生日
         function preBirth() {
           var birthday = "<?php echo $stuinfo['birthday'].""; ?>";
