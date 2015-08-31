@@ -9,3 +9,6 @@ New recruit website for NJUPT
 ```
 
 然后把数据库的`association_departments`表中的`departmentname`字段改为`departmentName`。
+
+# 20150901更新
+密码的哈希函数已更新，部署至生产服务器时如需直接写入数据库请用`password_hash("passwordhere", PASSWORD_DEFAULT, array("cost" => 9))`生成密码哈希值。
