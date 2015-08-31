@@ -144,7 +144,7 @@
             var b = <?php echo json_encode($associations); ?>;
             for (var l = 0; l < <?php echo sizeof($associations); ?>; l++) {
                 for (j in b[l]) {
-                    arrass.push(b[l][j]);
+                    arrass.push(b[l]['associationName']);
                 }
             }
             var times = arrass.length / 7;
