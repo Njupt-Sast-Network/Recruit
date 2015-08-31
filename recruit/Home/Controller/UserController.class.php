@@ -22,10 +22,10 @@ class UserController extends Controller
         // $studentBasicInfo = new StudentBasicInfoModel();
         // $student = $studentBasicInfo->getStudentInfoByXh();
         $map["xh"] = I('post.xh', '');
-        $map["password"] = md5('spf' . I('post.password', ''));
+        // $map["password"] = md5('spf' . I('post.password', ''));
         $studentinfo = M("student_basic_info")->where($map)->find();
-        if (!$studentinfo) {
-            $this->ajaxReturn(array("status" => 0, "info" => "用户名或密码错误", "data" => $map));
+        if ($studentinfo === null || password_verify(I('post.password'), $studentinfo['password']) === false) {
+            $this->ajaxReturn(array("status" => 0, "info" => "用户名或密码错误", "data" => array('pwdhash'=>$studentinfo['password'],'pwdpost'=>I('post.password'))));
         } else {
             session_start();
             unset($studentinfo["password"]);
@@ -82,7 +82,7 @@ class UserController extends Controller
                 $this->ajaxReturn(array("status" => 0, "info" => $key . "缺失"));
             }
         }
-        $data['password'] = md5('spf' . $data['password']);
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT, array("cost" => 9));
         $map["xh"] = $data["xh"];
         if ($studentBasicInfo->where($map)->count() > 0) {
             $this->ajaxReturn(array("status" => 0, "info" => "此学号已被注册,如果忘记密码请寻找社团管理员"));
@@ -162,10 +162,10 @@ class UserController extends Controller
         if (!$map["xh"]) {
             $this->ajaxReturn(array("status" => 0, "info" => "未登录"));
         }
-        $old = md5('spf' . I('post.old', ''));
+        // $old = md5('spf' . I('post.old', ''));
         $current = I('post.current', '');
         $student = M("student_basic_info")->where($map)->find();
-        if ($student['password'] != $old) {
+        if (password_verify(I('post.old'), $student['password'])) {
             $this->ajaxReturn(array("status" => 0, "info" => "旧密码不正确"));
         } else {
             if (strlen($current) < 6) {
@@ -225,9 +225,9 @@ class UserController extends Controller
         // unset($data['password']);
         // unset($data['name']);
         if ($data['birthday'] !== "0000-00-00" && $data['qq'] && $data['mail'] && $data['phone']) {
-            $this->ajaxReturn(array("result"=>true));
+            $this->ajaxReturn(array("result" => true));
         } else {
-            $this->ajaxReturn(array("result"=>false));
+            $this->ajaxReturn(array("result" => false));
         }
     }
 

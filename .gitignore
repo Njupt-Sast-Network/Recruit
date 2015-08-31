@@ -43,7 +43,7 @@ Temporary Items
 .apdisk
 ./recruit/Runtime/*
 ./recruit/Runtime/
-recruit/Runtime/Logs/Common/15_07_18.log
+
 *.log
 /recruit/Runtime/
 recruit/Runtime/*

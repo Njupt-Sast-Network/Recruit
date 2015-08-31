@@ -343,7 +343,8 @@ class IndexController extends Controller
             case 'rstpwd': //重置账号密码
                 $map['id'] = I('post.id');
                 $map['username'] = I('post.username');
-                $map['password'] = md5('spf' . I('post.password'));
+                // $map['password'] = md5('spf' . I('post.password'));
+                $map['password'] = password_hash(I('post.password'), PASSWORD_DEFAULT, array("cost" => 9));
                 if ($db->save($map) === false) {
                     $this->ajaxReturn(array('errno' => -1, 'errmsg' => 'SQL错误', 'sql' => $db->getLastSql()));
                     die();
@@ -374,7 +375,8 @@ class IndexController extends Controller
                 if ($db->where(array('username' => $_POST['username']))->count() > 0) {
                     $this->ajaxReturn(array('errno' => 4, 'errmsg' => '该用户名已存在'));
                 }
-                $_POST['password'] = md5('spf' . $_POST['password']);
+                // $_POST['password'] = md5('spf' . $_POST['password']);
+                $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT, array("cost" => 9));
                 $db->create($_POST);
                 if ($db->add()) {
                     $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
