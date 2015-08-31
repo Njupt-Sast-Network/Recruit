@@ -10,12 +10,18 @@
     <!-- Bootstrap -->
     <link href="__ROOT__/css/bootstrap.min.css" rel="stylesheet">
     <link href="__ROOT__/css/style.css" rel="stylesheet">
-
+    <script language='javascript'>
+    function onEnterDown () {
+      if(window.event.keyCode == 13){
+        $("#reg").click();
+      }
+    }
+    </script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <![endif]-->
   </head>
-  <body>
+  <body onkeydown='onEnterDown()'>
     <div class="wrap">
       <div class="container" id="main">
       <!--logo图片-->
