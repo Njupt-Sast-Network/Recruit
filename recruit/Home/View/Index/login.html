@@ -53,7 +53,7 @@
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox"> 记住我
+                    <input id="rememberMe" type="checkbox"> 记住我
                 </label>
             </div>
           </form>
@@ -71,7 +71,7 @@
     </div>
     <script src="__ROOT__/js/jquery-1.11.2.min.js"></script>
     <script src="__ROOT__/js/bootstrap.min.js"></script>
-    <!--<script src="../../../../public/js/ajax.js"></script>-->
+    <script src="__ROOT__/js/jquery.cookie.js"></script>
     <script>
     
     $(document).ready(function(){
@@ -128,6 +128,30 @@
     }); 
 
 });
+
+    //判断之前是否有设置cookie，如果有，则设置【记住我】选择框  
+    if($.cookie('absms_crm2_userName')!=undefined){  
+        $("#rememberMe").attr("checked", true);  
+    }else{  
+        $("#rememberMe").attr("checked", false);  
+    }  
+      
+    //读取cookie  
+    if($('#rememberMe:checked').length>0){  
+        $('#userName').val($.cookie('absms_crm2_userName'));  
+        $('#password').val($.cookie('absms_crm2_password'));  
+    }  
+      
+    //监听【记住我】事件  //设置cookie //清除cookie 
+    $("#rememberMe").click(function(){  
+        if($('#rememberMe:checked').length>0){ 
+            $.cookie('absms_crm2_userName', $('#userName').val());  
+            $.cookie('absms_crm2_password', $('#password').val());  
+        }else{ 
+            $.removeCookie('absms_crm2_userName');  
+            $.removeCookie('absms_crm2_password');  
+        }  
+    });  
     </script>
   </body>
 </html>
