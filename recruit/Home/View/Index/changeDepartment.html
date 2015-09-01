@@ -147,9 +147,10 @@
                     arrass.push(b[l]['associationName']);
                 }
             }
-            var times = arrass.length / 7;
+
+            var times = arrass.length / 5;
             for (var n = 0; n < times; n++) {
-                teamNum.push(arrass[1 + n * 7]);
+                teamNum.push(arrass[1 + n * 5]);
             }
         }
         return teamNum;
