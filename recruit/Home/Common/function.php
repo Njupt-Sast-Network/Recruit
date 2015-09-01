@@ -8,12 +8,20 @@
 
 use Common\Model\StudentBasicInfoModel;
 
-function getStuInfo() {
+function getStuInfo()
+{
     $xh = I('session.xh', '');
     if (!$xh) {
-        header('Location: '.U('Home/Index/login'));
+        header('Location: ' . U('Home/Index/login'));
         die();
     }
     $stuinfo = new StudentBasicInfoModel();
     return $stuinfo->getStudentInfoByXh($xh);
+}
+
+// 检测输入的验证码是否正确，$code为用户输入的验证码字符串
+function checkVerifyCode($code, $id = '')
+{
+    $verify = new \Think\Verify();
+    return $verify->check($code, $id);
 }
