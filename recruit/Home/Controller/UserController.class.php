@@ -18,20 +18,19 @@ class UserController extends Controller
 
     public function doLogin()
     {
-        // echo "string";
         // $studentBasicInfo = new StudentBasicInfoModel();
         // $student = $studentBasicInfo->getStudentInfoByXh();
         $map["xh"] = I('post.xh', '');
         // $map["password"] = md5('spf' . I('post.password', ''));
         $studentinfo = M("student_basic_info")->where($map)->find();
         if ($studentinfo === null || password_verify(I('post.password'), $studentinfo['password']) === false) {
-            $this->ajaxReturn(array("status" => 0, "info" => "用户名或密码错误", "data" => array('pwdhash'=>$studentinfo['password'],'pwdpost'=>I('post.password'))));
+            $this->ajaxReturn(array("status" => 0, "info" => "用户名或密码错误"));
         } else {
             session_start();
             unset($studentinfo["password"]);
             session("xh", $studentinfo["xh"]); //登陆成功后将学生学号、姓名写入session
             session("name", $studentinfo["name"]);
-            $this->ajaxReturn(array("status" => 1, "info" => "success", "data" => $studentinfo));
+            $this->ajaxReturn(array("status" => 1, "info" => "success"));
         };
     }
 
@@ -72,6 +71,9 @@ class UserController extends Controller
 
     public function doReg()
     {
+        if (!checkVerifyCode(I('post.verifyCode'))) {
+            $this->ajaxReturn(array("status" => 0, "info" => "验证码错误", "verifyCode" => I('post.verifyCode')));
+        }
         $studentBasicInfo = new StudentBasicInfoModel();
         $data['xh'] = I('post.xh', '', '/^[BHYQ][\d]+/i');
         $data['name'] = I('post.name', '', '/^[\x{4e00}-\x{9fa5}]+$/u');
@@ -90,7 +92,6 @@ class UserController extends Controller
             $back = $studentBasicInfo->add($data);
             session("xh", $data["xh"]); //登陆成功后将学生学号、姓名写入session
             session("name", $data["name"]);
-            $returndata["data"] = $back;
             $returndata["info"] = "成功";
             $returndata["status"] = 1;
             $this->ajaxReturn($returndata);

@@ -91,6 +91,7 @@
             var xh = $("#inputStudentId1").val();
             var name = $("#inputName1").val();
             var password = $("#inputPassWord1").val();
+            var verifyCode  = $("#inputIdentifyingCode1").val();
             if (($("#inputStudentId1").attr("checked") == "checked") && ($("#inputName1").attr("checked") == "checked") && ($("#inputPassWord1").attr("checked") == "checked") && ($("#confirmPassWord1").attr("checked") == "checked")) {
                 $.ajax({
                     type: "POST",
@@ -99,12 +100,16 @@
                     data: {
                         "xh": xh,
                         "name": name,
-                        "password": password
+                        "password": password,
+                        "verifyCode": verifyCode
                     },
                     success: function(back) {
                         if (back.status == 1) {
-                            window.location.href = "{:U('Home/Index/changeDepartment')}"
+                            console.log(back);
+                            window.location.href = "{:U('Home/Index/changeDepartment')}";
+
                         } else {
+                            console.log(back);
                             alert(back.info);
                         }
                     },
