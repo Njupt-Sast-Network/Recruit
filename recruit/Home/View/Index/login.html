@@ -138,20 +138,21 @@
       
     //读取cookie  
     if($('#rememberMe:checked').length>0){  
-        $('#userName').val($.cookie('absms_crm2_userName'));  
-        $('#password').val($.cookie('absms_crm2_password'));  
+        $('#inputStudentId').val($.cookie('absms_crm2_userName'));  
+        $('#inputPassword').val($.cookie('absms_crm2_password'));  
     }  
       
     //监听【记住我】事件  //设置cookie //清除cookie 
     $("#rememberMe").click(function(){  
         if($('#rememberMe:checked').length>0){ 
-            $.cookie('absms_crm2_userName', $('#userName').val());  
-            $.cookie('absms_crm2_password', $('#password').val());  
+            $.cookie('absms_crm2_userName', $('#inputStudentId').val());  
+            $.cookie('absms_crm2_password', $('#inputPassword').val());  
         }else{ 
             $.removeCookie('absms_crm2_userName');  
             $.removeCookie('absms_crm2_password');  
         }  
     });  
+
     </script>
   </body>
 </html>
