@@ -21,9 +21,8 @@ class IndexController extends Controller
     public function verify()
     {
         $Verify = new \Think\Verify(); //使用验证码
-        $Verify->fontSize = 30; //验证码字体大小
-        $Verify->length = 3; //验证码长度
-        $Verify->useZh = true;
+        $Verify->fontSize = 35; //验证码字体大小
+        $Verify->length = 4; //验证码长度
         $Verify->entry();
     }
 

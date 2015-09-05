@@ -139,17 +139,14 @@
     //读取cookie  
     if($('#rememberMe:checked').length>0){  
         $('#inputStudentId').val($.cookie('absms_crm2_userName'));  
-        $('#inputPassword').val($.cookie('absms_crm2_password'));  
     }  
       
     //监听【记住我】事件  //设置cookie //清除cookie 
     $("#rememberMe").click(function(){  
         if($('#rememberMe:checked').length>0){ 
-            $.cookie('absms_crm2_userName', $('#inputStudentId').val());  
-            $.cookie('absms_crm2_password', $('#inputPassword').val());  
+            $.cookie('absms_crm2_userName', $('#inputStudentId').val(),{ expires: 15 });  
         }else{ 
             $.removeCookie('absms_crm2_userName');  
-            $.removeCookie('absms_crm2_password');  
         }  
     });  
 
