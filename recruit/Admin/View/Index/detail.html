@@ -109,7 +109,7 @@
             </div>
             <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> 修改新生密码</button>
             <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
-            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span> 生成word</button>
+            <button type="button" class="btn btn-success" id="saveexcel"><span class="glyphicon glyphicon-cloud-download"></span> 导出个人信息xls</button>
 
             <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-saved"></span> 结束部门招新</button>
         </div>
@@ -180,6 +180,11 @@
     $('#btncomctrl').click(function() {
         window.location.href = "__URL__/comctrl";
     })
+        $(document).on("click","#saveexcel",function(){
+        var nowass = $("#nowass").val();
+        var url = "__URL__/downloaddetailxls?xh="+'<?php echo $basic['xh'] ?>'+"&ass="+nowass;
+        location.href = url;
+    });
 
     </script>
 </body>

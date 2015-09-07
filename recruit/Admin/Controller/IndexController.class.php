@@ -240,6 +240,72 @@ class IndexController extends Controller
     exit;
 
     }
+    public function downloaddetailxls()
+    {
+        $mapxh['association']=$_GET['ass'];
+        $mapxh['xh']=$_GET['xh'];
+        $allrecruit = M('student_download')->where($mapxh)->select();
+        $basic = M("student_basic_info");
+        $tmpdepartments = M("association_departments")->select();
+        foreach ($tmpdepartments as $vt) {
+            $departments[$vt["id"]] = $vt; //用id为下标序列化部门列表
+        }
+            $allrecruit[0]["departmentName1"] = $departments[$allrecruit[0]["department1"]]["departmentName"];
+            $allrecruit[0]["departmentName2"] = $departments[$allrecruit[0]["department2"]]["departmentName"];
+        $final=$allrecruit;
+        vendor('PHPExcel');
+        $i=4;
+        $php_path = dirname(__FILE__) . '/';
+        $excelurl = $php_path.'../../../public/download/detail.xls';
+        $objPHPExcel = \PHPExcel_IOFactory::load($excelurl);
+        foreach($final as $k=>$v){
+    $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue('B4', $v['name'])
+                ->setCellValue('E4', $v['xh'])
+                ->setCellValue('B6', $v['phone'])
+                ->setCellValue('D8', $v['departmentName1'])
+                ->setCellValue('H8', $v['departmentName2'])
+                ->setCellValue('H6', $v['mail'])
+                ->setCellValue('E6', $v['qq'])
+                ->setCellValue('B7', $v['dorm'])
+                ->setCellValue('E5', $v['college'])
+                ->setCellValue('H5', $v['major'])
+                ->setCellValue('H4', $v['birthday'])
+                ->setCellValue('E7', $v['gaozhong'])
+                ->setCellValue('B9', $v['quest1'])
+                ->setCellValue('B10', $v['quest2'])
+                ->setCellValue('B11', $v['quest3'])
+                ->setCellValue('A9', $v['question1'])
+                ->setCellValue('A10', $v['question2'])
+                ->setCellValue('A11', $v['question3']);
+        switch ($v["sex"]) {
+                case 1:
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', '男');
+                    break;
+                case 2:
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', '女'); 
+                    break;
+                
+                }
+    $i++;
+    }
+        $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue('A1', $final[0]['association'].'招新个人信息表');
+    ob_end_clean();  //清空缓存 
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control:must-revalidate,post-check=0,pre-check=0");
+    header("Content-Type:application/force-download");
+    header("Content-Type:application/vnd.ms-execl");
+    header("Content-Type:application/octet-stream");
+    header("Content-Type:application/download");
+    header('Content-Disposition:attachment;filename='.$final[0]['association'].'__'.$final[0]['name'].'.xls');//设置文件的名称
+    header("Content-Transfer-Encoding:binary");
+    $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+    $objWriter->save('php://output');
+    exit;
+
+    }
     public function apply()
     {
         //录取

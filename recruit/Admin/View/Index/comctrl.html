@@ -78,7 +78,7 @@
                 <?php } ?>
 
                 <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
-                <button type="button" id="saveout" class="btn btn-primary" style="float:right"><span class="glyphicon glyphicon-cloud-download"></span> 生成Word</button>
+                <button type="button" id="saveword" class="btn btn-primary" style="float:right"><span class="glyphicon glyphicon-cloud-download"></span> 生成Word</button>
                 <button type="button" id="saveexcel" class="btn btn-success" ><span class="glyphicon glyphicon-cloud-download"></span> 生成XLS</button>
                 <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-saved"></span> 结束部门招新</button>
         </div>
@@ -151,6 +151,21 @@
         data.department2 = $("#department2").val();
         data.acceptState = $("#acceptState").val();
         var url = "__URL__/downloadallxls?";
+        for (p in data){
+            if (data[p]) {
+                url = url + p + "=" + data[p] + "&";
+            };
+        }
+        location.href = url;
+    });
+        $(document).on("click","#saveword",function(){
+        var data = {};
+        data.xh = $("#xuehao").val();
+        data.name = $("#name").val();
+        data.department1 = $("#department1").val();
+        data.department2 = $("#department2").val();
+        data.acceptState = $("#acceptState").val();
+        var url = "__URL__/downloadword?";
         for (p in data){
             if (data[p]) {
                 url = url + p + "=" + data[p] + "&";
