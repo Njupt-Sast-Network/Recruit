@@ -166,7 +166,7 @@ class UserController extends Controller
         // $old = md5('spf' . I('post.old', ''));
         $current = I('post.current', '');
         $student = M("student_basic_info")->where($map)->find();
-        if (password_verify(I('post.old'), $student['password'])) {
+        if (!password_verify(I('post.old'), $student['password'])) {
             $this->ajaxReturn(array("status" => 0, "info" => "旧密码不正确"));
         } else {
             if (strlen($current) < 6) {
@@ -176,6 +176,7 @@ class UserController extends Controller
             if (!$res) {
                 $this->ajaxReturn(array("status" => 0, "info" => $res));
             } else {
+                session(null);
                 $this->ajaxReturn(array("status" => 1, "info" => "成功"));
             }
         }
