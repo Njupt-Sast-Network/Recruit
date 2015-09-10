@@ -107,7 +107,7 @@
 
      
     $("#inputStudentId").blur(function(){
-    var id = /^[BQH]+[0-9]{8}$/;
+    var id = /^[BQH][0-9]{8}$/;
     if(!id.test($("#inputStudentId").val())){
         $("#inputStudentId").css("border-color","#8B0000");
         $("#inputStudentId").attr("checked","");
