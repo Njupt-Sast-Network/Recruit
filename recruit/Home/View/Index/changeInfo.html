@@ -380,18 +380,18 @@
                 var reg = regexMatch[id];
                 if(!reg.test($(this).val())){
                   $(this).removeAttr("checked");
-                  $(this).css("border-color","#8B0000");
+                  $(this).css({"border-color":"#8B0000","border-width":"2px"});
                 } else {
                   $(this).attr("checked","checked");
-                  $(this).css("border-color","#66afe9");
+                  $(this).css({"border-color":"#66afe9","border-width":"2px"});
                 }
               } else {
                 if(!$(this).val()){
                   $(this).removeAttr("checked");
-                  $(this).css("border-color","#8B0000");
+                  $(this).css({"border-color":"#8B0000","border-width":"2px"});
                 } else {
                   $(this).attr("checked","checked");
-                  $(this).css("border-color","#66afe9");
+                  $(this).css({"border-color":"#66afe9","border-width":"2px"});
                 }
               }
             });
