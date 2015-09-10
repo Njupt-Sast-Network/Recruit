@@ -106,9 +106,9 @@ a:hover{
 	border-color: #777;
 }
 .form-control{
-	background-color: #696969;
+/*background-color: #696969;*/
 	border-radius: 10px;
-	color:#fff;
+/*	color:#fff;*/
 	border:1px solid #696969;
 }
 span a:hover{
