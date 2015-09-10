@@ -49,8 +49,8 @@ class IndexController extends Controller
         }
         $_SESSION["nowassociation"] = $nowassociation;
         $_SESSION["nowdepartment"] = $nowdepartment;
-        $map["association"] = $nowassociation;
-        $alldepartment = M("association_departments")->where($map)->field("id,departmentName")->select();
+        $map2["association"] = $nowassociation;
+        $alldepartment = M("association_departments")->where($map2)->field("id,departmentName")->select();
         $this->assign("nowassociation", $nowassociation);
         $this->assign("nowdepartment", $nowdepartment);
         $this->assign("identity", $data["identity"]);
