@@ -86,7 +86,7 @@
                 <input type="text" class="question" id="quest1" value="{$quest['quest1']}">
                 <input type="text" class="question" id="quest2" value="{$quest['quest2']}">
                 <input type="text" class="question" id="quest3" value="{$quest['quest3']}">
-                <button class="btn btn-primary" id="btnEditQuestConfirm">确认修改</button>
+                <button type="button" class="btn btn-primary" id="btnEditQuestConfirm">确认修改</button>
             </form>
         </div>
     </div>
@@ -123,7 +123,7 @@
             'quest2': quest2,
             'quest3': quest3
         }, function(result) {
-            console.log(result);
+            alert(result.errmsg);
         })
     })
 

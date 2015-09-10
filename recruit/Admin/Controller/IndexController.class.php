@@ -517,7 +517,7 @@ class IndexController extends Controller
 
         if (I('session.identity') == '社团管理员') {
             //这里判断请求操作的部门是否为该社团的部门
-            $deptBelonging = $dbAssocDept->where('id=' . I('post.id'))->getField('association');
+            $deptBelonging = $dbAssocDept->where(array('associationName' => I('post.associationName')))->getField('association');
             if ($deptBelonging != I('session.associationName')) {
                 $this->ajaxReturn(array('errno' => 1, 'errmsg' => '权限不足'));
             }
