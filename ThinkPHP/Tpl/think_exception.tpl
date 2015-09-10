@@ -36,6 +36,7 @@ h1{ font-size: 32px; line-height: 48px; }
 		</div>
 		<div class="text">
 			<p>FILE: <?php echo $e['file'] ;?> &#12288;LINE: <?php echo $e['line'];?></p>
+			<p>很抱歉给您带来不便，如果可以，请将页面截图和导致错误的操作步骤发送至<a href="mailto:B14090617@njupt.edu.cn?&subject=招新系统错误报告">B14090617@njupt.edu.cn</a>，非常感谢！</p>
 		</div>
 	</div>
 <?php }?>

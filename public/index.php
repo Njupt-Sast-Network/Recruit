@@ -1,5 +1,6 @@
 <?php
-//开启调试模式define('APP_DEBUG',TRUE);
+//开启调试模式
+define('APP_DEBUG',TRUE);
 //定义项目名称
 define('APP_NAME','Recruit');
 // 开启rest
