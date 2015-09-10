@@ -656,9 +656,13 @@ class IndexController extends Controller
         if (!$recruit) {
             $this->error("此新生未报名你的社团");
         }
-
+        $tmpdepartments = M("association_departments")->select();
+        foreach ($tmpdepartments as $vt) {
+            $departments2[$vt["id"]] = $vt; //用id为下标序列化部门列表
+        }
         $this->assign("basic", $info);
         $this->assign("recruit", $recruit);
+        $this->assign("departments2", $departments2);
         $this->display();
     }
 }
