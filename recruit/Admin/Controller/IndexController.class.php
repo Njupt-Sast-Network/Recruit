@@ -161,13 +161,27 @@ class IndexController extends Controller
                 $shaixuan[] = $one;
             }
         }
-         $final[] = $shaixuan[];
+        $num = (int) $_GET["num"] ? (int) $_GET["num"] : 20;
+        $page = (int) $_GET["page"] ? (int) $_GET["page"] : 1;
+        $allpage = ceil($count / $num);
+        if ($page > $allpage) {
+            $page = $allpage;
+        }
+        $start = ($page - 1) * $num;
+        $end = $page * $num;
+        for ($i = $start; $i < $end; $i++) {
+            if (!isset($shaixuan[$i])) {
+                break;
+            }
+            $final[] = $shaixuan[$i];
+        }
+        
         vendor('PHPExcel');
         $i=4;
         $php_path = dirname(__FILE__) . '/';
         $excelurl = $php_path.'../../../public/download/all.xls';
         $objPHPExcel = \PHPExcel_IOFactory::load($excelurl);
-        foreach($final as $k=>$v){
+        foreach($shaixuan as $k=>$v){
     $objPHPExcel->setActiveSheetIndex(0)
                 ->setCellValue('B'.$i, $v['name'])
                 ->setCellValue('A'.$i, $v['xh'])
