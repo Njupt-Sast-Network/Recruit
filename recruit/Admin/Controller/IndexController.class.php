@@ -161,13 +161,7 @@ class IndexController extends Controller
                 $shaixuan[] = $one;
             }
         }
-        for ($i = $start; $i < $end; $i++) {
-            if (!isset($shaixuan[$i])) {
-                break;
-            }
-            $final[] = $shaixuan[$i];
-        }
-        
+         $final[] = $shaixuan[];
         vendor('PHPExcel');
         $i=4;
         $php_path = dirname(__FILE__) . '/';
