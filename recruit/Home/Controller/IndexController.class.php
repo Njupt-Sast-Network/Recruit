@@ -60,8 +60,13 @@ class IndexController extends Controller
         foreach ($obj_associations as $key => $value) {
         $associations[] = $value;//然而由于TP一些奇怪的特性又不得不这么折腾一下
         }*/
+        $tmpdepartments = M("association_departments")->select();
+        foreach ($tmpdepartments as $vt) {
+            $departments[$vt["id"]] = $vt['departmentName']; //用id为下标序列化部门列表
+        }
         $associations = M("association_list")->field('id,associationName,quest1,quest2,quest3')->select();
         $this->assign("associations", $associations);
+        $this->assign("departments", $departments);
         $this->assign("recruitInfo", $recruitInfo); //在前端用这个recruitInfo来存储此学生所有的报名信息
         // 在前端一定要存着每条已有的报名信息的id号，删除和更新的时候一定要发送id号，否则无法执行
         $this->display();

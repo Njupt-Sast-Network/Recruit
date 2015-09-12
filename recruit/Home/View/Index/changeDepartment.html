@@ -209,8 +209,14 @@
 
             function preContent(k, m) {
                 var status = "";
+                var dep = new Array();
+                var deptid = arr[(k - 1) * 9 + 8];
+                <?php
+                 foreach($departments as $key=>$value){
+                echo "dep[$key]    ='$value';\n";}
+                ?>;
                 if(arr[(k - 1) * 9 + 8]>0){
-                    status = "你被某个部门录取了。";
+                    status = "恭喜你，你被"+dep[deptid]+"录取了！";
                 }
                 else{
                 switch (arr[(k - 1) * 9 + 8]) {
