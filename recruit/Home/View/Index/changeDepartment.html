@@ -209,15 +209,13 @@
 
             function preContent(k, m) {
                 var status = "";
+                if(arr[(k - 1) * 9 + 8]>0){
+                    status = "你被某个部门录取了。";
+                }
+                else{
                 switch (arr[(k - 1) * 9 + 8]) {
                     case "0":
                         status = "暂无结果";
-                        break;
-                    case "1":
-                        status = "恭喜你已经被第一个部门录取";
-                        break;
-                    case "2":
-                        status = "恭喜你已经被第二个部门录取";
                         break;
                     case "-1":
                         status = "被第一部门拒绝，请等待第二部门结果";
@@ -225,6 +223,7 @@
                     case "-2":
                         status = "很遗憾，你没有被任一部门录取";
                         break;
+                }
                 }
                 var preDep1 = "",
                     preDep2 = "";
