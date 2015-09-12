@@ -287,7 +287,7 @@ class IndexController extends Controller
                     break;
                 default:
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', '未选择');
-                    break;；
+                    break;
                 }
     $i++;
     }
