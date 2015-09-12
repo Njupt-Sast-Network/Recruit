@@ -125,7 +125,7 @@
                 <button type="button" id="shaixuan" class="btn btn-primary"><span class="glyphicon glyphicon-filter"></span> 筛选</button>
             </div>
         </form>
-        <iframe src="__URL__/recuritlist" id="recuritlist" width="1000" align="center" height="300" name="win" onload="Javascript:void(0)" frameborder="0" scrolling="no"></iframe>
+        <iframe src="__URL__/recuritlist" id="recuritlist" width="1000" align="center" height="300" name="win" onload="Javascript:SetWinHeight(this)" frameborder="0" scrolling="no"></iframe>
     </div>
     <script type="text/javascript">
     $(document).on("change", "#nowass,#nowdep", function() {
@@ -192,7 +192,7 @@
 
         if (ifm != null && subWeb != null) {
 
-            ifm.height = subWeb.body.scrollHeight;
+            ifm.height = subWeb.body.scrollHeight + 100;
 
         }
     }
