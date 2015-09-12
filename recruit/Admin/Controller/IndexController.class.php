@@ -285,7 +285,9 @@ class IndexController extends Controller
                 case 2:
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', '女'); 
                     break;
-                
+                default:
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', '未选择');
+                    break;；
                 }
     $i++;
     }
