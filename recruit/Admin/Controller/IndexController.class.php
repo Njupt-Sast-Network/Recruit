@@ -89,7 +89,7 @@ class IndexController extends Controller
         foreach ($allrecruit as $one) {
             $b = true;
             foreach ($condition as $cname => $va) {
-                if (!strstr($one[$cname], $va)) {
+                if ($one[$cname]==$va)) {
                     $b = false;
                     break;
                 }
