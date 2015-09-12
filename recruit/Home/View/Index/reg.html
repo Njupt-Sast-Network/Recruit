@@ -48,16 +48,16 @@
                 <div role="tabpannel" class="tab-pane active" id="sign-up">
                     <form role="form">
                         <div class="form-group">
-                            <input type="studentId" class="form-control" id="inputStudentId1" placeholder="学号" checked="">
+                            <input type="studentId" class="form-control" id="inputStudentId1" placeholder="学号" checkedd="">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="inputName1" placeholder="姓名" checked="">
+                            <input type="text" class="form-control" id="inputName1" placeholder="姓名" checkedd="">
                         </div>
                         <div class="form-group">
-                            <input type="passWord" class="form-control" id="inputPassWord1" placeholder="密码" checked="">
+                            <input type="passWord" class="form-control" id="inputPassWord1" placeholder="密码" checkedd="">
                         </div>
                         <div class="form-group">
-                            <input type="passWord" class="form-control" id="confirmPassWord1" placeholder="确认密码" checked="">
+                            <input type="passWord" class="form-control" id="confirmPassWord1" placeholder="确认密码" checkedd="">
                         </div>
                         <div class="form-group" id="identifyingCode1">
                             <input type="text" class="form-control" id="inputIdentifyingCode1" placeholder="验证码">
@@ -92,7 +92,7 @@
             var name = $("#inputName1").val();
             var password = $("#inputPassWord1").val();
             var verifyCode  = $("#inputIdentifyingCode1").val();
-            if (($("#inputStudentId1").attr("checked") == "checked") && ($("#inputName1").attr("checked") == "checked") && ($("#inputPassWord1").attr("checked") == "checked") && ($("#confirmPassWord1").attr("checked") == "checked")) {
+            if (($("#inputStudentId1").attr("checkedd") == "checked") && ($("#inputName1").attr("checkedd") == "checked") && ($("#inputPassWord1").attr("checkedd") == "checked") && ($("#confirmPassWord1").attr("checkedd") == "checked")) {
                 $.ajax({
                     type: "POST",
                     url: "{:U('Home/User/doReg')}",
@@ -118,11 +118,11 @@
                     }
                 });
             } else {
-                if ($("#inputStudentId1").attr("checked") == "") {
+                if ($("#inputStudentId1").attr("checkedd") == "") {
                     alert("请正确输入学号");
-                } else if ($("#inputName1").attr("checked") == "") {
+                } else if ($("#inputName1").attr("checkedd") == "") {
                     alert("请正确输入姓名，2-6个汉字");
-                } else if ($("#inputPassWord1").attr("checked") == "") {
+                } else if ($("#inputPassWord1").attr("checkedd") == "") {
                     alert("请正确输入密码，长度在6-18之间");
                 } else {
                     alert("两次输入密码不一致");
@@ -131,13 +131,14 @@
         });
 
         $("#inputStudentId1").blur(function() {
-            var id = /^[BQH][0-9]{8}$/;
+            var id = /^[BQH][1][2345][0-9]{6}$/;
             if (!id.test($("#inputStudentId1").val())) {
                 $("#inputStudentId1").css("border-color", "#8B0000");
-                $("#inputStudentId1").attr("checked", "");
-            } else {
+                $("#inputStudentId1").attr("checkedd","");
+            } 
+            else {
                 $("#inputStudentId1").css("border-color", "#66afe9");
-                $("#inputStudentId1").attr("checked", "checked");
+                $("#inputStudentId1").attr("checkedd", "checked");
             }
         });
         $("#inputName1").blur(function() {
@@ -147,10 +148,10 @@
             var id = /[\u4e00-\u9fa5]{2,6}/;
             if (!id.test($("#inputName1").val())) {
                 $("#inputName1").css("border-color", "#8B0000");
-                $("#inputName1").attr("checked", "");
+                $("#inputName1").attr("checkedd", "");
             } else {
                 $("#inputName1").css("border-color", "#66afe9");
-                $("#inputName1").attr("checked", "checked");
+                $("#inputName1").attr("checkedd", "checked");
             }
         });
         $("#inputPassWord1").blur(function() {
@@ -160,24 +161,25 @@
             var id = /^[\w\W]{6,16}$/;
             if (!id.test($("#inputPassWord1").val())) {
                 $("#inputPassWord1").css("border-color", "#8B0000");
-                $("#inputPassWord1").attr("checked", "");
+                $("#inputPassWord1").attr("checkedd", "");
             } else {
                 $("#inputPassWord1").css("border-color", "#66afe9");
-                $("#inputPassWord1").attr("checked", "checked");
+                $("#inputPassWord1").attr("checkedd", "checked");
             }
         });
         $("#confirmPassWord1").blur(function() {
             var id = /^[\w\W]{6,16}$/;
             if (($("#inputPassWord1").val() == $("#confirmPassWord1").val()) && (id.test($("#inputPassWord1").val()))) {
                 $("#confirmPassWord1").css("border-color", "#66afe9");
-                $("#confirmPassWord1").attr("checked", "checked");
+                $("#confirmPassWord1").attr("checkedd", "checked");
+                console.log($("#confirmPassWord1").attr("checkedd"));
             } else {
                 $("#confirmPassWord1").css("border-color", "#8B0000");
-                $("#confirmPassWord1").attr("checked", "");
+                $("#confirmPassWord1").attr("checkedd", "");
             }
         });
         $("#inputName1").focus(function() {
-            $("#inputName1").attr("placeholder", "2-4位汉字");
+            $("#inputName1").attr("placeholder", "2-6位汉字");
         });
         $("#inputPassWord1").focus(function() {
             $("#inputPassWord1").attr("placeholder", "6-18位、字母或数字开头");
