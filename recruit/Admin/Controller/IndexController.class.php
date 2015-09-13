@@ -161,7 +161,7 @@ class IndexController extends Controller
                 $shaixuan[] = $one;
             }
         }
-        $num = (int) $_GET["num"] ? (int) $_GET["num"] : 20;
+     /*   $num = (int) $_GET["num"] ? (int) $_GET["num"] : 20;
         $page = (int) $_GET["page"] ? (int) $_GET["page"] : 1;
         $allpage = ceil($count / $num);
         if ($page > $allpage) {
@@ -174,7 +174,7 @@ class IndexController extends Controller
                 break;
             }
             $final[] = $shaixuan[$i];
-        }
+        }*/
         
         vendor('PHPExcel');
         $i=4;
