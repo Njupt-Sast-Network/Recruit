@@ -106,7 +106,7 @@
                     <li><a href="__URL__/AssocMgr">部门管理</a></li>
                     <li><a href="__URL__/editQuestion">修改招新问题</a></li>
                 </ul>
-                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-saved"></span> 结束社团招新</button>
+                <button type="button" class="btn btn-danger" id="end"><span class="glyphicon glyphicon-saved"></span> 结束社团招新
             </div>
             <button type="button" class="btn btn-primary" onclick="javascript:window.location.href='__URL__/changePwd'"><span class="glyphicon glyphicon-pencil"></span> 修改新生密码</button>
             <button type="button" class="btn" onclick="javascript:window.location.href='__URL__/loginout'">注销</button>
@@ -180,6 +180,22 @@
             ifm.height = subWeb.body.scrollHeight;
         }
     }
+    $(document).on("click", "#end", function () {
+        var url = "__URL__/end";
+        if (!confirm('确认结束当前社团的招新吗？')) {
+            return;
+        }
+        ;
+        $.post('__URL__/end', {
+        }, function (back) {
+            if (back.errno != 0) {
+                alert(back.errmsg);
+                return;
+            }
+            alert('结束社团招新成功！');
+            window.location.reload();
+        });
+    });
     $('#btncomctrl').click(function() {
         window.location.href = "__URL__/comctrl";
     })

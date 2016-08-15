@@ -100,15 +100,17 @@ class UserController extends Controller
 
     public function doRegAssociation()
     {
-        $disableAssoc = ['大学生科学技术协会'];
-
+        $ass = M('association_list');
+        $disableAssocList = $ass -> where ('status=1') ->field('associationName')->select();
+        for ($i=0;$i<count($disableAssocList);$i++){
+            $disableAssoc[$i] = $disableAssocList[$i]['associationName'];
+        }
         //新增添加报名信息
         $studentRecruitInfo = new StudentRecruitInfoModel();
         $data['xh'] = I('session.xh', '');
         $data['department1'] = I('post.department1', '');
         $data['department2'] = I('post.department2', '');
         $data['association'] = I('post.association', '');
-
         if (in_array($data['association'], $disableAssoc)) {
             $this->ajaxReturn(array("status" => 0, "info" => $data['association'] . "的报名已经结束！"));
         }

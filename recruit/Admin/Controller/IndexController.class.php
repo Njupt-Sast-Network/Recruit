@@ -601,6 +601,40 @@ class IndexController extends Controller
         session(null);
         $this->redirect("index");
     }
+    public function end(){
+        if (I("session.identity", "") !== "超级管理员" && I("session.identity", "") !== "社团管理员") {
+            $this->ajaxReturn(array('status' => -1, 'msg' => "权限不足"));
+        }
+        if (!IS_AJAX) {
+            echo "非法操作";die();
+        }
+        if(!I("session.associationName")){
+            if(!I('get.nowassociation')){
+                $association = "大学生科学技术协会";
+            }else{
+                $association = I('get.nowassociation');
+            }
+        }else{
+            $association = I("session.associationName");
+        }
+        $ass = M('association_list');
+        $data['status']=1;
+        $map['associationName'] = $association;
+        $status = $ass->where($map)->field('status')->find();
+        $status = intval($status);
+        if($status==1){
+            $this->ajaxReturn(array('errno' => 2, 'errmsg' => '该社团已经停止招新！'));
+        }
+        $result = $ass->where($map)->save($data);
+        if ($result === false) {
+            $this->ajaxReturn(array('errno' => -1, 'errmsg' => 'SQL错误', 'sql' => $ass->getLastSql()));
+        } else {
+            $this->ajaxReturn(array('errno' => 0, 'errmsg' => 'success'));
+        }
+
+
+
+    }
     public function detail()
     {
         $data["identity"] = I("session.identity", "");
@@ -608,7 +642,7 @@ class IndexController extends Controller
             case '部门管理员':
                 $associations[0]["associationName"] = I("session.associationName", ""); // 首先有个associatitons和departments，这两个东西存的是当前身份下能够操作的社团（们）和部门（们）
                 $map["departmentName"] = I("session.departmentName", "");
-                $departments[0] = M("association_departments")->where($map)->field("id,departmentName")->find(); //这两个东西来产生页面上左边的那两个下拉框，这个给用户选择变成哪些身份的权利
+                $departments[0] = M("association_departments")->where($map)->field("id,departmentName")->find(); //这两个东西来产生页面上左边的那两个下拉框，给用户选择变成哪些身份的权利
                 $nowassociation = $associations[0]["associationName"];
                 $nowdepartment = $departments[0]["id"]; //同样的，部门管理员权限最小，只能操作当前社团的当前部门，所以完全不管get过来什么，当前部门都是这个部门
                 break;
