@@ -608,7 +608,7 @@ class IndexController extends Controller
             case '部门管理员':
                 $associations[0]["associationName"] = I("session.associationName", ""); // 首先有个associatitons和departments，这两个东西存的是当前身份下能够操作的社团（们）和部门（们）
                 $map["departmentName"] = I("session.departmentName", "");
-                $departments[0] = M("association_departments")->where($map)->field("id,departmentName")->find(); //这两个东西来产生页面上左边的那两个下拉框，给用户选择变成哪些身份的权利
+                $departments[0] = M("association_departments")->where($map)->field("id,departmentName")->find(); //这两个东西来产生页面上左边的那两个下拉框，这个给用户选择变成哪些身份的权利
                 $nowassociation = $associations[0]["associationName"];
                 $nowdepartment = $departments[0]["id"]; //同样的，部门管理员权限最小，只能操作当前社团的当前部门，所以完全不管get过来什么，当前部门都是这个部门
                 break;
