@@ -37,7 +37,11 @@ class IndexController extends Controller
                 break;
             case '超级管理员':
                 $associations = M("association_list")->field("associationName")->select();
-                $map['association'] = I('get.nowassociation');
+                if(!I('get.nowassociation')){
+                    $map['association'] = "大学生科学技术协会";
+                }else{
+                    $map['association'] = I('get.nowassociation');
+                }
                 $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
                 $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationName"]; //nowassociation和nowdepartment
                 session('associationName', $nowassociation);
@@ -361,6 +365,11 @@ class IndexController extends Controller
                 break;
             case '超级管理员':
                 $associations = M("association_list")->field("associationName")->select();
+                if(!I('get.nowassociation')){
+                    $map['association'] = "大学生科学技术协会";
+                }else{
+                    $map['association'] = I('get.nowassociation');
+                }
                 $departments = M("association_departments")->where($map)->field("id,departmentName,association")->select();
                 $nowassociation = I("get.nowassociation", "") ? I("get.nowassociation", "") : $associations[0]["associationName"];
                 $nowdepartment = I("get.nowdepartment", "") ? I("get.nowdepartment", "") : $departments[0]["id"];
