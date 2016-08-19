@@ -75,7 +75,7 @@ class UserController extends Controller
             $this->ajaxReturn(array("status" => 0, "info" => "验证码错误", "verifyCode" => I('post.verifyCode')));
         }
         $studentBasicInfo = new StudentBasicInfoModel();
-        $data['xh'] = I('post.xh', '', '/^[BHYQ][\d]+/i');
+        $data['xh'] = I('post.xh', '');
         $data['name'] = I('post.name', '', '/^[\x{4e00}-\x{9fa5}]+$/u');
         $data['password'] = I('post.password', '');
         // 检查提交数据完整程度
