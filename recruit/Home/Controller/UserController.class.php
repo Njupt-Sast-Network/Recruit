@@ -89,7 +89,7 @@ class UserController extends Controller
         if ($studentBasicInfo->where($map)->count() > 0) {
             $this->ajaxReturn(array("status" => 0, "info" => "此学号已被注册,如果忘记密码请寻找社团管理员"));
         } else {
-            $back = $studentBasicInfo->add($data);
+            //$back = $studentBasicInfo->add($data);
             session("xh", $data["xh"]); //登陆成功后将学生学号、姓名写入session
             session("name", $data["name"]);
             $returndata["info"] = "成功";
@@ -102,6 +102,7 @@ class UserController extends Controller
     {
         $ass = M('association_list');
         $disableAssocList = $ass -> where ('status=1') ->field('associationName')->select();
+        $disableAssoc = [];
         for ($i=0;$i<count($disableAssocList);$i++){
             $disableAssoc[$i] = $disableAssocList[$i]['associationName'];
         }

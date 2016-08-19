@@ -41,6 +41,7 @@ class UserController extends Controller
                 } else {
                     $this->ajaxReturn(array("status" => 0, "info" => "用户名或密码错误"));
                 }
+                break;
             default:
                 $this->ajaxReturn(array("status" => 0, "info" => "未选择身份"));
                 break;
