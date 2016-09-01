@@ -28,7 +28,7 @@ class UserController extends Controller
         } else {
             session_start();
             unset($studentinfo["password"]);
-            session("xh", $studentinfo["xh"]); //登陆成功后将学生学号、姓名写入session
+            session("xh", $studentinfo["xh"]); //登录成功后将学生学号、姓名写入session
             session("name", $studentinfo["name"]);
             $this->ajaxReturn(array("status" => 1, "info" => "success"));
         };
@@ -49,7 +49,7 @@ class UserController extends Controller
         $xh = I('session.xh', '');
         $student = $studentBasicInfo->getStudentInfoByXh($xh);
         if (!$student) {
-            die('用户数据获取失败,请重新登陆!');
+            die('用户数据获取失败,请重新登录!');
         }
         $recruitState = $studentRecruitInfo->getStudentRecruitState(array('xh' => $xh));
         foreach ($recruitState as $item) {
@@ -90,7 +90,7 @@ class UserController extends Controller
             $this->ajaxReturn(array("status" => 0, "info" => "此学号已被注册,如果忘记密码请寻找社团管理员"));
         } else {
             $back = $studentBasicInfo->add($data);
-            session("xh", $data["xh"]); //登陆成功后将学生学号、姓名写入session
+            session("xh", $data["xh"]); //登录成功后将学生学号、姓名写入session
             session("name", $data["name"]);
             $returndata["info"] = "成功";
             $returndata["status"] = 1;
