@@ -249,7 +249,7 @@ class IndexController extends Controller
         $mapxh['association']=$_GET['ass'];
         $mapxh['xh']=$_GET['xh'];
         $allrecruit = M('student_download')->where($mapxh)->select();
-        $basic = M("student_basic_info");
+        //$basic = M("student_basic_info");
         $tmpdepartments = M("association_departments")->select();
         foreach ($tmpdepartments as $vt) {
             $departments[$vt["id"]] = $vt; //用id为下标序列化部门列表

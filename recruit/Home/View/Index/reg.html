@@ -32,8 +32,8 @@
             <!--信息填写界面导航-->
             <ul class="nav nav-tabs RL" id="tab-list" role="tablist">
                 <li role="presentation" class="first">
-                    <a href="__URL__/login" data-toggle="link" role="tab" aria-expanded="true"><span>登陆</span></a>
-                    <!--链接到登陆页面-->
+                    <a href="__URL__/login" data-toggle="link" role="tab" aria-expanded="true"><span>登录</span></a>
+                    <!--链接到登录页面-->
                 </li>
                 <li role="presentation" class="active">
                     <a href="__URL__/reg" data-toggle="link" role="tab" aria-expanded="true"><span>注册</span></a>
@@ -132,8 +132,7 @@
 
         $("#inputStudentId1").blur(function() {
             var id = /^[BQYH][1][23456][0-9]{6}$/;
-            var yid =/^[1216|1016][0-9]{9}$/;
-            if (!id.test($("#inputStudentId1").val())&&!yid.test($("#inputStudentId1").val())) {
+            if (!id.test($("#inputStudentId1").val())) {
                 $("#inputStudentId1").css("border-color", "#8B0000");
                 $("#inputStudentId1").attr("checkedd","");
             } 

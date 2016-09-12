@@ -50,3 +50,4 @@ recruit/Runtime/*
 recruit/Runtime
 recruit/Admin/Conf/config.php
 recruit/Home/Conf/config.php
+.idea
