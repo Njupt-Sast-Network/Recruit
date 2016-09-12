@@ -699,9 +699,12 @@ class IndexController extends Controller
         }
         $map["association"] = $nowassociation;
         $recruit = M("student_recruit_info")->where($map)->find();
-        if (!$recruit) {
-            $this->error("此新生未报名你的社团");
+        if($data["identity"]!="超级管理员"){
+            if (!$recruit) {
+                $this->error("此新生未报名你的社团");
+            }
         }
+
         $tmpdepartments = M("association_departments")->select();
         foreach ($tmpdepartments as $vt) {
             $departments2[$vt["id"]] = $vt; //用id为下标序列化部门列表
