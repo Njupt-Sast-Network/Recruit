@@ -27,7 +27,7 @@ function checkVerifyCode($code, $id = '')
 }
 
 function isAPIMode(){
-	if(I('post.api_token') === $_ENV['api_token']){
+	if(I('post.api_token') === $_SERVER['api_token']){
 		return true;
 	}
 	return false;
