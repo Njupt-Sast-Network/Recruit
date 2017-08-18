@@ -42,6 +42,8 @@ class UserController extends Controller
 
     public function getRecruitState()
     {
+	    prepareForAPI();
+
         $studentBasicInfo = new StudentBasicInfoModel();
         $studentRecruitInfo = new StudentRecruitInfoModel();
         $associationDepartments = new AssociationDepartmentsModel();
@@ -71,7 +73,8 @@ class UserController extends Controller
 
     public function doReg()
     {
-        if (!checkVerifyCode(I('post.verifyCode'))) {
+    	//API Mode can bypass verify code
+        if (!isAPIMode() && !checkVerifyCode(I('post.verifyCode'))) {
             $this->ajaxReturn(array("status" => 0, "info" => "验证码错误", "verifyCode" => I('post.verifyCode')));
         }
         $studentBasicInfo = new StudentBasicInfoModel();
@@ -100,6 +103,8 @@ class UserController extends Controller
 
     public function doRegAssociation()
     {
+	    prepareForAPI();
+
         $ass = M('association_list');
         $disableAssocList = $ass -> where ('status=1') ->field('associationName')->select();
         $disableAssoc = [];
@@ -134,6 +139,8 @@ class UserController extends Controller
 
     public function doChangeDepartment()
     {
+	    prepareForAPI();
+
         //修改报名信息
         $studentRecruitInfo = new StudentRecruitInfoModel();
         $map["xh"] = I('session.xh', '');
@@ -154,6 +161,8 @@ class UserController extends Controller
     }
     public function delDepartment()
     {
+	    prepareForAPI();
+
         //删除报名信息
         $map["xh"] = I('session.xh', '');
         $map["id"] = I('post.id');
@@ -168,6 +177,8 @@ class UserController extends Controller
     }
     public function doChangePassword()
     {
+	    prepareForAPI();
+
         $xh = I('session.xh', '');
         $map["xh"] = I('session.xh', '');
         if (!$map["xh"]) {
@@ -194,6 +205,8 @@ class UserController extends Controller
 
     public function doChangeInfo()
     {
+	    prepareForAPI();
+
         $student = getStuInfo();
         $data['name'] = I('post.name', '', '/^[\x{4e00}-\x{9fa5}]+$/u');
         $data['birthday'] = (int) $_POST['birthday-y'] . '-' . (int) $_POST['birthday-m'] . '-' . (int) $_POST['birthday-d'];
@@ -221,6 +234,8 @@ class UserController extends Controller
     }
     public function associationinfo()
     {
+	    prepareForAPI();
+
         //此接口用于查询社团信息，发送社团名称，返回社团的3个问题以及社团的所有部门
         $name = I("associationName", "");
         $departments = M("association_departments")->where(array("association" => $name))->field("id,departmentName")->select();
@@ -231,6 +246,8 @@ class UserController extends Controller
 
     public function isInfoComplete()
     {
+	    prepareForAPI();
+
         $xh = isset($_GET['xh']) ? I('get.xh') : I('session.xh');
         $data = D('StudentBasicInfo')->getStudentInfoByXh($xh);
         // unset($data['id']);
