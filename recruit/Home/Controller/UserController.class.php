@@ -282,6 +282,8 @@ class UserController extends Controller
         $this->onlyForAPI();
         $studentBasicInfo = new StudentBasicInfoModel();
         $stuInfo = $studentBasicInfo->getStudentInfoByXh(I('session.xh', ''));
+        unset($stuInfo['password']);
+        unset($stuInfo['id']);
         $this->ajaxReturn(["result" => $stuInfo]);
     }
     
@@ -293,11 +295,11 @@ class UserController extends Controller
         $departments = $departmentInfo->getDepartments();
         $associationInfo = new AssociationListModel();
         $associations = $associationInfo->getAssociations();
-        $this->ajaxReturn([
+        $this->ajaxReturn(["result" =>[
             "associations"=> $associations,
             "departments"=> $departments,
             "recruitInfo"=> $recruitInfo
-        ]);
+        ]]);
     }
 
 
