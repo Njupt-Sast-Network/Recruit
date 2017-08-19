@@ -42,7 +42,7 @@ class UserController extends Controller
 
     public function getRecruitState()
     {
-	    prepareForAPI();
+        prepareForAPI();
 
         $studentBasicInfo = new StudentBasicInfoModel();
         $studentRecruitInfo = new StudentRecruitInfoModel();
@@ -73,7 +73,7 @@ class UserController extends Controller
 
     public function doReg()
     {
-    	//API Mode can bypass verify code
+        //API Mode can bypass verify code
         if (!isAPIMode() && !checkVerifyCode(I('post.verifyCode'))) {
             $this->ajaxReturn(array("status" => 0, "info" => "验证码错误", "verifyCode" => I('post.verifyCode')));
         }
@@ -103,7 +103,7 @@ class UserController extends Controller
 
     public function doRegAssociation()
     {
-	    prepareForAPI();
+        prepareForAPI();
 
         $ass = M('association_list');
         $disableAssocList = $ass -> where ('status=1') ->field('associationName')->select();
@@ -139,7 +139,7 @@ class UserController extends Controller
 
     public function doChangeDepartment()
     {
-	    prepareForAPI();
+        prepareForAPI();
 
         //修改报名信息
         $studentRecruitInfo = new StudentRecruitInfoModel();
@@ -161,7 +161,7 @@ class UserController extends Controller
     }
     public function delDepartment()
     {
-	    prepareForAPI();
+        prepareForAPI();
 
         //删除报名信息
         $map["xh"] = I('session.xh', '');
@@ -177,7 +177,7 @@ class UserController extends Controller
     }
     public function doChangePassword()
     {
-	    prepareForAPI();
+        prepareForAPI();
 
         $xh = I('session.xh', '');
         $map["xh"] = I('session.xh', '');
@@ -205,7 +205,7 @@ class UserController extends Controller
 
     public function doChangeInfo()
     {
-	    prepareForAPI();
+        prepareForAPI();
 
         $student = getStuInfo();
         $data['name'] = I('post.name', '', '/^[\x{4e00}-\x{9fa5}]+$/u');
@@ -234,7 +234,7 @@ class UserController extends Controller
     }
     public function associationinfo()
     {
-	    prepareForAPI();
+        prepareForAPI();
 
         //此接口用于查询社团信息，发送社团名称，返回社团的3个问题以及社团的所有部门
         $name = I("associationName", "");
@@ -246,7 +246,7 @@ class UserController extends Controller
 
     public function isInfoComplete()
     {
-	    prepareForAPI();
+        prepareForAPI();
 
         $xh = isset($_GET['xh']) ? I('get.xh') : I('session.xh');
         $data = D('StudentBasicInfo')->getStudentInfoByXh($xh);
@@ -259,5 +259,29 @@ class UserController extends Controller
             $this->ajaxReturn(array("result" => false));
         }
     }
+
+    public function getSelfInfo()
+    {
+        onlyForAPI();
+        $studentBasicInfo = new StudentBasicInfoModel();
+        $stuInfo = $studentBasicInfo->getStudentInfoByXh(I('session.xh', ''));
+        $this->ajaxReturn(["result" => $stuInfo]);
+    }
+    
+    public function getDepartment(){
+        onlyForAPI();
+        $studentRecruitInfo = new StudentRecruitInfoModel();
+        $recruitInfo = $studentRecruitInfo->getStudentRecruitState(["xh"=>I('session.xh', '')]);
+        $departmentInfo = new  AssociationDepartmentsModel();
+        $departments = $departmentInfo->getDepartments();
+        $associationInfo = new AssociationListModel();
+        $associations = $associationInfo->getAssociations();
+        $this->ajaxReturn([
+            "associations"=> $associations,
+            "departments"=> $departments,
+            "recruitInfo"=> $recruitInfo
+        ]);
+    }
+
 
 }

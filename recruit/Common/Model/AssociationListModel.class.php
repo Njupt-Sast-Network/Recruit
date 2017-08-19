@@ -11,6 +11,11 @@ use Think\Model;
 
 class AssociationListModel extends Model {
 
+    //获取所有社团
+    public function getAssociations(){
+       return $this->field('id,associationName,quest1,quest2,quest3')->select();
+    }
+
     // 使用社团id返回社团名称
     public function getAssociationNameById($id) {
         $condition['id'] = $id;

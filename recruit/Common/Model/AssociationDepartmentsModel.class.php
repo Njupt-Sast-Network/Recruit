@@ -49,4 +49,14 @@ class AssociationDepartmentsModel extends Model {
         return $this->where($condition)->save($updatedInfo);
     }
 
+    // 获取所有部门
+    public function getDepartments(){
+        $tmpdepartments = M("association_departments")->select();
+        $departments = [];
+        foreach ($tmpdepartments as $vt) {
+            $departments[$vt["id"]] = $vt['departmentName']; //用id为下标序列化部门列表
+        }
+        return $departments;
+    }
+
 }
