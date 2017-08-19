@@ -46,18 +46,3 @@ function doAPILogin(){
 	}
 }
 
-//对于 小程序 和 前端ajax 共用的接口
-function prepareForAPI(){
-	if(isAPIMode()){
-		doAPILogin();
-	}
-}
-
-//对于只提供给 小程序 使用的接口
-function onlyForAPI(){
-	if(isAPIMode()){
-		doAPILogin();
-	}else{
-		$this->ajaxReturn(array("status" => 0, "info" => "鉴权失败"));
-	}
-}
