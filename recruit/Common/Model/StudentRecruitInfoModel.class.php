@@ -16,6 +16,11 @@ class StudentRecruitInfoModel extends Model{
         return $this->where($condition)->find();
     }
 
+    // 返回指定学号的学生报名、录取状况
+    public function getStudentRecruitStateByXh($xh) {
+        return $this->where(["xh"=>$xh])->select();
+    }
+
     // 返回学生是否可以被用户录取(社团部门用户)
     public function isStudentAcceptAble($xh) {
         $condition['xh'] = $xh;
