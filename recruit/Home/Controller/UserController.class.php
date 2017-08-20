@@ -84,8 +84,13 @@ class UserController extends Controller
             }
             $item['association'] = $associationLists->getAssociationNameById($item['association']);
         }
-        $this->assign('recruitState', $recruitState);
-        $this->display();
+        if(isAPIMode()){
+            $this->ajaxReturn($recruitState);
+        }else{
+            $this->assign('recruitState', $recruitState);
+            $this->display();
+        }
+
     }
 
     public function doReg()
