@@ -38,7 +38,7 @@ class UserController extends Controller
     //对于只提供给 小程序 使用的接口
     private function onlyForAPI(){
         if(isAPIMode()){
-            doAPILogin();
+            $this->doAPILogin();
         }else{
             $this->ajaxReturn(array("status" => 0, "info" => "鉴权失败"));
         }
