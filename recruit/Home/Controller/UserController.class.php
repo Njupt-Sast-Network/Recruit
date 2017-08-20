@@ -82,7 +82,7 @@ class UserController extends Controller
         if (!$student) {
             die('用户数据获取失败,请重新登录!');
         }
-        $recruitState = $studentRecruitInfo->getStudentRecruitState(array('xh' => $xh));
+        $recruitState = $studentRecruitInfo->getStudentRecruitStateByXh($xh);
         foreach ($recruitState as $item) {
             $item['department1'] = $associationDepartments->getDepartmentNameByDepartmentId($item['department1'], $item['association']);
             $item['department2'] = $associationDepartments->getDepartmentNameByDepartmentId($item['department2'], $item['association']);
@@ -307,7 +307,7 @@ class UserController extends Controller
     public function getDepartment(){
         $this->onlyForAPI();
         $studentRecruitInfo = new StudentRecruitInfoModel();
-        $recruitInfo = $studentRecruitInfo->getStudentRecruitState(["xh"=>I('session.xh', '')]);
+        $recruitInfo = $studentRecruitInfo->getStudentRecruitStateByXh(I('session.xh', ''));
         $departmentInfo = new  AssociationDepartmentsModel();
         $departments = $departmentInfo->getDepartments();
         $associationInfo = new AssociationListModel();
