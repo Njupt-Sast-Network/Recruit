@@ -11,6 +11,11 @@ use Think\Model;
 
 class StudentBasicInfoModel extends Model
 {
+    // 按学号判断学生是否存在
+    public function isStudentExistByXh($xh){
+        $condition['xh'] = $xh;
+        return ($this->where($condition)->count()==1);
+    }
 
     // 按学号获取学生基本信息
     public function getStudentInfoByXh($xh)

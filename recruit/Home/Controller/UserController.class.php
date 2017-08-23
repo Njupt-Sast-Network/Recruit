@@ -319,5 +319,14 @@ class UserController extends Controller
         ]]);
     }
 
+    public function isStudentExist(){
+        if(!isAPIMode()) {
+            $this->ajaxReturn(["result" => "鉴权失败"]);
+        }
+        $studentBasicInfo = new StudentBasicInfoModel();
+        $result = $studentBasicInfo->isStudentExistByXh(I('post.xh', ''));
+        $this->ajaxReturn(["result" =>$result]);
+    }
+
 
 }
