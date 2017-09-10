@@ -132,7 +132,7 @@
         });
 
         $("#inputStudentId1").blur(function() {
-            var id = /^[BQYH][1][23456][0-9]{6}$/;
+            var id = /^[BQYH][1][234567][0-9]{6}$/;
             if (!id.test($("#inputStudentId1").val())) {
                 $("#inputStudentId1").css("border-color", "#8B0000");
                 $("#inputStudentId1").attr("checkedd","");
