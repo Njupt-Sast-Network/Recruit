@@ -146,6 +146,7 @@ class IndexController extends Controller
                 $allrecruit[$p]["able"] = 0;
             }
         }
+        $condition = [];
         if (isset($_GET["xh"])) {$condition["xh"] = $_GET["xh"];}
         if (isset($_GET["name"])) {$condition["name"] = $_GET["name"];}
         if (isset($_GET["department1"])) {$condition["department1"] = $_GET["department1"];}
@@ -228,7 +229,7 @@ class IndexController extends Controller
     $i++;
     }
         $objPHPExcel->setActiveSheetIndex(0)
-                ->setCellValue('A1', $final[0]['association'].'招新报名统计表');
+                ->setCellValue('A1', $_SESSION["nowassociation"].'招新报名统计表');
     ob_end_clean();  //清空缓存 
     header("Pragma: public");
     header("Expires: 0");
@@ -237,7 +238,7 @@ class IndexController extends Controller
     header("Content-Type:application/vnd.ms-execl");
     header("Content-Type:application/octet-stream");
     header("Content-Type:application/download");
-    header('Content-Disposition:attachment;filename='.$final[0]['association'].'报名统计表.xls');//设置文件的名称
+    header('Content-Disposition:attachment;filename='.$_SESSION["nowassociation"].'报名统计表.xls');//设置文件的名称
     header("Content-Transfer-Encoding:binary");
     $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
     $objWriter->save('php://output');
