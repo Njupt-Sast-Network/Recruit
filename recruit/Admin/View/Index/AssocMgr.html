@@ -229,7 +229,7 @@
                 };
                 $.post("{:U('Index/handleDept')}", {
                         "action": 'add',
-                        "association": '{$nowassociation}',
+                        "association": '<?php echo $nowassociation;?>',
                         "departmentName": newdeptname,
                         "username": newusrname,
                         "password": newpwd
