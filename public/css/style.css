@@ -16,7 +16,6 @@ html {
 .block {
   display: block;
 }
-}
 #tab-list {
 	margin:15px;
 }
@@ -203,6 +202,13 @@ span a:hover{
 }
 .checkbox {
   margin: 0 50px 0 50px;
+}
+.welcome {
+    color: #fff;
+    font-size: 30px;
+    margin-top: 30px;
+    text-align: center;
+    white-space: nowrap;
 }
 
 @media (min-width:600px){.tablecontain{width: 500px;}}
